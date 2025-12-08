@@ -11,22 +11,29 @@
   font-weight: 700;
   font-style: normal;
 }
-
 */
+:root {
+    --font-family: "Poppins", sans-serif;
+    --background-color: #F0FFF0;
+    --text-color-1: #21B573;
+    --text-color-2: #FD511A;
+    --text-color-3: #6C6B6B;
+}
+
 /* Basic CSS */
 body {
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-family);
 }
 
 p {
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-family);
     font-size: 16px;
 }
 
 
 /* Nav Section */
 .nav-font {
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-family);
     font-size: 16px;
 }
 
@@ -44,39 +51,39 @@ p {
 }
 
 .background_color {
-    background-color: #F0FFF0;
+    background-color: var(--background-color);
 }
 
 
 /* Banner Section */
 .banner {
     /* height: 576px; */
-    background-color: #F0FFF0;
+    background-color: var(--background-color);
     padding: 50px 0;
 }
 
 
 .banner_text h6 {
     font-size: 16px;
-    color: #FD511A;
-    font-family: "Poppins", sans-serif;
+    color: var(--text-color-2);
+    font-family: var(--font-family);
 }
 
 .banner_text p {
     font-size: 16px;
-    color: #6C6B6B;
-    font-family: "Poppins", sans-serif;
+    color: var(--text-color-3);
+    font-family: var(--font-family);
 }
 
 .banner_text h1 {
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-family);
     font-weight: 700;
     line-height: 50px;
 
 }
 
 .banner_text span {
-    color: #21B573;
+    color: var(--text-color-1);
 }
 
 .submit_btn {
@@ -85,7 +92,7 @@ p {
     border-radius: 33px;
     color: white;
     border: none;
-    background-color: #21B573;
+    background-color: var(--text-color-1);
     font-size: 16px;
     font-family: "Roboto", sans-serif;
 }
@@ -97,7 +104,7 @@ p {
 
 /* Sub Item Section */
 .item_section {
-    background: #F0FFF0;
+    background: var(--background-color);
     padding: 30px 10px;
     /* margin: 20px 0; */
     border-radius: 12px;
@@ -117,22 +124,22 @@ p {
 
 
 .item_section h3 {
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-family);
     font-weight: 500;
     font-size: 24px;
     padding-top: 25px;
 }
 
 .item_section p {
-    color: #585859;
+    color: var(--text-color-3);
 }
 
 /* Online Courses Section */
 #courses h1 {
-    color: #413960;
+    color: var(--text-color-3);
     font-size: 36px;
     font-weight: 800;
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-family)
 }
 
 .course_part {
@@ -153,7 +160,7 @@ p {
 
 .course_part .buy_course_btn {
     padding: 8px 28px;
-    background-color: #21B573;
+    background-color: var(--text-color-1);
     border-radius: 33px;
     border: none;
     color: white;
@@ -168,7 +175,7 @@ p {
 .testimonial_heading h1 {
     font-size: 36px;
     font-weight: 700;
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-family);
     margin-bottom: 50px;
 }
 
@@ -187,7 +194,7 @@ p {
 .footer h3 {
     font-size: 18px;
     font-weight: 700;
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-family);
     padding-top: 10px;
 }
 
@@ -243,7 +250,7 @@ p {
     .item_section {
         width: 100%;
     }
-    
+
     .banner_img img {
         width: 100%;
     }
