@@ -226,6 +226,9 @@ p {
     .footer .col-md-4 {
         margin-bottom: 10px;
     }
+    .banner_img img {
+        width: 100%;
+    }
 }
 
 @media (max-width: 576px) {
@@ -238,6 +241,10 @@ p {
     }
 
     .item_section {
+        width: 100%;
+    }
+    
+    .banner_img img {
         width: 100%;
     }
 }
