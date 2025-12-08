@@ -1,2 +1,2 @@
 01. e-school:
-https://scalerart.github.io/assignment/01.%20e_school/index.html
+https://scalerart.github.io/webDevelopment/assignment/01.%20e_school/index.html
