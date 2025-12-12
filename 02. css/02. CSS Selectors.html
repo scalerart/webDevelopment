@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Selectors</title>
+</head>
+<body>
+    <!-- 
+    *** CSS Selectors
+        1.  Element Selector
+            Element selector হল HTML এর কোনো নির্দিষ্ট element কে লক্ষ্য করা।
+                p {
+                    color: blue;   /* সব <p> ট্যাগের লেখা নীল হবে */
+                }
+            Element selector সরাসরি HTML tag এর নাম দিয়ে লেখা হয়।
+            উদাহরণ: h1, div, p, a ইত্যাদি
+
+        2.  Class Selector
+            একাধিক element কে একই CSS দেওয়ার জন্য class ব্যবহার হয়।
+                <p class="highlight">এই লেখা হাইলাইট</p>
+                <p class="highlight">এইটাও হাইলাইট</p>
+                    .highlight {
+                        color: red;
+                        font-weight: bold;
+                    }
+            . দিয়ে class কে CSS এ নির্বাচন করা হয়।
+            একটি page-এ এক class বহু element এ ব্যবহার করা যায়। 
+            
+        3.  ID Selector
+            কোনো একটি element কে আলাদা CSS দেওয়ার জন্য ID ব্যবহার হয়।
+                <p id="special">এই লেখা স্পেশাল</p>
+                    #special {
+                        color: green;
+                        font-size: 20px;
+                    }
+            # দিয়ে ID কে CSS এ নির্বাচন করা হয়।
+            একটি page-এ একই ID একবারই ব্যবহার করা উচিত।
+            
+        4.  Universal Selector (*)
+            সাইটের সব element কে একসাথে CSS দেওয়ার জন্য ব্যবহার হয়।
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+            সব element এর margin ও padding reset করার জন্য খুব জনপ্রিয়।
+            
+        5.  Grouping Selectors
+            একই CSS অনেক element এর জন্য ব্যবহার করতে চাইলে , দিয়ে group করা যায়।
+                h1, h2, h3 {
+                    font-family: Arial, sans-serif;
+                    color: navy;
+                }
+            h1, h2, h3 একসাথে একই CSS পাবে।
+            
+        6.  Child Selector (>)
+            একটি parent element-এর সরাসরি child কে CSS দিতে ব্যবহার হয়।
+                <div class="parent">
+                    <p>Child 1</p>
+                    <span>Child 2</span>
+                </div>
+            .parent > p {
+                color: orange;  /* শুধুমাত্র parent-এর সরাসরি <p> এ প্রয়োগ হবে */
+            }                        
+
+        7.  Descendant Selector (Space)
+            Parent element এর যেকোনো descendant (child, grandchild ইত্যাদি) কে CSS দিতে ব্যবহার হয়।
+                .parent p {
+                    font-size: 18px;   /* parent-এর যেকোনো <p> এ প্রয়োগ হবে */
+                }
+            Child Selector শুধু সরাসরি child,
+            Descendant Selector সব nested element কে ধরে।                    
+    -->
+</body>
+</html>
