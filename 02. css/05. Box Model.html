@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Box Model</title>
+</head>
+<body>
+    
+    <!-- 
+    =>  CSS Box Model
+        1.  CSS-এ প্রতিটি HTML element আসলে একটি বাক্স (Box)।
+        2.  এই বাক্সের গঠনই হলো Box Model।
+
+    =>  CSS Box Model এর ৪টি অংশ
+        1.  Margin
+        2.  Border
+        3.  Padding
+        4.  Content
+
+    1.  Content
+        =>  এটাই আসল জায়গা যেখানে
+        =>  লেখা, ছবি, ভিডিও থাকে।
+    
+    2.  Padding
+        =>  Content আর Border এর মাঝের ভিতরের ফাঁকা জায়গা।
+        =>  Padding এর বিভিন্ন রূপ:
+            1.  padding: 10px;                  সব দিক
+            2.  padding: 10px 20px;             top-bottom | left-right
+            3.  padding: 10px 15px 20px;        top | left-right | bottom
+            4.  padding: 10px 15px 20px 25px;   top right bottom left
+            
+    3.  Border
+        =>  Padding এর বাইরে থাকা সীমারেখা।
+        =>  Border এর অংশ:
+            1.  thickness → 2px
+            2.  style → solid
+            3.  color → black
+
+    4.  Margin
+        =>  একটি element আর অন্য element এর মাঝে বাইরের ফাঁকা জায়গা।
+        =>  Layout সুন্দর করতে margin সবচেয়ে বেশি ব্যবহৃত হয়।
+        =>  Center করার magic: margin: auto;
+
+    5.  box-sizing
+        =>  এই সমস্যা সমাধানের জন্য আসে box-sizing
+        =>  box-sizing: content-box (Default);
+        =>  box-sizing: border-box (Recommended);
+
+    =>  Professional Best Practice
+        =>  সব প্রজেক্টের শুরুতেই লিখতে হবে:
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+        =>  এটা layout control অনেক সহজ করে দেয়।        
+    -->
+</body>
+</html>

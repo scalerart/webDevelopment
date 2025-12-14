@@ -9,7 +9,42 @@
     
 
     <!-- 
-    CSS Colors & Units
+    =>  CSS Units মোট দুই ধরনের—
+        1.  Absolute Units
+        2.  Relative Units
+
+        1.  Absolute Units (নির্দিষ্ট বা স্থির ইউনিট)
+            এগুলো Fixed। স্ক্রিন ছোট–বড় হলেও পরিবর্তন হয় না।
+
+            Absolute Units তালিকা:
+            1.  px → Pixels
+            2.  cm → Centimeters
+            3.  mm → Millimeters
+            4.  in → Inches
+            5.  pt → Points
+            6.  pc → Picas
+
+            বর্তমানে সবচেয়ে বেশি ব্যবহৃত absolute unit হলো px
+    
+        2.  Relative Units (আপেক্ষিক বা পরিবর্তনশীল ইউনিট)
+            Parent, root font-size বা device screen এর উপর নির্ভর করে পরিবর্তিত হয়।
+            Responsive design-এর জন্য গুরুত্বপূর্ণ।
+
+            Relative Units তালিকা:
+            1.  % → Parent এর শতকরা অংশ
+            2.  em → Parent font-size এর উপর নির্ভর
+            3.  rem → Root (html) font-size এর উপর নির্ভর
+            4.  vh → Viewport height (স্ক্রিন উচ্চতার %)
+            5.  vw → Viewport width (স্ক্রিন প্রস্থের %)
+            6.  vmin → viewport-এর ছোট দিকের %
+            7.  vmax → viewport-এর বড় দিকের %
+            8.  ex → x-height (খুব কম ব্যবহৃত)
+            9.  ch → character width
+            10.  lh → line height
+
+            Responsive design–এ সবচেয়ে বেশি ব্যবহৃত relative units হলো: %, em, rem, vh, vw
+
+    *** CSS Colors & Units
         1.  Colors in CSS
             CSS এ রং সেট করার অনেক উপায় আছে। প্রধান চারটি হলো:
             1.  Color Name
