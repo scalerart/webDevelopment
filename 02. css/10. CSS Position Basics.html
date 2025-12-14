@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Position Basics</title>
+</head>
+<body>
+    <!-- 
+    =>  CSS Position Basics
+        =>  position দিয়ে আমরা নির্ধারণ করি
+        =>  element কোথায় থাকবে
+        =>  কিসের ভিত্তিতে নড়বে
+
+    1.  position: static (Default)
+        =>  বৈশিষ্ট্য
+            1.  HTML এর normal flow অনুযায়ী থাকে
+            2.  top, right, bottom, left কাজ করে না
+            3.  সব element default ভাবে static
+        =>  সাধারণ layout-এর জন্য।
+
+    2.  position: relative
+        =>  বৈশিষ্ট্য
+            1.  নিজের original জায়গার ভিত্তিতে নড়ে
+            2.  আগের জায়গা ফাঁকা থাকে
+            3.  absolute child-এর reference হিসেবে কাজ করে
+        =>  Layout adjust ও child position করতে ব্যবহৃত হয়।
+
+    3.  position: absolute
+        =>  বৈশিষ্ট্য
+            1.  Nearest positioned parent (relative/absolute/fixed) এর ভিত্তিতে নড়ে
+            2.  Normal flow থেকে বের হয়ে যায়
+            3.  জায়গা দখল করে না
+            4.  Parent না থাকলে?
+        =>  পুরো viewport এর ভিত্তিতে position হয়।
+
+    4.  position: fixed
+        =>  বৈশিষ্ট্য
+            1.  Screen (viewport) এর সাথে fixed থাকে
+            2.  Scroll করলেও নড়ে না
+            3.  Header, back-to-top button-এর জন্য আদর্শ
+
+    5.  top, right, bottom, left
+        =>  এইগুলো দিয়ে position এর দিক নির্ধারণ করা হয়।
+        =>  কাজ করে কখন?
+            1.  relative
+            2.  absolute
+            3.  fixed
+            4.  static এ কাজ করে না।          
+    -->
+</body>
+</html>

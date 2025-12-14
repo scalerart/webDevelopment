@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox Basics</title>
+</head>
+<body>
+    <!-- 
+    =>  Flexbox Basics
+        =>  Flexbox হলো এক-মাত্রিক (1D) layout system
+        =>  Row অথবা Column ধরে element সাজাতে সবচেয়ে সহজ পদ্ধতি
+        
+    1.  display: flex
+        =>  Flexbox চালু করার জন্য parent element-এ লিখতে হয়: display: flex;
+        =>  Child elements গুলো flex items হয়ে যায়।
+
+    2.  flex-direction
+        =>  Flex items কোন দিকে সাজানো হবে।
+        =>  Values: flex-direction:
+            1.  flex-direction: row;            default → বাম থেকে ডানে
+            2.  flex-direction: row-reverse;
+            3.  flex-direction: column;         উপর থেকে নিচে
+            4.  flex-direction: column-reverse;
+
+    3.  justify-content
+        =>  Main axis বরাবর alignment করে।
+        =>  Common values: justify-content: center;
+            1.  flex-start (default)
+            2.  center
+            3.  flex-end
+            4.  space-between
+            5.  space-around
+            6.  space-evenly
+        =>  Horizontal spacing control করতে সবচেয়ে গুরুত্বপূর্ণ।
+
+    4.  align-items
+        =>  Cross axis বরাবর alignment (single row)।
+        =>  Values: align-items: center;
+            1.  stretch (default)
+            2.  center
+            3.  flex-start
+            4.  flex-end
+            5.  baseline
+        =>  Vertical centering এর magic
+
+    5.  align-content
+        =>  Multiple rows/lines থাকলে কাজ করে।
+        =>  কাজ করবে তখনই যখন: flex-wrap: wrap;
+        =>  Values: align-content:
+            1.  stretch (default)
+            2.  center
+            3.  flex-start
+            4.  flex-end
+            5.  space-between
+            6.  space-around        
+    -->
+</body>
+</html>
