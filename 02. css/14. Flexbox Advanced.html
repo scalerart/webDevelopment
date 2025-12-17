@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox Advanced</title>
+</head>
+<body>
+    <!-- 
+    =>  Flexbox Advanced
+        =>  এই দিনে আপনি শিখবেন
+            1.  item কীভাবে ভাঙবে
+            2.  কে কত জায়গা নেবে
+            3.  কে আগে/পরে আসবে
+
+    1.  flex-wrap
+        =>  Flex item এক লাইনে থাকবে নাকি ভেঙে নতুন লাইনে যাবে।
+        =>  Values:
+            1.  flex-wrap: nowrap;      default
+            2.  flex-wrap: wrap;        নতুন লাইনে যাবে
+            3.  flex-wrap: wrap-reverse;
+        =>  Responsive card layout এর জন্য wrap খুব দরকারি
+
+    2.  flex-basis
+        =>  Item-এর initial size নির্ধারণ করে।
+        =>  এটা width এর মতো, কিন্তু flex-smart
+        =>  main axis বরাবর কাজ করে।
+    
+    3.  flex-grow
+        =>  Extra space থাকলে কে কতটা বড় হবে।
+        =>  box1 { flex-grow: 1; } .box2 { flex-grow: 2; }
+        =>  box2, box1 এর চেয়ে দ্বিগুণ জায়গা নেবে।
+
+    4.  flex-shrink
+        =>  Space কম হলে কে কতটা ছোট হবে।
+
+    5.  flex shorthand (Important)
+        .item {
+            flex: 1 0 200px;
+        }
+        =>  মানে:
+        =>  flex-grow | flex-shrink | flex-basis
+        =>  সবচেয়ে বেশি ব্যবহৃত: flex: 1;
+
+    6.  order property
+        =>  HTML না বদলে element এর order পরিবর্তন করা যায়।
+    -->
+</body>
+</html>

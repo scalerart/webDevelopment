@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clip-path, Mask & Shapes</title>
+</head>
+<body>
+    <!-- 
+    =>  Clip-path, Mask & Shapes
+        1.  এগুলো দিয়ে element-এর shape কেটে নেওয়া,
+        2.  অদ্ভুত ও সুন্দর ডিজাইন তৈরি করা যায়
+        3.  HTML structure না বদলিয়েই
+
+    1.  clip-path
+        =>  clip-path কী?
+        =>  clip-path দিয়ে element-এর এক অংশ দেখানো হয়, বাকি অংশ কেটে যায় (hidden)।
+
+        1.  clip-path: circle()
+            =>  clip-path: circle(50%);
+            =>  Image গোল হয়ে যাবে।
+        2.  Position সহ circle
+            =>  clip-path: circle(40% at center);
+            =>  clip-path: circle(50% at top left);
+            =>  at দিয়ে position ঠিক করা হয়।
+        3.  clip-path: polygon()
+            =>  নিজের মতো করে যেকোনো shape বানানো যায়।
+            =>  clip-path: polygon(x y, x y, x y...);
+        4.  Triangle Shape
+            .box {
+                clip-path: polygon(
+                    50% 0%,
+                    100% 100%,
+                    0% 100%
+                );
+            }
+        5.  Hexagon Shape
+            .box {
+                clip-path: polygon(
+                    25% 0%,
+                    75% 0%,
+                    100% 50%,
+                    75% 100%,
+                    25% 100%,
+                    0% 50%
+                );
+            }
+
+    2.  CSS Mask (সংক্ষেপে ধারণা)
+        =>  Mask অনেকটা clip-path এর মতো তবে smooth fade effect দেয়
+        
+    3.  shape-outside
+        =>  shape-outside কী?
+        =>  Text কে shape অনুযায়ী flow করানো যায়।
+        =>  কাজ করে শুধু:
+            1.  float element এ
+            2.  Image বা fixed width element এ        
+    -->
+</body>
+</html>

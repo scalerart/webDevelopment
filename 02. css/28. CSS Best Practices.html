@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Best Practices</title>
+</head>
+
+<body>
+
+    <!-- 
+    =>  CSS Best Practices
+        =>  CSS লেখা শুধু কাজ করা নয়, কোড clean, easy-to-read, scalable করা অত্যন্ত গুরুত্বপূর্ণ।
+
+    1.  DRY Principle
+        =>  DRY = “Don’t Repeat Yourself”
+            1.  একই কোড বারবার লিখবেন না
+            2.  Reusable class ও variable ব্যবহার করুন
+
+        =>  Example (Bad)
+            .header {
+                color: white;
+                font-size: 20px;
+            }
+            .footer {
+                color: white;
+                font-size: 20px;
+            }
+
+        =>  Example (Good – DRY)
+            .text-white {
+                color: white;
+                font-size: 20px;
+            }
+            .header, .footer {
+                @extend .text-white; /* SASS এর জন্য, vanilla CSS এ class reuse */
+            }
+
+        =>  Variable দিয়ে DRY
+            :root {
+                --primary-color: #3498db;
+            }
+            .header {
+                color: var(--primary-color);
+            }
+            .footer {
+                color: var(--primary-color);
+            } 
+
+    2.  Naming Conventions (BEM)
+        =>  BEM = Block Element Modifier
+        =>  Block = Main component
+        =>  Element = Block-এর অংশ
+        =>  Modifier = Variation
+        
+    3.  Additional Best Practices
+        1.  Organize CSS
+        2.  Base / Layout / Components / Utilities
+        3.  Use variables for colors, fonts, spacing
+        4.  Avoid !important
+        5.  Use Flex/Grid instead of floats
+        6.  Comment your code
+        7.  Use responsive units (%, rem, vw, vh)
+
+    4.  Principle Tip
+        1.  DRY             Reuse classes & variables
+        2.  BEM             Block__Element--Modifier
+        3.  Maintainable	Organized folder & comments
+        4.  Responsive	    Relative units & media queries        
+    -->
+</body>
+
+</html>

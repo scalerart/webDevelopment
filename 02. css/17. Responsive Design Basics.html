@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Design Basics</title>
+</head>
+<body>
+    <!-- 
+    =>  Responsive Design Basics
+        =>  Responsive Design মানে
+            1.  একই ওয়েবসাইট, কিন্তু
+            2.  মোবাইল, ট্যাব, ল্যাপটপ, ডেস্কটপে আলাদা ভাবে সুন্দর দেখাবে।
+
+    1.  Media Queries কী?
+        =>  Media Query দিয়ে আমরা বলি— “স্ক্রিন এত হলে এই CSS কাজ করবে”
+            @media (max-width: 768px) {
+                body {
+                    background: lightblue;
+                }
+            }
+        =>  স্ক্রিন 768px বা কম হলেই এই CSS চলবে।
+
+    2.  Media Query Syntax (সহজ করে)
+            @media (condition) {
+                /* CSS here */
+            }
+        =>  Common conditions:
+            1.  max-width → বড় থেকে ছোট
+            2.  min-width → ছোট থেকে বড় (recommended)
+
+    3.  Mobile-First Approach (Best Practice)
+        =>  কেন?
+            1.  মোবাইল user সবচেয়ে বেশি
+            2.  CSS কম ও clean থাকে
+                /* Mobile default */
+                body {
+                    font-size: 14px;
+                }
+
+                /* Tablet */
+                @media (min-width: 768px) {
+                    body {
+                        font-size: 16px;
+                    }
+                }
+
+                /* Desktop */
+                @media (min-width: 1024px) {
+                    body {
+                        font-size: 18px;
+                    }
+                }
+
+    4.  Breakpoints কী?
+        =>  Breakpoint হলো যেখানে layout পরিবর্তন দরকার হয়।
+
+    5.  Common Breakpoints (Standard)
+        =>  Device	  Width
+        1.  Mobile	≤ 576px
+        2.  Tablet	≥ 768px
+        3.  Laptop	≥ 992px
+        4.  Desktop	≥ 1200px
+    -->
+</body>
+</html>

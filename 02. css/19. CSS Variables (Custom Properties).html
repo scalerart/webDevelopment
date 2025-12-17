@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Variables (Custom Properties)</title>
+</head>
+<body>
+    
+    <!-- 
+    =>  CSS Variables (Custom Properties)
+        CSS Variable মানে
+        1.  CSS-এর ভিতরেই variable তৈরি করা
+        2.  এক জায়গায় মান বদলালে পুরো site-এ প্রভাব
+
+    1.  :root selector কী?
+        =>  :root হলো পুরো document-এর সবচেয়ে উপরের parent (html element)।
+            :root {
+                --main-color: #3498db;
+                --font-base: 16px;
+            }
+        =>  এখানে দেওয়া variable সব জায়গা থেকে access করা যায়।
+
+    2.  CSS Variable লেখার নিয়ম
+        =>  --variable-name: value;
+        =>  Variable নাম অবশ্যই -- দিয়ে শুরু হবে।
+
+    3.  var() function
+        =>  Variable ব্যবহার করতে var() function লাগে।
+            body {
+                color: var(--main-color);
+                font-size: var(--font-base);
+            }
+                
+    4.  Dark Mode Example
+            :root {
+                --bg: white;
+                --text: black;
+            }
+            .dark {
+                --bg: #111;
+                --text: #eee;
+            }
+            body {
+                background: var(--bg);
+                color: var(--text);
+            }
+        =>  .dark class দিলেই পুরো theme বদলে যাবে
+
+    5.  Responsive Design-এ CSS Variables
+            :root {
+                --base-font: 14px;
+            }
+            @media (min-width: 768px) {
+                :root {
+                    --base-font: 16px;
+                }
+            }
+            body {
+                font-size: var(--base-font);
+            }
+        =>  Media query + variable = magic        
+    -->
+</body>
+</html>

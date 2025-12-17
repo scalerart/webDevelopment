@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relative Units in Responsive Design</title>
+</head>
+<body>
+    <!-- 
+    =>  Relative Units in Responsive Design
+        =>  Relative units মানে
+            1.  স্ক্রিন, parent বা root অনুযায়ী সাইজ পরিবর্তন হয়
+            2.  Responsive design-এর জন্য একদম পারফেক্ট
+
+        1.  em
+            =>  em parent element-এর font-size এর উপর নির্ভর করে।
+                .parent {
+                    font-size: 20px;
+                }
+                .child {
+                    font-size: 1.5em; /* 30px */
+                }
+            =>  Nested হলে size বেড়ে যেতে পারে (confusing)
+            =>  কখন ব্যবহার করবেন?
+                1.  Padding, margin (text related)
+                2.  Component based design
+
+        2.  rem (সবচেয়ে গুরুত্বপূর্ণ)
+            =>  rem পুরো document-এর root (html) font-size-এর উপর নির্ভর করে।
+                html {
+                    font-size: 16px;
+                }
+                p {
+                    font-size: 1.25rem; /* 20px */
+                }
+            =>  Predictable
+            =>  Responsive-friendly
+            =>  Best choice
+
+        3.  % (percentage)
+            =>  % কীভাবে কাজ করে?
+            =>  Parent element-এর উপর নির্ভর করে।
+                .box {
+                    width: 50%;
+                }
+            =>  Container-এর 50% নেবে।
+            =>  Best use:
+                1.  Width
+                2.  Responsive layout
+                3.  Images
+
+        4.  vw (viewport width)
+            =>  vw কী?
+            =>  Viewport-এর width অনুযায়ী।
+                .hero {
+                    width: 100vw;
+                }
+            =>  1vw = screen width-এর 1%
+            =>  Font Responsive Example
+                h1 {
+                    font-size: 5vw;
+                }
+
+        5.  vh (viewport height)
+            =>  vh কী?
+            =>  Viewport height-এর উপর ভিত্তি করে।
+                .section {
+                    height: 100vh;
+                }
+            =>  Full-screen section বানাতে perfect
+
+        6.  Best Practices (Must Read)
+            1.  Font-size → rem ব্যবহার করুন
+            2.  Layout → %, fr, vw
+            3.  Full height section → 100vh
+            4.  Nested em সাবধানে ব্যবহার করুন            
+    -->
+</body>
+</html>

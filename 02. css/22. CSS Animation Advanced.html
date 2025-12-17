@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Animation Advanced</title>
+</head>
+<body>
+    <!-- 
+    =>  CSS Animation Advanced
+    1.  animation-delay
+        =>  Animation শুরু হওয়ার আগে কত সময় অপেক্ষা করবে।
+        =>  animation-delay: 1s;
+        =>  Negative delay ও দেওয়া যায়:
+        =>  animation-delay: -0.5s;
+        =>  মাঝপথ থেকে শুরু করবে।
+
+    2.  animation-iteration-count
+        =>  Animation কতবার চলবে।
+        =>  animation-iteration-count: 3;
+        =>  animation-iteration-count: infinite;
+        =>  Loader, spinner এর জন্য infinite
+
+    3.  animation-direction
+        =>  Animation কোন দিকে চলবে।
+        =>  animation-direction: normal;
+        =>  Values:
+            1.  normal              default
+            2.  reverse
+            3.  alternate           সামনে → পেছনে
+            4.  alternate-reverse
+        =>   Smooth looping এর জন্য alternate খুব সুন্দর
+
+    4.  animation-fill-mode
+        =>  Animation শুরু বা শেষ হলে element কোন state এ থাকবে।
+        =>  animation-fill-mode: forwards;
+        =>  Values:
+            1.  none        default
+            2.  forwards    শেষ অবস্থায় থাকবে
+            3.  backwards   শুরু আগেই first frame
+            4.  both        forwards + backwards
+
+    5.  Complete Example (Professional)
+            @keyframes slideIn {
+                from {
+                    transform: translateX(-100px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            .card {
+                animation-name: slideIn;
+                animation-duration: 0.8s;
+                animation-delay: 0.3s;
+                animation-iteration-count: 1;
+                animation-direction: normal;
+                animation-fill-mode: forwards;
+            }
+
+    6.  Animation Shorthand (Advanced)
+        =>  animation: slideIn 0.8s ease 0.3s 1 normal forwards;
+        =>  name | duration | timing | delay | count | direction | fill-mode            
+    -->
+</body>
+</html>

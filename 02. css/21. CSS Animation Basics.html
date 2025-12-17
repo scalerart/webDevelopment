@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Animation Basics</title>
+</head>
+<body>
+    <!-- 
+    =>  CSS Animation Basics
+        =>  Animation = নিজে নিজে চলা motion
+        =>  Transition = hover বা state change এ চলে
+
+    1.  @keyframes
+        =>  @keyframes দিয়ে animation-এর ধাপ (steps) বানানো হয়।
+        =>  Basic Structure
+            @keyframes moveBox {
+                from {
+                    transform: translateX(0);
+                }
+                to {
+                    transform: translateX(200px);
+                }
+            }
+
+        =>  Percentage ব্যবহার করে
+            @keyframes colorChange {
+                0%   { background: red; }
+                50%  { background: yellow; }
+                100% { background: green; }
+            }
+        =>  বেশি control পাওয়া যায়
+
+    2.  animation-name
+        =>  Element-এ কোন animation চলবে তা নির্ধারণ করে।
+
+    3.  animation-duration
+        =>  animation-duration: 2s;
+        =>  Animation চলতে কত সময় লাগবে।
+
+    4.  Animation কখন ব্যবহার করবেন?
+        1.  Loading spinner
+        2.  Attention grabbing effect
+        3.  Repeating motion        
+     -->
+</body>
+</html>

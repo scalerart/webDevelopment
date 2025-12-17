@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Advanced</title>
+</head>
+<body>
+    <!-- 
+    =>  CSS Grid Advanced
+        1.  grid item কতটা জায়গা নেবে
+        2.  responsive grid auto magic
+
+    1.  grid-column
+        =>  Grid item কোন column থেকে শুরু করে কোথায় শেষ হবে।
+        =>  grid-column: 1 / 3;
+        =>  মানে: column line 1 থেকে 3 পর্যন্ত।
+
+    2.  grid-row
+        =>  Row এর জন্য একই নিয়ম।
+        =>  grid-row: 1 / 4;
+
+    3.  auto-fit vs auto-fill
+        =>  এই দুইটা responsive grid-এর game changer
+        1.  auto-fill
+            =>  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            =>  যতগুলো column বসতে পারে বসাবে
+            =>  খালি জায়গা থাকলেও column রাখবে
+        2.  auto-fit
+            =>  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            =>  খালি column collapse করে
+            =>  item গুলো জায়গা ভাগ করে নেয়
+
+    4.  Responsive Card Grid (Best Example)
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        =>  Mobile → 1 column
+        =>  Tablet → 2 columns
+        =>  Desktop → auto-fit columns            
+
+
+    -->
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transition & Transform</title>
+</head>
+<body>
+    <!-- 
+    =>  Transition & Transform
+        =>  Transition = পরিবর্তনকে ধীরে/স্মুথ করা
+        =>  Transform = element-এর আকার, অবস্থান বা কোণ বদলানো
+
+    1.  CSS Transition
+        =>  Transition ব্যবহার হয় যখন
+        =>  hover / focus / state change এ smooth effect চান
+        1.  transition-duration
+            =>  পরিবর্তন হতে কত সময় লাগবে।
+        2.  transition-timing-function
+            =>  পরিবর্তনের গতি কেমন হবে।
+            =>  Common values:
+                1.  linear
+                2.  ease        default
+                3.  ease-in
+                4.  ease-out
+                5.  ease-in-out
+        3.  Shorthand (সবচেয়ে বেশি ব্যবহৃত)
+            =>  transition: all 0.4s ease;
+        4.  Transition কাজ করে কখন?
+            1.  Hover
+            2.  Focus
+            3.  Class change
+            4.  JS interaction
+            5.  Page load এ কাজ করে না
+            
+    2.  CSS Transform
+        =>  Transform দিয়ে element-এর shape, size, position বদলানো যায়।
+        1.  scale() – বড়/ছোট করা
+            =>  transform: scale(1.2);
+        2.  rotate() – ঘোরানো
+            =>  transform: rotate(45deg);
+            =>  deg → degree
+            =>  negative value = উল্টো দিকে
+        3.  translate() – সরানো
+            =>  transform: translate(20px, 10px);
+            =>  Position না বদলিয়ে move করে
+        4.  skew() – বাঁকানো
+            =>  transform: skew(10deg, 5deg);
+        5.  Multiple Transform একসাথে
+            =>  transform: scale(1.1) rotate(10deg) translateY(-5px);
+            =>  Order matter করে
+                    
+    -->
+</body>
+</html>
