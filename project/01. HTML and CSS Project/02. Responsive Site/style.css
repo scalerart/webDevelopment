@@ -1,0 +1,828 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    border: none;
+    outline: none;
+    font-family: "Poppins", sans-serif;
+}
+
+:root {
+    --bg-color: #1f242d;
+    --second-bg-color: #323946;
+    --main-color: #7cf03d;
+    --white-color: #fff;
+    --disabled-color: #fff3;
+}
+
+/* \f00d */
+
+html {
+    font-size: 62.5%;
+    /* 1rem = 10px */
+}
+
+/* Navbar CSS Here */
+body {
+    scroll-behavior: smooth;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: var(--bg-color);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 3%;
+}
+
+.logo {
+    display: block;
+    padding: 1rem 0;
+    color: var(--white-color);
+    font-size: 3.5rem;
+    font-weight: 700;
+}
+
+.nav_link a {
+    font-size: 2.4rem;
+    color: var(--white-color);
+    font-weight: 500;
+    margin-left: 2rem;
+    transition: .5s;
+}
+
+.nav_link a:hover,
+.nav_link .active {
+    color: var(--main-color);
+}
+
+#menu_icon {
+    display: none;
+}
+
+.menu_btn {
+    font-size: 2.4rem;
+    color: var(--white-color);
+    display: none;
+}
+
+@media only screen and (max-width:940px) {
+    .menu_btn {
+        display: block;
+    }
+
+    .nav_link {
+        position: fixed;
+        top: 7.3rem;
+        left: -100%;
+        text-align: center;
+        background-color: var(--second-bg-color);
+        width: 100%;
+        height: 100vh;
+        transition: all .5s ease;
+    }
+
+    #menu_icon:checked~.nav_link {
+        left: 0%;
+    }
+
+    .nav_link a {
+        display: block;
+        padding: 2.5rem;
+    }
+}
+
+/* Hero Section CSS Here */
+.hero_section {
+    background-image: url(images/banner.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    width: 100%;
+    height: 88.5vh;
+}
+
+
+/* Services Section CSS Here */
+#services {
+    background-color: var(--bg-color);
+}
+
+.service_container {
+    width: 100%;
+    padding: 5rem 3%;
+}
+
+.service_container h1 {
+    text-align: center;
+    color: var(--white-color);
+    font-size: 4.5rem;
+}
+
+.service_container h1 span {
+    color: var(--main-color);
+}
+
+.services {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin: 2.5rem 0;
+}
+
+.service_box {
+    background-color: var(--second-bg-color);
+    padding: 1.5rem 2rem;
+    border-radius: 1rem;
+    border: .2rem solid var(--second-bg-color);
+    transition: .5s;
+}
+
+.service_box:hover {
+    border: .2rem solid var(--main-color);
+    transform: scale(1.02);
+}
+
+.service_box h3 {
+    font-size: 3.6rem;
+    color: var(--white-color);
+    padding: 1rem 0;
+    transition: .5s;
+}
+
+.service_box:hover h3 {
+    color: var(--main-color);
+}
+
+
+.service_box p {
+    font-size: 1.6rem;
+    color: var(--white-color);
+}
+
+.service_icon {
+    display: flex;
+    justify-content: space-between;
+}
+
+.service_icon i:not(a i) {
+    font-size: 3.6rem;
+    color: var(--white-color);
+    transition: .5s;
+}
+
+.service_box:hover .service_icon i:not(a i) {
+    color: var(--main-color);
+}
+
+.service_icon a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--bg-color);
+    font-size: 1.6rem;
+    width: 5rem;
+    height: 5rem;
+    background-color: var(--white-color);
+    border-radius: 50%;
+    transition: .5s;
+}
+
+.service_box:hover .service_icon a {
+    background-color: var(--main-color);
+}
+
+/* Services Section Responsive CSS Here */
+@media only screen and (max-width: 1050px) {
+    .services {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+        margin: 2.5rem 0;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .services {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 2.5rem;
+        margin: 2.5rem 0;
+    }
+}
+
+/* Resume section CSS Here */
+#resume {
+    background-color: var(--bg-color);
+}
+
+.resume_container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5rem;
+    padding: 5rem 3%;
+}
+
+.resume_box {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.resume_box h2 {
+    font-size: 4.5rem;
+    color: var(--white-color);
+}
+
+.resume_box p {
+    font-size: 1.6rem;
+    color: var(--white-color);
+    padding-bottom: 1rem;
+    text-align: justify;
+}
+
+.read-more-btn {
+    margin-bottom: 0;
+}
+
+.read-more {
+    width: 100%;
+    height: 34rem;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.experience,
+.education,
+.skills {
+    width: 100%;
+    height: 34rem;
+    overflow-y: auto;
+}
+
+.read-more::-webkit-scrollbar,
+.experience::-webkit-scrollbar,
+.education::-webkit-scrollbar,
+.skills::-webkit-scrollbar {
+    width: .5rem;
+}
+
+.read-more::-webkit-scrollbar-thumb,
+.experience::-webkit-scrollbar-thumb,
+.education::-webkit-scrollbar-thumb,
+.skills::-webkit-scrollbar-thumb {
+    background-color: var(--main-color);
+    border-radius: 3rem;
+}
+
+.btn-sci {
+    display: inline-flex;
+    justify-content: center;
+    gap: 2rem;
+
+}
+
+.btn-sci a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background-color: var(--main-color);
+    color: var(--bg-color);
+    border: .2rem solid var(--main-color);
+    box-shadow: 0 0 1.5rem var(--main-color);
+    transition: .5s;
+}
+
+.btn-sci a:hover {
+    box-shadow: none;
+    color: var(--main-color);
+    border: .2rem solid var(--main-color);
+    background-color: transparent;
+}
+
+.resume-btn,
+.read-more-btn {
+    font-size: 2.4rem;
+    font-weight: 500;
+    text-align: center;
+    display: inline-block;
+    color: var(--white-color);
+    background-color: var(--second-bg-color);
+    padding: 1rem 0;
+    border: 2px solid var(--second-bg-color);
+    border-radius: 1rem;
+    width: 100%;
+    margin: 1rem 0;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.experience-btn {
+    margin-top: 2.4rem;
+}
+
+.resume-btn:hover,
+.read-more-btn:hover {
+    color: var(--main-color);
+    border: 2px solid var(--main-color);
+    transform: scale(1.02);
+}
+
+
+.experience,
+.education,
+.skills,
+.about,
+.read-more {
+    display: none;
+}
+
+#experience_icon,
+#education_icon,
+#skills_icon,
+#about_icon,
+#read-more_icon {
+    display: none;
+}
+
+#experience_icon:checked~.experience,
+#education_icon:checked~.education,
+#skills_icon:checked~.skills,
+#about_icon:checked~.about,
+#read-more_icon:checked~.read-more {
+    display: block;
+}
+
+
+.resume-detail {
+    margin-top: 2rem;
+}
+
+.resume-detail h2 {
+    font-size: 4.5rem;
+    color: var(--white-color);
+}
+
+.resume-detail h2 span {
+    color: var(--main-color);
+}
+
+.resume-detail p {
+    font-size: 1.6rem;
+    color: var(--white-color);
+    padding-bottom: 2rem;
+}
+
+.resume-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.resume-item {
+    padding: 1.5rem;
+    background-color: var(--second-bg-color);
+    border-radius: 1rem;
+}
+
+
+.resume-item .year {
+    color: var(--main-color);
+}
+
+.resume-item h3 {
+    font-size: 1.5rem;
+    color: var(--white-color);
+}
+
+.resume-item .company {
+    font-size: 2rem;
+    font-weight: 500;
+    padding-top: 1rem;
+    padding-left: 2rem;
+    position: relative;
+}
+
+.resume-item .company::before {
+    content: "o";
+    position: absolute;
+    color: var(--main-color);
+    left: 0;
+    top: 0.8rem;
+}
+
+.resume-detail.skills .resume-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(10rem, 1fr));
+    gap: 1.5rem;
+}
+
+.resume-detail.skills .resume-item {
+    position: relative;
+    align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.resume-detail.skills .resume-item i {
+    font-size: 8.5rem;
+    color: var(--white-color);
+    padding: 4rem 0;
+    transition: .2s;
+    transform: .5;
+}
+
+.resume-detail.skills .resume-item:hover i {
+    color: var(--main-color);
+}
+
+.resume-detail.skills .resume-item span {
+    position: absolute;
+    top: -20%;
+    background: var(--white-color);
+    color: var(--bg-color);
+    font-size: 1.6rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.6rem;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: 0.3s;
+}
+
+.resume-detail.skills .resume-item:hover span {
+    top: -25%;
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.about .resume-list .resume-item {
+    background: none;
+    padding: 0;
+}
+
+.about .resume-list .resume-item p {
+    color: var(--main-color);
+    font-size: 1.6rem;
+}
+
+.about .resume-list .resume-item p span {
+    color: var(--white-color);
+    padding-left: 1rem;
+}
+
+/* Resume Responsive CSS Here */
+@media only screen and (max-width: 940px) {
+    .resume_box {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+
+    .resume-detail.skills .resume-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(10rem, 1fr));
+        gap: 1.5rem;
+    }
+
+    .resume_container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+
+    .experience .resume-list,
+    .education .resume-list {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        margin: 0 .5rem;
+    }
+
+    .resume-box,
+    .resume-detail {
+        margin: 0 .5rem;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .about .resume-list {
+        display: flex;
+        flex-direction: column;
+        margin: 0 1rem;
+    }
+}
+
+/* Portfolio Section CSS Here */
+#portfolio {
+    background-color: var(--bg-color);
+    width: 100%;
+    padding: 5rem 3%;
+}
+
+.portfolio-tittle {
+    font-size: 4.5rem;
+    text-align: center;
+    color: var(--white-color);
+    margin-bottom: 2rem;
+}
+
+.portfolio-tittle span {
+    color: var(--main-color);
+}
+
+.portfolio-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 0 3rem;
+}
+
+.portfolio-list h1 {
+    font-size: 10rem;
+    line-height: 9rem;
+    color: transparent;
+    -webkit-text-stroke: .1rem var(--white-color);
+}
+
+.portfolio-list h2 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    padding: 2rem 0;
+    color: var(--white-color);
+}
+
+.portfolio-list p {
+    color: var(--white-color);
+    font-size: 1.6rem;
+    padding-bottom: 2rem;
+}
+
+.portfolio-list h4 {
+    font-size: 1.6rem;
+    font-weight: 300;
+    padding-bottom: 2rem;
+    color: var(--main-color);
+}
+
+.portfolio-list h4 {
+    width: 100%;
+    border-bottom: .1rem solid var(--white-color);
+}
+
+.portfolio-btn-item {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.portfolio-btn i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: var(--white-color);
+    width: 6rem;
+    height: 6rem;
+    font-size: 2.4rem;
+    background-color: var(--second-bg-color);
+    transition: .5s;
+}
+
+.portfolio-btn i:hover {
+    color: var(--main-color);
+}
+
+.portfolio-btn-item {
+    position: relative;
+}
+
+.portfolio-btn span {
+    position: absolute;
+    top: -3rem;
+    left: -1rem;
+    background: var(--white-color);
+    color: var(--bg-color);
+    font-size: 1.6rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.6rem;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: 0.3s;
+}
+
+.portfolio-btn:hover span {
+    top: -4.5rem;
+    left: -1rem;
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.portfolio-image {
+    width: 100%;
+    border-radius: 1.5rem;
+    overflow: hidden;
+}
+
+.portfolio-image img {
+    width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+    .portfolio-box {
+        display: flex;
+        flex-direction: column-reverse;
+        padding: 0 1.5rem;
+    }
+}
+
+
+
+
+
+
+
+
+/* Contact Section CSS Here */
+#contact {
+    background-color: var(--bg-color);
+    padding: 5rem 3%;
+    width: 100%;
+}
+
+.contact-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5rem;
+    margin: 0 3rem;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.contact-box h2 {
+    font-size: 4rem;
+    color: var(--white-color);
+    text-align: left;
+}
+
+.contact-form h2 {
+    text-align: center;
+}
+
+.contact-form h2 span {
+    color: var(--main-color);
+}
+
+.contact-box p {
+    color: var(--white-color);
+    font-size: 1.6rem;
+    margin: .5rem 0;
+}
+
+.contact-list {
+    display: flex;
+    margin-top: 1.5rem;
+    align-items: center;
+}
+
+.contact-list a {
+    background-color: var(--second-bg-color);
+    padding: 1rem;
+    font-size: 2rem;
+    font-weight: 700;
+    border-radius: .8rem;
+    color: var(--main-color);
+    margin-right: 1rem;
+}
+
+.contact-list p {
+    color: var(--main-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-list p span {
+    color: var(--white-color);
+}
+
+.contact-form {
+    background-color: var(--second-bg-color);
+    border-radius: 1rem;
+    padding: 3rem;
+}
+
+.input-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.input-box input {
+    width: 100%;
+    height: 5rem;
+    background-color: var(--bg-color);
+    border-radius: .5rem;
+    color: var(--white-color);
+    border: .1rem solid var(--bg-color);
+}
+
+.input-box input:focus {
+    border: .1rem solid var(--main-color);
+}
+
+textarea {
+    display: grid;
+    gap: 2rem;
+    width: 100%;
+    height: 33vh;
+    margin-top: 1.5rem;
+    background-color: var(--bg-color);
+    border-radius: .5rem;
+    color: var(--white-color);
+    border: .1rem solid var(--bg-color);
+    resize: none;
+}
+
+textarea:focus {
+    border: .1rem solid var(--main-color);
+}
+
+.contact-item input,
+.contact-item textarea {
+    padding: 1rem;
+    font-size: 1.6rem;
+}
+
+.contact-btn {
+    cursor: pointer;
+    margin-top: 2rem;
+    background-color: var(--main-color);
+    padding: .5rem 1.2rem;
+    font-size: 1.6rem;
+    border-radius: 2.5rem;
+    border: .2rem solid var(--main-color);
+    box-shadow: 0 0 .8rem var(--main-color);
+    transition: .5s;
+}
+
+.contact-btn:hover {
+    border: .2rem solid var(--main-color);
+    background: none;
+    color: var(--main-color);
+    box-shadow: none;
+}
+
+/* Contact Section Responsive CSS Here */
+@media only screen and (max-width: 940px) {
+    .contact-container {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: rem;
+        margin: 0 1.5rem;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .contact-container {
+        margin: 0 1rem;
+    }
+
+    .contact-form {
+        padding: 2rem;
+    }
+
+    .input-box {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 2rem;
+        margin-top: 1.5rem;
+    }
+
+    html {
+        font-size: 60%;
+    }
+}

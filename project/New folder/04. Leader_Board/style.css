@@ -6,6 +6,7 @@
     --font-family: "Poppins", sans-serif;
 }
 
+
 body {
     box-sizing: border-box;
     font-family: var(--font-family);
