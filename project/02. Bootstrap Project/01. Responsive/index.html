@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Responsive Website</title>
+    <!-- CSS CDN Link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- CSS Icon Link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-danger text-white">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white fs-3 fw-bold" href="#">BT <span>Shop</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                    <ul class="navbar-nav ms-auto mb-2 pe-3 mb-lg-0 fs-5">
+                        <li class="nav-item"><a class="nav-link active text-white" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#">Product</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#">Contact Us</a></li>
+                    </ul>
+
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                        <button class="btn btn-danger" type="submit">Search</button>
+                    </form>
+
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section Start -->
+        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="3000">
+                    <img src="images/Slide/slider-01.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item" data-bs-interval="3000">
+                    <img src="images/Slide/slider-02.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item" data-bs-interval="3000">
+                    <img src="images/Slide/slider-03.jpg" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <!-- Hero Section End -->
+    </header>
+
+    <!-- Main Section Start -->
+    <main>
+        <!-- Product Section Start -->
+        <section class="my-lg-5">
+            <p class="h1 fw-bold text-center pb-3">All Product</p>
+
+            <div class="row row-cols-1 m-auto justify-content-center align-items-center">
+
+                <div class="col-lg-5 col-sm-12 justify-content-center">
+                    <img class="img-fluid mb-4" src="images/Others/karina-apa.jpg" alt="">
+                </div>
+
+                <div class="col-lg-7 col-sm-12 justify-content-center">
+                    <div class="row row-cols-md-4 row-cols-sm-3 row-cols-1 w-100 m-auto gap-4 d-flex justify-content-center">
+
+                        <div class="shadow shadow-md rounded-3 p-2">
+                            <img class="img-fluid" src="images/Product/1.shoe.jpg" alt="">
+                            <p class="text-center text-black-50 fs-5">Product Sneakers</p>
+
+                            <div class="d-flex flex-column-reverse justify-content-between align-items-center gap-1">
+                                <span class="text-primary fs-5 fw-semibold">
+                                    $154.00
+                                </span>
+                                <span class="text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <i class="bi bi-star"></i>
+                                </span>
+                            </div>
+                            <div class="btn btn-primary mt-2 w-100">Add to Cart</div>
+                        </div>
+
+                        <div class="shadow shadow-md rounded-3 p-2">
+                            <img class="img-fluid" src="images/Product/2.jeans.jpg" alt="">
+                            <p class="text-center text-black-50 fs-5">Jeans Pent</p>
+
+                            <div class="d-flex flex-column-reverse justify-content-between align-items-center gap-1">
+                                <span class="text-primary fs-5 fw-semibold">
+                                    $154.00
+                                </span>
+                                <span class="text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <i class="bi bi-star"></i>
+                                </span>
+                            </div>
+                            <div class="btn btn-primary mt-2 w-100">Add to Cart</div>
+                        </div>
+
+                        <div class="shadow shadow-md rounded-3 p-2">
+                            <img class="img-fluid" src="images/Product/3.watch.jpg" alt="">
+                            <p class="text-center text-black-50 fs-5">Man's Watch</p>
+
+                            <div class="d-flex flex-column-reverse justify-content-between align-items-center gap-1">
+                                <span class="text-primary fs-5 fw-semibold">
+                                    $154.00
+                                </span>
+                                <span class="text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <i class="bi bi-star"></i>
+                                </span>
+                            </div>
+                            <div class="btn btn-primary mt-2 w-100">Add to Cart</div>
+                        </div>
+
+                        <div class="shadow shadow-md rounded-3 p-2">
+                            <img class="img-fluid" src="images/Product/4.t-shirt.jpg" alt="">
+                            <p class="text-center text-black-50 fs-5">T-shirts of Mans</p>
+
+                            <div class="d-flex flex-column-reverse justify-content-between align-items-center gap-1">
+                                <span class="text-primary fs-5 fw-semibold">
+                                    $154.00
+                                </span>
+                                <span class="text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <i class="bi bi-star"></i>
+                                </span>
+                            </div>
+                            <div class="btn btn-primary mt-2 w-100">Add to Cart</div>
+                        </div>
+
+                        <div class="shadow shadow-md rounded-3 p-2">
+                            <img class="img-fluid" src="images/Product/5.half-pent.png" alt="">
+                            <p class="text-center text-black-50 fs-5">Half Pent</p>
+
+                            <div class="d-flex flex-column-reverse justify-content-between align-items-center gap-1">
+                                <span class="text-primary fs-5 fw-semibold">
+                                    $154.00
+                                </span>
+                                <span class="text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <i class="bi bi-star"></i>
+                                </span>
+                            </div>
+                            <div class="btn btn-primary mt-2 w-100">Add to Cart</div>
+                        </div>
+
+                        <div class="shadow shadow-md rounded-3 p-2">
+                            <img class="img-fluid" src="images/Product/6.cap.jpg" alt="">
+                            <p class="text-center text-black-50 fs-5">Cap of Man's</p>
+
+                            <div class="d-flex flex-column-reverse justify-content-between align-items-center gap-1">
+                                <span class="text-primary fs-5 fw-semibold">
+                                    $154.00
+                                </span>
+                                <span class="text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <i class="bi bi-star"></i>
+                                </span>
+                            </div>
+                            <div class="btn btn-primary mt-2 w-100">Add to Cart</div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!-- Product Section End -->
+
+
+    </main>
+    <!-- Main Section End -->
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
