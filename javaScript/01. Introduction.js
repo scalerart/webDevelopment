@@ -11,6 +11,7 @@
 =>  JavaScript কী?
     JavaScript (JS) হলো একটি Programming Language যা ওয়েবসাইটকে জীবন্ত (Dynamic) করে তোলে।
 
+=>  কেন দরকার?
     =>  HTML = কাঠামো
     =>  CSS = সাজসজ্জা
     =>  JavaScript = কাজ করার ক্ষমতা (Brain)
