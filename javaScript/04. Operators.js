@@ -56,8 +56,7 @@ JavaScript Operators Master Checklist
     1.  () → প্রথমে হবে
     2.  / % → তারপর
     3.  + - → তারপর
-
-Assignment = → সবশেষে    
+    4.  Assignment = → সবশেষে
 */
 
 // Arithmetic Operators
@@ -68,6 +67,8 @@ console.log('Subtraction:', x - y);
 console.log('Multiplication:', x * y);
 console.log('Division:', x / y);
 console.log('Modulus:', x % y);
+console.log('Exponentiation:', x ** 2);
+
 
 //Assignment Operators
 let a = 10;
@@ -76,6 +77,7 @@ console.log('Subtract & Assign:', a -= 5);
 console.log('Multiply & Assign:', a *= 5);
 console.log('Divide & Assign:', a /= 5);
 console.log('Modulus & Assign:', a %= 10);
+console.log('Exponentiation & Assign:', a **= 2);
 
 //Comparison Operators
 const i = "5"
@@ -101,5 +103,3 @@ let q = 10;
 console.log('Increment:', ++q);
 console.log('Decrement:', --q);
 console.log(q);
-
-
