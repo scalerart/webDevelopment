@@ -179,5 +179,3 @@ console.log(sum(...numbers));
 console.log(...numbers);
 console.log(Math.min(...numbers));
 console.log(Math.max(...numbers));
-
-
