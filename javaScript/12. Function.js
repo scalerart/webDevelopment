@@ -119,3 +119,19 @@ function myFunction(name, country) {
 };
 myFunction('ABDUL KADIR', 'BANGLADESH');
 myFunction('ABDUR RAHMAN', 'SAUDI ARABIA');
+
+
+//  Arguments
+function argument() {
+    if (arguments.length === 0) {
+        console.log("Arguments Not Found");
+    } else {
+        let sum = 0;
+        for (let i = 0; i < arguments.length; i++) {
+            sum += arguments[i];
+        }
+        return sum;
+    }
+}
+const argumentSum = argument(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+console.log(argumentSum);

@@ -99,3 +99,30 @@ for (let i = 0; i < matrix.length; i++) {
 }
 console.log(add);
 
+
+//  Problem 11: Factorial
+function fact(n) {
+    let factorial = 1;
+    for (let i = 1; i <= n; i++) {
+        factorial *= i;
+    }
+    return factorial;
+}
+const result = fact(10);
+console.log(result);
+
+//  Problem 12: Remove Duplicate
+const friendList = ["Rohim", "Rakib", "Rony", "Ratul", "Sujon", "Kamrul", "Roton", "Rakib", "Ratul", "Kamrul", "Rohim"]
+
+function remobeDuplicate(friendName) {
+    newList = [];
+    for (let i = 0; i < friendName.length; i++) {
+        const name = friendName[i];
+        if (newList.includes(name) === false) {
+            newList.push(name);
+        }
+    }
+    return newList
+}
+const newFriendList = remobeDuplicate(friendList);
+console.log(newFriendList);

@@ -1,157 +1,203 @@
 /*
 JavaScript Array Master Checklist
-    ✔ Array basic
     ✔ push / pop
     ✔ shift / unshift
-    ✔ map
-    ✔ filter
-    ✔ reduce
-    ✔ chaining
+    ✔ map / filter / reduce
+    ✔ forEach
+    ✔ slice / splice
+    ✔ sort / reverse
+    ✔ find / includes
+    ✔ some / every    
 
-1.  Array কী? (Array Basic)
+=>  Array কী? (Array Basic)
     =>  Array হলো এমন একটি ডেটা স্ট্রাকচার যেখানে একসাথে অনেকগুলো ডেটা রাখা যায়।
-    =>  let fruits = ["Apple", "Banana", "Mango"];
+        let fruits = ["apple", "banana", "mango"];
 
     =>  কেন Array দরকার?
         1.  আলাদা আলাদা variable না বানিয়ে
             এক জায়গায় অনেক ডেটা রাখা
         2.  Loop, function দিয়ে সহজে কাজ করা যায়
 
-2.  Array Index
-    =>  Array-এর প্রতিটি element-এর একটা index number থাকে
-    =>  Index সবসময় 0 থেকে শুরু
-        let fruits = ["Apple", "Banana", "Mango"];
-        fruits[0]; Apple
-        fruits[1]; Banana
-        fruits[2]; Mango
-    =>  Update element
-        fruits[1] = "Orange";
+    =>  let fruits = ["apple", "banana", "mango"];
 
-3.  Array Length
-    fruits.length; // total elements
+=>  BASIC ARRAY METHODS    
+    1.  push() – শেষে যোগ
+        fruits.push("orange");
 
-4.  push() — শেষে যোগ করা
-    =>  Array-এর শেষে element যোগ করে।
-        let numbers = [1, 2, 3];
-        numbers.push(4);
-        console.log(numbers); // [1,2,3,4]
-    =>  Original array change হয়
+    2.  pop() – শেষ থেকে বাদ
+        fruits.pop();
 
-5.  pop() — শেষ থেকে remove
-    =>  Array-এর শেষের element remove করে।
-        let numbers = [1, 2, 3];
-        numbers.pop();
-        console.log(numbers); // [1,2,3]
-    =>  Removed element return করে
+    3.  unshift() – শুরুতে যোগ
+        fruits.unshift("grape");
 
-6.  unshift() — শুরুতে যোগ করা
-    =>  Array-এর শুরুতে element যোগ করে।
-        let numbers = [1, 2, 3];
-        numbers.unshift(0);
-        console.log(numbers); // [0,1,2,3]
+    4.  shift() – শুরু থেকে বাদ
+            fruits.shift();
+        =>  shift / unshift slow (index change হয়)
+    
+    5.  length
+        fruits.length;
 
-7.  shift() — শুরু থেকে remove
-    =>  Array-এর শুরুর element remove করে।
-        let numbers = [1, 2, 3];
-        numbers.shift();
-        console.log(numbers); // [1,2,3]
+=>  SEARCH & CHECK METHODS
+    1.  includes()
+        fruits.includes("apple"); // true
 
-=>  push/pop vs shift/unshift
-    1.  push/pop → fast
-    2.  shift/unshift → একটু slow (index shift হয়)
+    2.  indexOf()
+        fruits.indexOf("banana"); // 1
 
-8.  map() — পরিবর্তন করে নতুন Array বানায়
-    =>  map ব্যবহার হয় যখন প্রতিটা element নিয়ে কিছু পরিবর্তন করতে চাই
-        let nums = [1, 2, 3, 4];
-        let squared = nums.map(n => n * n);
-        console.log(squared); // [1,4,9,16]
-    =>  Original array change হয় না
-    =>  Same length-এর নতুন array দেয়
+    3.  find()
+        let numbers = [5, 10, 15];
+        numbers.find(n => n > 8); // 10
 
-9.  map() with index
-        let nums = [1, 2, 3, 4];
-        nums.map((value, index) => {
-        return index + ": " + value;
-        });
+    4.  findIndex()
+        numbers.findIndex(n => n > 8); // 1
 
-10. filter() — বাছাই করে নতুন Array বানায়
-    =>  filter ব্যবহার হয় যখন
-    =>  কিছু element রাখবো, কিছু বাদ দেবো
-        let ages = [12, 18, 25, 15, 30];
-        let adults = ages.filter(age => age >= 18);
-        console.log(adults); // [18,25,30]
-    =>  Condition true হলে রাখে
-    =>  Length ছোট বা সমান হতে পারে
-    =>  Example
-        let users = [
-            { name: "A", active: true },
-            { name: "B", active: false }
-        ];
-        let activeUsers = users.filter(u => u.active);
+=>  ITERATION METHODS  
+    1.  forEach()
+        =>  শুধু loop, return করে না
+            fruits.forEach(fruit => {
+                console.log(fruit);
+            });
 
-11. reduce() — সব মিলিয়ে একটায় নামায়
-    =>  reduce সবচেয়ে powerful।
-        let nums = [1,2,3,4];
-        let sum = nums.reduce((acc, cur) => {
-            return acc + cur;
-        }, 0);
-        console.log(sum); // 10
+    2.  map()
+        =>  নতুন array বানায়
+            let prices = [100, 200, 300];
+            let newPrices = prices.map(p => p + 50);
+        =>  React / UI-তে সবচেয়ে বেশি লাগে
 
-    =>  reduce parameters
-        1.  acc → accumulator
-        2.  cur → current value
-        3.  0 → initial value
+    3.  filter()
+        =>  condition অনুযায়ী filter
+            let nums = [10, 15, 20];
+            let result = nums.filter(n => n > 15);
 
-    =>  reduce() দিয়ে আরও কাজ
-        1.  Max value
-            let max = nums.reduce((a, b) => a > b ? a : b);
+    4.  reduce()
+        =>  সব value → একটায় convert
+            let nums = [1,2,3,4];
+            let sum = nums.reduce((acc, cur) => {
+                return acc + cur;
+                }, 0);
+            console.log(sum); // 10
 
-        2.  Average
-            let avg = nums.reduce((a, b) => a + b, 0) / nums.length;
+        =>  reduce parameters
+            1.  acc → accumulator
+            2.  cur → current value
+            3.  0 → initial value
 
-        3.  Count
-            let count = nums.reduce(acc => acc + 1, 0);
+=>  MODIFY ARRAY
+    1.  slice()
+        fruits.slice(1, 3);
+        =>  original change করে না
 
-=>  map vs filter vs reduce (Most Important)
-    1.  map     প্রতিটা element পরিবর্তন
-    2.  filter  কিছু element বাছাই
-    3.  reduce  সব মিলিয়ে একটায়
+    2.  splice()
+        fruits.splice(1, 1, "kiwi");
+        =>  original array change করে add/remove দুটোই
 
-=>  Practice Tasks (Must Do)
-    1.  map দিয়ে salary +10% করো
-    2.  filter দিয়ে failed student বাদ দাও
-    3.  reduce দিয়ে total bill হিসাব করো
-    4.  map + filter + reduce chain করে দেখো
-        let nums = [1,2,3,4];
-        .filter(n => n > 2)
-        .map(n => n * 2)
-        .reduce((a, b) => a + b, 0);
+    3.  concat()
+        let a = [1, 2];
+        let b = [3, 4];
+        a.concat(b);
+
+    4.  join()
+        fruits.join(", ");
+
+=>  SORT & REVERSE
+    1.  sort()
+        let nums = [10, 2, 5];
+        nums.sort((a, b) => a - b);
+        =>  string হিসাবে sort করে default-এ
+
+    2.  reverse()
+        fruits.reverse();
+
+=>  CHECK CONDITION
+    1.  some()
+        nums.some(n => n > 10);
+
+    2.  every()
+        nums.every(n => n > 5);
+
+=>  ADVANCED / INTERVIEW LEVEL
+    1.  flat()
+        [1, [2, [3]]].flat(2);
+
+    2.  flatMap()
+        ["hi", "bye"].flatMap(w => w.split(""));
+
+=>  Common Mistakes
+    1.  map দিয়ে filter করা
+    2.  reduce ভয় পাওয়া
+    3.  sort comparator না দেওয়া
+    4.  splice / slice confuse করা
 */
-const numbers = [1, 2, 3, 4, 5];
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-//  Array Index
-console.log(numbers.indexOf(5));
+//  forEach
+const result = numbers.forEach((number) => {
+    if (numbers.length === 9) {
+        console.log(number, "You are win");
+    } else {
+        console.log(number, "You are not win");
+    }
+})
 
-//  Array Length
-console.log(numbers.length);
+//  map()
+const total = numbers.map((number) => {
+    return number + 1;
+})
+console.log(total);
 
-//  Array push()
-numbers.push(6);
-console.log(numbers);
 
-//  Array pop()
-numbers.pop();
-console.log(numbers);
+const heroes = [
+    {
+        id: 1, name: "Shakib Khan", age: 44, profession: "Film Actor", country: "Bangladesh", married: true, movies: 250,
+        popularMovies: ["Priyotoma", "Rajkumar", "Password"],
+        awards: { national: 4, international: 2 },
+        active: true
+    },
+    {
+        id: 2, name: "Dev", age: 41, profession: "Actor & Politician", country: "India", married: false, movies: 120,
+        popularMovies: ["Challenge", "Paglu", "Khoka 420"],
+        awards: { national: 1, international: 1 },
+        active: true
+    },
+    {
+        id: 3, name: "Salman Khan", age: 59, profession: "Film Actor", country: "India", married: false, movies: 140,
+        popularMovies: ["Dabangg", "Sultan", "Bajrangi Bhaijaan"],
+        awards: { national: 0, international: 5 },
+        active: true
+    },
+    {
+        id: 4, name: "Shah Rukh Khan", age: 60, profession: "Film Actor", country: "India", married: true, movies: 100,
+        popularMovies: ["DDLJ", "Pathaan", "Jawan"],
+        awards: { national: 8, international: 12 },
+        active: true
+    },
+    {
+        id: 5, name: "Hrithik Roshan", age: 51, profession: "Film Actor", country: "India", married: false, movies: 60,
+        popularMovies: ["Krrish", "War", "Dhoom 2"],
+        awards: { national: 6, international: 4 },
+        active: true
+    }
+];
 
-//  Array unshift()
-numbers.unshift(0);
-console.log(numbers);
+//  filter()
+const singleHero = heroes.filter((hero) => {
+    return hero.age > 50
+})
+console.log(singleHero);
 
-//  Array shift()
-numbers.shift();
-console.log(numbers);
+//  reduce()
+const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const reduce = nums.reduce((accumulator, currentValue) => {
+    console.log(`accumulator: ${accumulator} currentValue: ${currentValue}`);
+    return accumulator + currentValue;
+}, 0);
+console.log(reduce);
 
-//  Array sort()
-const number = [5, 8, 6, 1, 9, 3, 2, 4, 7];
-number.sort();
-console.log(number);
+//  slice() 
+const slice = nums.slice(0, 5);
+console.log(slice);
+
+//  splice()
+const splice = nums.splice(0, 9, 11, 12, 13, 14, 15);
+console.log(splice);
+console.log(nums);

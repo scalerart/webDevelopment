@@ -135,7 +135,7 @@
     5.  Array of object থেকে filter + map করো
 */
 
-//  Destructuring
+//  Array Destructuring
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 const [a, b, c, d, e, f, g, h, i] = numbers;
 console.log(a, b, c, d, e, f, g, h, i);
@@ -148,7 +148,6 @@ const z = [...x, ...y];
 console.log(z);
 
 //  Object Destructuring
-
 const myInfromation = {
     name: "ABDUL KADIR",
     fatherName: "NUR ALAM",
@@ -156,6 +155,5 @@ const myInfromation = {
     age: 25,
     address: "Raipu, Lakshmipur"
 }
-
 const { name, fatherName, motherName, age, address } = myInfromation;
 console.log(name, fatherName, motherName, age, address);
