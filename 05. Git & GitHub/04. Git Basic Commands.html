@@ -1,0 +1,118 @@
+<!-- 
+Git Basic Commands
+    (Working → Staging → Commit)
+
+1.  একটা Project Folder বানাও
+    1.  Desktop / যেকোনো জায়গায়
+        ✔  নতুন একটা folder বানাও
+
+        ✔  Folder নাম দাও:
+            git-practice
+
+    2.  Folder এর ভিতরে ঢুকো
+        ✔  Right click
+        ✔  Open with Git Bash
+
+2.  Git Repository Initialize করা
+    এখন Git Bash এ লিখো:
+        git init
+
+    Output হবে এরকম:
+        Initialized empty Git repository
+
+    ✔  এর মানে: এই folder এখন Git Repository
+    ✔  ভেতরে একটা hidden .git folder তৈরি হয়েছে এইখানেই Git সব history রাখে
+
+3.  Git Status (সবচেয়ে বেশি ব্যবহৃত command)
+    লিখো:
+        git status
+
+    Output:
+        ✔  No commits yet
+        ✔  nothing to commit
+
+    ✔  মানে: এখনো কোনো file নেই
+    ✔  Git সবকিছু observe করছে
+    ✔  git status = Git এর চোখ
+
+4.  একটা File তৈরি করি
+    Folder এর ভিতরে একটা file বানাও:
+        index.html
+
+    ভিতরে লেখো:
+        <h1>Hello Git</h1>
+
+    ✔  Save করো
+
+5.  Git Status আবার দেখো
+    git status
+
+    ✔  Output দেখাবে:
+        Untracked files:
+            index.html
+
+    ✔  মানে: Git ফাইলটা দেখছে কিন্তু এখনো track করছে না
+
+6.  Staging Area তে পাঠানো (git add)
+    একটিমাত্র file add করতে:
+        git add index.html
+
+    ✔  অথবা সব file একসাথে:
+        git add .
+
+    ✔  মানে = সব file
+    
+7.  আবার Status দেখো
+    git status
+
+    Output:
+        Changes to be committed:
+            index.html
+
+    ✔  এখন file আছে: Staging Area তে
+
+8.  Commit করা (Permanent Save)
+    এখন Git কে বলবো: “এই পরিবর্তনটা স্থায়ীভাবে রেখে দাও”
+        git commit -m "Add first HTML file"
+
+    Output:
+        1 file changed
+
+    ✔  অভিনন্দন! এটা তোমার প্রথম Git commit
+
+9.  Commit History দেখো
+    git log
+
+    ✔  তুমি দেখতে পাবে:
+        Commit ID
+        Author
+        Date
+        Message
+
+    ✔  প্রতিটা commit = একটা save point
+
+10. Git Flow বুঝে নাও (খুব গুরুত্বপূর্ণ)
+    Working Directory
+        ↓ git add
+    Staging Area
+        ↓ git commit
+    Repository
+    ✔  তুমি এখন এই flow নিজে নিজে করে ফেলেছো
+
+=>  Lesson Summary
+    1.  git init
+    2.  git status
+    3.  git add
+    4.  git commit
+    5.  git log
+    6.  Working → Staging → Repo
+
+=>  Practice Task
+    1.  index.html এ আরেকটা line যোগ করো
+    2.  আবার:
+        git status
+        git add .
+        git commit -m "Update HTML content"
+
+    ✔  নিজে নিজে করো (এইটাই শেখা)
+-->

@@ -13,8 +13,63 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="me-auto">
-    <h1 class="text-primary">Welecome to Pinoneer Bank</h1>
+<body>
+    <main>
+        <section id="loginArea">
+            <div>
+                <h1 class="text-center fs-1 fw-bold text-primary mt-5 mb-4">Welecome to Pinoneer Bank</h1>
+                <div class="p-5 mx-auto w-50 d-grid gap-4 shadow-lg border border-1 rounded-3">
+                    <p class="fs-3 fw-bold text-center">Login</p>
+                    <input class="form-control fs-5" type="text" placeholder="Email">
+                    <input class="form-control fs-5" type="password" placeholder="Password">
+                    <button id="loginBtn" class="w-100 btn btn-primary fs-5">Login</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="bankSection">
+            <div class="row row-cols-md-3 mx-5 d-flex justify-content-center align-items-center text-white">
+                <div>
+                    <div class="mx-3 my-5 p-3 rounded-4 text-center bg-danger">
+                        <p class="fs-3 fw-bold">Deposit</p>
+                        <h1 class="fw-bold">$ <span id="currentDeposit">00</span></h1>
+                    </div>
+                </div>
+                <div>
+                    <div class="mx-3 my-5 p-3 rounded-4 text-center bg-success">
+                        <p class="fs-3 fw-bold">Withdraw</p>
+                        <h1 class="fw-bold">$ <span id="currentWithdraw">00</span></h1>
+                    </div>
+                </div>
+                <div>
+                    <div class="mx-3 my-5 p-3 rounded-4 text-center bg-primary">
+                        <p class="fs-3 fw-bold">Balance</p>
+                        <h1 class="fw-bold">$ <span id="currentBalance">1240</span></h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-cols-md-2 mx-5 d-flex justify-content-center align-items-center">
+                <div>
+                    <div class="mx-3 mt-3 p-5 rounded-4 text-center shadow-lg border border-1">
+                        <p class="fs-4 fw-bold">Deposit</p>
+                        <input id="depositAmount" class="form-control mb-4 fs-5" type="text" placeholder="$ amount you want to deposit">
+                        <button id="depositBtn" class="w-100 btn btn-danger fs-5">Deposit</button>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="mx-3 mt-3 p-5 rounded-4 text-center shadow-lg border border-1">
+                        <p class="fs-4 fw-bold">Widthdraw</p>
+                        <input id="withdrawAmmount" class="form-control mb-4 fs-5" type="text" placeholder="$ amount you want to widthdraw">
+                        <button id="withdrawBtn" class="w-100 btn btn-danger fs-5">Widthdraw</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
