@@ -19,6 +19,11 @@ const depositBtn = document.getElementById('depositBtn').addEventListener('click
 // withdraw button event handler
 const withdrawBtn = document.getElementById('withdrawBtn').addEventListener('click', function () {
     const withdrawNumber = getInpurNumber('withdrawAmmount')
+
+    updateSpanText("currentWithdraw", withdrawNumber);
+    updateSpanText("currentBalance", -1 * withdrawNumber);
+
+    document.getElementById('withdrawAmmount').value = '';
 });
 
 function getInpurNumber(id) {
