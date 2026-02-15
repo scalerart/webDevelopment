@@ -23,6 +23,8 @@
 
 html {
     font-size: 62.5%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 3rem;
     /* 1rem = 10px */
 }
 
@@ -351,6 +353,7 @@ nav {
 .about,
 .read-more {
     display: none;
+    transition: all 0.3s ease;
 }
 
 #experience_icon,
@@ -359,6 +362,7 @@ nav {
 #about_icon,
 #read-more_icon {
     display: none;
+    transition: all 0.3s ease;
 }
 
 #experience_icon:checked~.experience,
@@ -367,6 +371,7 @@ nav {
 #about_icon:checked~.about,
 #read-more_icon:checked~.read-more {
     display: block;
+    transition: all 0.3s ease;
 }
 
 

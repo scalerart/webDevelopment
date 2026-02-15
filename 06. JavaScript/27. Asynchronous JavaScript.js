@@ -9,8 +9,7 @@ Asynchronous JavaScript Checklist
     ✔ Error handling
 
 1.  JavaScript কেন Asynchronous দরকার?
-    JavaScript হলো Single-threaded
-    মানে এক সময়ে একটাই কাজ করে
+    JavaScript হলো Single-threaded মানে এক সময়ে একটাই কাজ করে
 
     =>  তাহলে সমস্যা কোথায়?
         console.log("Start");

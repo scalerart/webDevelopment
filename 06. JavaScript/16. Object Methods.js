@@ -1,5 +1,27 @@
 /*
 JavaScript Object Methods Checklist
+Core 7 (Must Know)
+    1.  Object.keys
+    2.  Object.values
+    3.  Object.entries
+    4.  Object.assign
+    5.  Object.freeze
+    6.  Object.seal
+    7.  Object.hasOwn
+
+Important Advanced
+    1.  Object.create
+    2.  Object.defineProperty
+    3.  Object.getPrototypeOf
+    4.  Object.setPrototypeOf
+    5.  Object.is
+
+Deep Interview Level
+    1.  Object.getOwnPropertyDescriptor(s)
+    2.  Object.preventExtensions
+    3.  Object.isFrozen
+    4.  Object.isSealed
+    5.  Object.isExtensible
 
 =>  Object methods দুই ভাগে ভাবলে সহজ হয়
     1.  Object constructor methods
@@ -101,6 +123,58 @@ JavaScript Object Methods Checklist
             city: { value: "Dhaka" }
         });
 
+16. Object.getOwnPropertyDescriptor()
+    ✔  একটি নির্দিষ্ট property-এর পুরো configuration দেয়
+        let user = { name: "Rahim" };
+        Object.getOwnPropertyDescriptor(user, "name");
+
+    ✔  Output:
+        {
+        value: "Rahim",
+        writable: true,
+        enumerable: true,
+        configurable: true
+        }
+
+17. Object.getOwnPropertyDescriptors()
+    ✔  সব property-এর descriptor একসাথে দেয়
+        Object.getOwnPropertyDescriptors(user);
+
+18. Object.preventExtensions()
+    ✔  নতুন property add করা যাবে না
+    ✔  কিন্তু update / delete করা যাবে
+        let obj = { a: 1 };
+        Object.preventExtensions(obj);
+        obj.b = 2; // কাজ করবে না
+
+    ✔  Freeze > Seal > preventExtensions
+    ✔  Freeze সবচেয়ে শক্ত।
+
+19. Object.isExtensible()
+    ✔  object-এ নতুন property add করা যাবে কিনা check
+        Object.isExtensible(obj);
+
+20. Object.isFrozen()
+    ✔  object freeze করা হয়েছে কিনা check
+        Object.isFrozen(obj);
+
+21. Object.isSealed()
+    ✔  object seal করা হয়েছে কিনা check
+        Object.isSealed(obj);        
+    ✔  Interview-এ খুব গুরুত্বপূর্ণ।
+
+22. hasOwnProperty() (Old way)
+    user.hasOwnProperty("name");
+
+    ✔  Modern way:
+        Object.hasOwn(user, "name");
+
+23. toString()
+    user.toString();
+
+24. valueOf()
+    Primitive value return করে।    
+
 =>  Most Used (তোমার জন্য Must-Know)
     ✔ Object.keys
     ✔ Object.values
@@ -153,6 +227,6 @@ console.log(myInfromation);
 
 //  Object.seal()
 const objectSeal = Object.seal(myInfromation);
-myInfromation.name ="Abdullah";
+myInfromation.name = "Abdullah";
 myInfromation.age = 25;
 console.log(myInfromation);
