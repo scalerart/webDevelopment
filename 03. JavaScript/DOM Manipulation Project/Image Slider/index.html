@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Slider</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="slider">
+        <div class="slides">
+            <div class="slide">Slide 1</div>
+            <div class="slide">Slide 2</div>
+            <div class="slide">Slide 3</div>
+            <div class="slide">Slide 4</div>
+            <div class="slide">Slide 5</div>
+            <div class="slide">Slide 6</div>
+            <div class="slide">Slide 7</div>
+            <div class="slide">Slide 8</div>
+            <div class="slide">Slide 9</div>
+            <div class="slide">Slide 10</div>
+        </div>
+
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+
+        <div class="dots"></div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
+
+<!-- 
+১.  একটি Modern Slider বানাতে কি কি লাগে?
+    1.  HTML Structure
+        আমাদের লাগবে:
+        1.  Slider Container
+        2.  Slides Wrapper
+        3.  প্রতিটি Slide
+        4.  Prev / Next Button
+        5.  Dots Navigation
+
+    2.  CSS Design (Premium Look)
+        আমাদের করতে হবে:
+        1.  Overflow hidden
+        2.  Flexbox layout
+        3.  Smooth transition
+        4.  Responsive height
+        5.  Button hover effect
+        6.  Active dot animation
+        7.  Mobile friendly
+
+    3.  JavaScript Logic
+        ✔  এখানে আসল ম্যাজিক
+        
+        আমাদের করতে হবে:
+        1.  currentIndex track করা
+        2.  translateX দিয়ে slide move করা
+        3.  Next/Prev button control
+        4.  Dot click করলে slide change
+        5.  Auto play
+        6.  Infinite loop
+        7.  Swipe support (mobile)
+
+=>  Slider কিভাবে কাজ করে?
+    1.  ধরো ৩টা slide আছে:
+        [Slide1][Slide2][Slide3]
+
+    2.  আমরা wrapper-কে সরাই:
+        transform: translateX(-100%);
+
+    ✔  মানে পুরো width অনুযায়ী slide shift হয়।
+
+    ✔  Formula:
+        slider.style.transform = `translateX(-${index * 100}%)`;
+-->

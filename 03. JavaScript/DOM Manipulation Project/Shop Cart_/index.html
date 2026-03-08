@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Shop</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <header>
+        <div>LOGO</div>
+        <div id="cart-icon">
+            <i class="ri-shopping-bag-line"></i>
+            <span class="cart-item-count" id="cart-count"></span>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="products" id="product-list">
+            <!-- <div class="card">
+                <img src="${product.image}">
+                <h4>${product.name}</h4>
+                <p>${product.desc}</p>
+                <div class="price-and-cart">
+                    <div class="price">$ ${product.price}</div>
+                    <button class="btn">
+                        <i class="ri-shopping-bag-line"></i>
+                    </button>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="cart">
+            <h2>My Cart</h2>
+            <div id="cart-items">
+                <!-- <div class="cart-item">
+                    <img src="${item.image}" class="cart-img">
+                    <span>${item.name}</span>
+
+                    <div class="qty-box">
+                        <span class="qty-btn minus" data-index="${index}">-</span>
+                        <span>${item.qty}</span>
+                        <span class="qty-btn plus" data-index="${index}">+</span>
+                    </div>
+
+                    <span>$${item.price * item.qty}</span>
+
+                    <span class="remove" data-index="${index}">
+                        <i class="ri-delete-bin-line"></i>
+                    </span>
+                </div> -->
+            </div>
+            <div class="total">Total: $ <span id="total">0</span></div>
+            <button class="buy-btn" onclick="buyNow()">Buy Now</button>
+        </div>
+    </div>
+
+    <footer>
+        <p style="text-align: center; color: white; padding-top: 15px; font-size: 16px;">ABDUL KADIR</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

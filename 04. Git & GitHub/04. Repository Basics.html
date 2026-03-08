@@ -1,0 +1,240 @@
+<!-- 
+Repository Basics
+
+1.  Repository কী?
+    ✔  Repository (সংক্ষেপে Repo) মানে: একটা Project Folder যেখানে কোড + তার সম্পূর্ণ ইতিহাস সংরক্ষিত থাকে
+
+    ✔  ধরো তুমি একটা Website বানাচ্ছো।
+
+        তোমার ফোল্ডারে আছে:
+        index.html
+        style.css
+        script.js
+        images/
+
+    ✔  যখন তুমি git init দাও—
+        1.  এই পুরো ফোল্ডারটা Git এর অধীনে চলে যায়
+        2.  তখন এটাকে বলা হয় Git Repository
+
+    =>  সহজভাবে:
+        Repository =
+            1.  তোমার Project
+            2.  তার সব পরিবর্তনের ইতিহাস
+
+2.  Local Repository Structure
+    ধরো তোমার folder structure এমন:
+
+        git-practice/
+        │
+        ├── index.html
+        ├── style.css
+        ├── script.js
+        └── .git/
+
+    এখানে ২টা অংশ গুরুত্বপূর্ণ:
+        A.  Working Files
+            index.html
+            style.css
+            script.js
+
+        ✔  এগুলো তুমি edit করো
+
+        B.  .git Folder (Hidden Brain)
+            .git হলো Git এর আসল মাথা
+    
+        ✔  এখানে সব history থাকে
+
+    =>  Local Repository এর ৩টি Core Layer
+        Git ভেতরে কাজ করে এইভাবে:
+
+            1.  Working Directory
+            2.  Staging Area
+            3.  Repository (.git এর ভিতরে)
+
+    ✔  এখন আমরা এগুলো গভীরভাবে বুঝবো।
+
+3.  .git Folder ধারণা (খুব গুরুত্বপূর্ণ)
+    .git folder তৈরি হয় যখন তুমি লেখো:
+
+        git init
+
+    .git এর ভিতরে কী থাকে?
+
+    ✔  তুমি চাইলে দেখতে পারো:
+        cd .git
+        ls
+
+    ✔  তুমি পাবে:
+
+HEAD
+config
+objects
+refs
+logs
+এগুলোর কাজ কী?
+File/Folder	কাজ
+HEAD	বর্তমান branch কোথায় আছে
+config	Git configuration
+objects	সব commit data
+refs	branch reference
+logs	activity history
+📌 গুরুত্বপূর্ণ কথা:
+
+❌ কখনো .git folder delete বা edit করবে না
+👉 করলে পুরো history শেষ    
+
+4.  Working Directory
+
+এটাই তোমার আসল কাজের জায়গা।
+
+index.html
+style.css
+
+👉 তুমি এখানে:
+
+লিখো
+
+edit করো
+
+delete করো
+
+নতুন file বানাও
+
+🧠 Working Directory মানে:
+
+যেখানে তুমি কাজ করো
+কিন্তু এখনো Git কে বলোনি save করতে
+
+উদাহরণ:
+
+তুমি index.html এ নতুন paragraph লিখলে।
+
+👉 এটা এখনো শুধু Working Directory তে
+👉 Git history তে যায়নি
+
+5.  Staging Area (Intermediate Layer)
+
+এটা Git এর সবচেয়ে misunderstood অংশ 😄
+কিন্তু আমি পরিষ্কার করে দিচ্ছি।
+
+📌 Staging Area কী?
+
+Commit করার আগে ফাইলগুলো প্রস্তুত রাখার জায়গা
+
+তুমি যখন লেখো:
+
+git add index.html
+
+👉 File যায়:
+Working Directory ➜ Staging Area
+
+কেন দরকার?
+
+ধরো তুমি ৩টা file edit করেছো:
+
+index.html
+style.css
+script.js
+
+কিন্তু তুমি শুধু index.html commit করতে চাও।
+
+👉 তাহলে শুধু এটাকে stage করবে।
+
+Flow:
+Working Directory
+    ↓ git add
+Staging Area
+    ↓ git commit
+Repository
+🧠 সহজ উদাহরণ:
+
+Working Directory = তুমি রান্না করছো 🍳
+Staging Area = প্লেটে তুলে রাখছো 🍽️
+Commit = টেবিলে পরিবেশন করছো 🍴
+
+6.  Commit History
+
+এখন আসি সবচেয়ে শক্তিশালী অংশে।
+
+📌 Commit কী?
+
+Commit =
+
+একটা নির্দিষ্ট সময়ের Project Snapshot
+
+যখন লেখো:
+
+git commit -m "Add navbar"
+
+👉 Git সেই সময়ের সব staged file এর ছবি তুলে রাখে 📸
+
+🧠 Commit এ কী থাকে?
+
+Unique ID (hash)
+
+Author name
+
+Email
+
+Date & time
+
+Message
+
+Changes
+
+🔍 Commit History দেখার command
+git log
+
+বা সংক্ষিপ্তভাবে:
+
+git log --oneline
+📈 Commit History দেখতে কেমন?
+a3f5e2c Add footer
+b7d92aa Add paragraph
+c2e44fd First commit
+
+👉 এগুলো একটার উপর আরেকটা দাঁড়িয়ে আছে
+👉 এটা একটা chain
+
+🧬 আসলে Git কাজ করে Snapshot দিয়ে
+
+অনেকে ভাবে Git difference রাখে।
+
+❌ না।
+
+Git আসলে পুরো project এর snapshot রাখে (smart way এ)।
+
+=>  সবকিছু একসাথে বুঝে নাও
+📁 Working Directory
+    (তুমি কাজ করছো)
+
+      ↓ git add
+
+📦 Staging Area
+    (Commit এর জন্য প্রস্তুত)
+
+      ↓ git commit
+
+🧠 Repository (.git folder)
+    (Permanent history)
+🎯 যদি এই অংশ পরিষ্কার হয় তাহলে—
+
+তুমি এখন বুঝো:
+
+✅ Repository কী
+✅ Local repo structure
+✅ .git folder কী করে
+✅ Working Directory
+✅ Staging Area
+✅ Commit History
+
+🧪 Mini Test (নিজে ভাবো)
+
+1️⃣ git init দিলে কী তৈরি হয়?
+2️⃣ git add কী করে?
+3️⃣ commit আসলে কী save করে?
+4️⃣ .git folder delete করলে কী হবে?
+
+তুমি এখন Beginner না।
+তুমি Git এর ভিতরের মেকানিজম বুঝতে শুরু করেছো 🤍
+-->
