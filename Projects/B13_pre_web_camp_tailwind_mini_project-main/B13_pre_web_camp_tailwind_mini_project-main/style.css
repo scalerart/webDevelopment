@@ -1,0 +1,75 @@
+* {
+  font-family: "Roboto", sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Bebas Neue", sans-serif;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background: #fffbeb;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 3%;
+}
+
+.nav_link a {
+  font-size: 16px;
+  display: inline-block;
+  padding: 20px 0;
+  color: #000;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-left: 20px;
+  transition: .5s;
+}
+
+#menu-toggle {
+  display: none;
+}
+
+.menu_btn {
+  font-size: 24px;
+  color: #000;
+  display: none;
+}
+
+@media only screen and (max-width:768px) {
+  .menu_btn {
+    display: block;
+    padding: 15px 0;
+  }
+
+  .nav_link {
+    position: fixed;
+    top: 64px;
+    left: -100%;
+    text-align: center;
+    background-color: #f1f1f1;
+    width: 100%;
+    height: 100vh;
+    transition: all .5s ease;
+  }
+
+  #menu-toggle:checked~.nav_link {
+    left: 0%;
+  }
+
+  .nav_link a {
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px 0;
+  }
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth scroll-py-2">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penguin Fashion</title>
+
+
+    <!-- Google font CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="bg-green-50">
+    <header>
+        <nav>
+            <div>
+                <a href="#"><img src="./assets/icons/logo.png" alt="" class="w-[225px] h-[31px]"></a>
+            </div>
+
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu_btn"><i class="fas fa-bars"></i></label>
+
+            <div class="nav_link">
+                <a class="active" href="#">Home</a>
+                <a href="#product">Product</a>
+                <a href="#about-us">About Us</a>
+                <a href="#contact-us">Contact Us</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- hero section -->
+    <section class="pt-16">
+        <!-- Banner -->
+        <div class="min-h-[75vh] flex justify-between items-center gap-4 container mx-auto">
+            <div class="hidden md:block">
+                <h2 class="text-[#FABE4C] text-[80px] md:leading-[75px] xl:leading-[35px]">Be the Penguins</h2>
+                <h2 class="text-[#363958] text-[80px]">of Winter</h2>
+                <p>Lorem Ipsum is simply dummy text of the printing
+                    and typesetting industry.</p>
+                <button
+                    class="button-linear-gradient rounded-[10px] w-[170px] h-[60px] inline-block font-semibold text-white mt-[14px]">
+                    <i class="fa-solid fa-cart-arrow-down"></i>
+                    BUY
+                    NOW</button>
+            </div>
+
+            <img src="./assets/images/model.png " alt="">
+        </div>
+
+        <!-- image -->
+        <img src="./assets/icons/banner_dot.png" alt="" class="absolute top-0 left-[50%]">
+    </section>
+
+
+
+    <!-- Woman section -->
+    <section id="product" class="container mx-auto my-[70px]">
+        <h2 class="text-[48px]">WOMAN JACKET</h2>
+        <div class="m-2 md:m-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            <div class="p-4 rounded-md shadow-sm shadow-gray-400">
+                <img src="./assets/images/jacket-1.png" alt=""
+                    class="w-full h-96 bg-white rounded-[20px] py-3 px-2 shadow-sm shadow-gray-400">
+                <h4 class="text-3xl mt-5 mb-3 font-bold">Yellow Coat jacket</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem suscipit inventore</p>
+                <div class="flex items-center justify-between mt-3">
+                    <h4 class="text-orange-400 text-[26px] lg:text-[36px] font-bold">$234</h4>
+                    <button
+                        class="bg-[#A4BC46] rounded-lg py-3 px-6 cursor-pointer hover:bg-[#93ad2a] transition-all delay-100 font-semibold text-white">
+                        <i class="fa-solid fa-cart-arrow-down"></i>
+                        BUY NOW</button>
+                </div>
+            </div>
+
+            <div class="p-4 rounded-md shadow-sm shadow-gray-400">
+                <img src="./assets/images/jacket-2.png" alt=""
+                    class="w-full h-96 bg-white rounded-[20px] py-3 px-2 shadow-sm shadow-gray-400">
+                <h4 class="text-3xl mt-5 mb-3 font-bold">Ladies Jacket</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem suscipit inventore</p>
+                <div class="flex items-center justify-between mt-3">
+                    <h4 class="text-orange-400 text-[26px] lg:text-[36px] font-bold">$234</h4>
+                    <button
+                        class="bg-[#A4BC46] rounded-lg py-3 px-6 cursor-pointer hover:bg-[#93ad2a] transition-all delay-100 font-semibold text-white">
+                        <i class="fa-solid fa-cart-arrow-down"></i>
+                        BUY NOW</button>
+                </div>
+            </div>
+
+            <div class="p-4 rounded-md shadow-sm shadow-gray-400">
+                <img src="./assets/images/jacket-3.png" alt=""
+                    class="w-full h-96 bg-white rounded-[20px] py-3 px-2 shadow-sm shadow-gray-400">
+                <h4 class="text-3xl mt-5 mb-3 font-bold">Woman Leather</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem suscipit inventore</p>
+                <div class="flex items-center justify-between mt-3">
+                    <h4 class="text-orange-400 text-[26px] lg:text-[36px] font-bold">$234</h4>
+                    <button
+                        class="bg-[#A4BC46] rounded-lg py-3 px-6 cursor-pointer hover:bg-[#93ad2a] transition-all delay-100 font-semibold text-white">
+                        <i class="fa-solid fa-cart-arrow-down"></i>
+                        BUY NOW</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Man section -->
+    <section class="container mx-auto my-[70px]">
+
+        <h2 class="text-[48px] ">Man JACKET</h2>
+        <div class="m-2 md:m-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+
+            <div class="p-4 rounded-md shadow-sm shadow-gray-400">
+                <img src="./assets/images/jacket-4.png" alt=""
+                    class="w-full h-96 bg-white rounded-[20px] py-3 px-2 shadow-sm shadow-gray-400">
+                <h4 class="text-3xl mt-5 mb-3 font-bold">Snowboard Jacket</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem suscipit inventore</p>
+                <div class="flex items-center justify-between mt-3">
+                    <h4 class="text-orange-400 text-[26px] lg:text-[36px] font-bold">$234</h4>
+                    <button
+                        class="bg-[#A4BC46] rounded-lg py-3 px-6 cursor-pointer hover:bg-[#93ad2a] transition-all delay-100 font-semibold text-white">
+                        <i class="fa-solid fa-cart-arrow-down"></i>
+                        BUY NOW</button>
+                </div>
+            </div>
+
+            <div class="p-4 rounded-md shadow-sm shadow-gray-400">
+                <img src="./assets/images/jacket-5.png" alt=""
+                    class="w-full h-96 bg-white rounded-[20px] py-3 px-2 shadow-sm shadow-gray-400">
+                <h4 class="text-3xl mt-5 mb-3 font-bold">Man Leather Jackets</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem suscipit inventore</p>
+                <div class="flex items-center justify-between mt-3">
+                    <h4 class="text-orange-400 text-[26px] lg:text-[36px] font-bold">$234</h4>
+                    <button
+                        class="bg-[#A4BC46] rounded-lg py-3 px-6 cursor-pointer hover:bg-[#93ad2a] transition-all delay-100 font-semibold text-white">
+                        <i class="fa-solid fa-cart-arrow-down"></i>
+                        BUY NOW</button>
+                </div>
+            </div>
+
+            <div class="p-4 rounded-md shadow-sm shadow-gray-400">
+                <img src="./assets/images/jacket-6.png" alt=""
+                    class="w-full h-96 bg-white rounded-[20px] py-3 px-2 shadow-sm shadow-gray-400">
+                <h4 class="text-3xl mt-5 mb-3 font-bold">Man Casual Jackets</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem suscipit inventore</p>
+                <div class="flex items-center justify-between mt-3">
+                    <h4 class="text-orange-400 text-[26px] lg:text-[36px] font-bold">$234</h4>
+                    <button
+                        class="bg-[#A4BC46] rounded-lg py-3 px-6 cursor-pointer hover:bg-[#93ad2a] transition-all delay-100 font-semibold text-white">
+                        <i class="fa-solid fa-cart-arrow-down"></i>
+                        BUY NOW</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Our facilities section -->
+    <section class="grid grid-cols-1 md:grid-cols-2 items-center justify-between gap-4 container mx-auto">
+        <div class="space-y-[25px] order-2">
+            <div class="flex items-center gap-3 shadow rounded-md p-2">
+                <img src="./assets/icons/house.png" alt="" class="w-[78px]">
+                <div>
+                    <h4 class="text-[24px] font-bold">Find the perfect fit</h4>
+                    <p>Everybody is different, which is why we offer styles for every body.</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 shadow rounded-md p-2">
+                <img src="./assets/icons/box.png" alt="" class="w-[78px]">
+                <div>
+                    <h4 class="text-[24px] font-bold">Free Exchanges</h4>
+                    <p>One of the many reasons you can shop
+                        with peace of mind..</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 shadow rounded-md p-2">
+                <img src="./assets/icons/question.png" alt="" class="w-[78px]">
+                <div>
+                    <h4 class="text-[24px] font-bold">Contact our seller</h4>
+                    <p>They are here to help you. That's quite
+                        literally what we pay them for.</p>
+                </div>
+            </div>
+        </div>
+        <img src="./assets/images/shopping.png" alt="" class="order-1 md:order-3">
+    </section>
+
+</body>
+
+</html>

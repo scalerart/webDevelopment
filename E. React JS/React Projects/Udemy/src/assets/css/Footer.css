@@ -1,0 +1,28 @@
+footer {
+    padding: 30px 5%;
+    background-color: #202230;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.footer-content .footer-box h4{
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.footer-content .footer-box span {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-content .footer-box span a {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 300;
+}
