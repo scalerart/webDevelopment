@@ -15,11 +15,17 @@
     transform: scale(1.05);
 }
 
-.product-tittle {
+.product-tittle a{
+    color: #000;
     font-size: 25px;
     font-weight: normal;
     margin-bottom: 16px;
 }
+
+/* .product-tittle a:hover{
+    text-decoration: underline;
+    text-underline-offset: 7px;
+} */
 
 .product-detail {
     display: flex;

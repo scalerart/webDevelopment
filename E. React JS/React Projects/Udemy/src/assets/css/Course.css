@@ -1,8 +1,14 @@
 .course-box {
     padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    /* border-radius: 10px; */
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); */
+    border: 1px solid #dec7ff;
 }
+
+.course-box:hover {
+    border-color: #6D28D2;
+}
+
 .course-box img {
     width: 100%;
     object-fit: cover;
@@ -52,7 +58,12 @@
     border: none;
     background-color: #6D28D2;
     border-radius: 6px;
+    /* transition: background-color 0.3s; */
     cursor: pointer;
+}
+
+.course-box .button button:hover{
+    background-color: #8639fa;
 }
 
 .course-box .button span {

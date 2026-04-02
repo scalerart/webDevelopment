@@ -1,0 +1,267 @@
+<!--
+1.  Computer Architecture Introduction
+
+P1: Computer আসলে কীভাবে কাজ করে? (Story Style)
+    ভাবো তুমি একটি রেস্টুরেন্টে গেছো →
+        1.  তুমি অর্ডার দিলে → Input
+        2.  শেফ রান্না করলো → Processing (CPU)
+        3.  খাবার তোমার সামনে এলো → Output
+
+    ✔  কম্পিউটারও ঠিক একইভাবে কাজ করে:
+        Input → Process → Output
+
+
+P2: Computer Architecture কী?
+    ✔  Definition (সহজভাবে):
+        Computer Architecture হলো এমন একটি ডিজাইন বা ব্লুপ্রিন্ট যা বলে—
+            1.  কম্পিউটারের ভিতরে কী কী অংশ আছে
+            2.  তারা কীভাবে একে অপরের সাথে কাজ করে
+            3.  এবং কীভাবে ডাটা প্রসেস হয়
+
+    ✔  মূল কথা: “কম্পিউটার ভিতরে কীভাবে চিন্তা করে — সেটাই Architecture”
+
+P3: Computer এর Main Components
+    1.  CPU (Brain of Computer)
+        ✔  সব কাজের “মাস্টার”
+
+        CPU এর ভিতরে:
+            1.  ALU (Arithmetic Logic Unit): যোগ, বিয়োগ, তুলনা ইত্যাদি করে
+            2.  Control Unit (CU): Instruction বুঝে, নির্দেশ দেয় কোন কাজ কখন করবে
+            3.  Registers: সাময়িকভাবে ডেটা রাখে
+
+    2.  Memory (মেমরি)
+        ✔  ডাটা রাখে
+
+            1.  RAM → Temporary (কম্পিউটার বন্ধ হলে মুছে যায়)
+            2.  ROM → Permanent
+
+    3.  Input Devices
+        ✔  ডাটা দেয়
+        ✔  যেমন: Keyboard, Mouse
+
+    4.  Output Devices
+        ✔  ফলাফল দেখায়
+        ✔  যেমন: Monitor, Printer
+
+    5.  Storage
+        ✔  দীর্ঘ সময় ডাটা রাখে
+        ✔  যেমন: Hard Disk, SSD
+
+P4: CPU কীভাবে কাজ করে? (Core Concept)
+    এটাই সবচেয়ে গুরুত্বপূর্ণ 
+
+    Instruction Cycle (Fetch → Decode → Execute)
+        1.  Fetch
+            RAM থেকে instruction নেয়
+
+        2.  Decode
+            instruction বুঝে (কি করতে হবে)
+
+        3.  Execute
+            কাজ করে (যেমন calculation)
+
+    ✔  Example: 5 + 3
+        1.  Fetch → “5+3” নেয়
+        2.  Decode → বুঝে এটা addition
+        3.  Execute → result = 8
+
+P5: Memory Hierarchy (কেন লাগে?)
+    সব মেমরি একরকম না
+
+    ✔  Trade-off:
+        Fast = Expensive + Small
+        Slow = Cheap + Large
+
+    ✔  Levels:
+        1.  Registers (CPU এর ভিতরে, fastest)
+        2.  Cache (very fast)
+        3.  RAM
+        4.  Hard Disk / SSD (slow but large)
+
+    ✔  Real-life:
+        Register = তোমার মস্তিষ্কে থাকা চিন্তা
+        RAM = টেবিলে রাখা বই
+        Hard disk = আলমারিতে রাখা বই
+
+P6: Bus System (Data চলাচল)
+    Bus = রাস্তা
+
+    Types:
+        1.  Data Bus → ডাটা নেয়
+        2.  Address Bus → কোথায় যাবে বলে
+        3.  Control Bus → control signal দেয়
+
+P7: Architecture Types
+    1.  Von Neumann Architecture
+        Data + Instruction একই জায়গায়
+        Simple but slow (bottleneck)
+
+    2.  Harvard Architecture
+        আলাদা memory
+        Faster but complex
+
+=>  Practice Task
+    1.  Computer কীভাবে কাজ করে?
+        কম্পিউটার মূলত Data নিয়ে কাজ করে এবং Instruction অনুযায়ী Process করে Output দেয়।
+
+        1.  Input (ডেটা সংগ্রহ)
+            1.  কম্পিউটার কোনো কাজ শুরু করার আগে ডেটা নেয়।
+            2.  Input device দিয়ে ডেটা আসে।
+                উদাহরণ: Keyboard, Mouse, Scanner, Microphone
+
+            ✔  কাজের ব্যাখ্যা: তুমি যদি Keyboard থেকে “5 + 3” লিখো, এটা input হিসেবে CPU এর কাছে যায়।
+
+        2.  Processing (প্রসেসিং / হিসাব করা)
+            1.  CPU (Central Processing Unit) ডেটা নিয়ে গাণিতিক বা লজিক্যাল কাজ করে।
+            2.  CPU এর তিনটি অংশ কাজ করে:
+                1.  ALU (Arithmetic Logic Unit): যোগ, বিয়োগ, তুলনা ইত্যাদি করে
+                2.  Control Unit (CU): Instruction বুঝে, নির্দেশ দেয় কোন কাজ কখন করবে
+                3.  Registers: সাময়িকভাবে ডেটা রাখে
+
+            ✔  কাজের ব্যাখ্যা: CPU বুঝে তুমি 5 + 3 লিখেছো → ALU যোগফল বের করে → Register এ রাখে।
+
+        3.  Storage / Memory (ডেটা রাখা)
+            1.  ডেটা সংরক্ষণের জন্য Memory ব্যবহার হয়।
+            2.  Memory দুই প্রকার:
+                1.  Primary Memory: RAM, Cache (দ্রুত, কিন্তু সাময়িক)
+                2.  Secondary Memory: Hard Disk, SSD (স্থায়ী)
+
+            ✔  কাজের ব্যাখ্যা: ALU এর যোগফল যদি পরে প্রয়োজন হয় → সেটা RAM বা Hard Disk এ রাখা যেতে পারে।
+
+        4.  Output (ফলাফল দেখানো)
+            1.  শেষের ধাপে কম্পিউটার কাজের ফলাফল Output Device দিয়ে দেয়।
+                উদাহরণ: Monitor, Printer, Speaker
+
+            ✔  কাজের ব্যাখ্যা: 5 + 3 এর ফলাফল হলো 8 → Monitor এ দেখানো হবে।
+
+        5.  Control & Instruction (নির্দেশনা অনুসরণ)
+            1.  CPU Instruction Cycle অনুসরণ করে:
+                1.  Fetch: Memory থেকে Instruction আনা
+                2.  Decode: Instruction বুঝা
+                3.  Execute: Instruction অনুযায়ী কাজ করা
+
+            ✔  এটাকে বলা হয় Fetch-Decode-Execute Cycle
+
+    2.  একটা simple diagram আঁকার চেষ্টা করো:
+        Input → CPU → Output
+                ↓
+              Memory
+              
+    3.  Fetch-Decode-Execute cycle Explain করো?
+        কম্পিউটার যখন কোনো প্রোগ্রাম বা instruction চালায়, তখন CPU প্রতিটি Instruction কে তিন ধাপে প্রক্রিয়া করে।
+
+        1.  Fetch (Instruction আনা)
+            কী ঘটে:
+                1.  CPU Memory থেকে Instruction নিয়ে আসে।
+                2.  Instruction Pointer / Program Counter (PC) ঠিক করে কোন Instruction নেবে।
+
+            Flow:
+                1.  PC → Instruction Address
+                2.  CPU → Memory থেকে Instruction read করে
+                3.  Instruction → Instruction Register (IR) এ রাখে
+
+        উদাহরণ:
+            যদি প্রোগ্রাম হয় ADD 5 + 3
+            CPU memory থেকে ADD instruction fetch করে।
+
+        2.  Decode (Instruction বোঝা)
+            কী ঘটে:
+                1.  Control Unit (CU) Instruction Register (IR) থেকে Instruction পড়ে।
+                2.  বুঝে কী কাজ করতে হবে।
+
+            Flow:
+                1.  Instruction type চেক করা → ALU কি করবে → কোন registers লাগবে → Memory access লাগবে কি না
+
+        উদাহরণ:
+            ADD 5 + 3 instruction decode করলে CU বুঝবে:
+            1.  ALU → Addition
+            2.  Operand → 5, 3
+            3.  Result কোথায় রাখা হবে → Register/Memory
+
+        3.  Execute (Instruction সম্পাদন)
+            কী ঘটে:
+                1.  ALU / CPU instruction অনুযায়ী কাজ করে।
+                2.  Result বের করে এবং Register বা Memory তে রাখে।
+
+            Flow:
+                1.  Arithmetic/logical operation করা
+                2.  Result save করা
+                3.  Program Counter update → Next instruction
+
+            উদাহরণ:
+                ADD 5 + 3 execute করলে:
+                1.  ALU → 5 + 3 = 8
+                2.  Result → Register এ save
+
+        4.  Cycle Repeat
+            এক Instruction শেষ → Program Counter update
+            পরের Instruction Fetch → Decode → Execute
+            এইভাবে পুরো প্রোগ্রাম চলে
+
+        =>  Diagram (Simple View)
+            Memory → [Instruction] 
+               ↓
+            Fetch → Instruction Register (IR)
+               ↓
+            Decode → Control Unit
+               ↓
+            Execute → ALU → Register/Memory
+               ↓
+            Next Instruction (PC++)
+
+        =>  Key Points to Remember
+            এটি CPU এর মূল কাজের চক্র
+            প্রতিটি Instruction এই 3 ধাপ অনুসরণ করে
+            Modern CPU তে এই cycle pipeline হয়ে থাকে → একের পর এক instruction overlappingভাবে চলে
+
+        =>  Summary in Short:
+            Fetch → Decode → Execute → Repeat
+            → CPU এর সমস্ত কাজ এই cycle এর মাধ্যমে হয়
+
+    4.  কেন RAM fast কিন্তু Hard Disk slow?
+        কম্পিউটারের Memory / Storage এর Speed অনেকটাই Technology ও Design এর ওপর নির্ভর করে।
+
+        1.  RAM (Random Access Memory) কেন দ্রুত?
+            মূল কারণগুলো:
+
+            1.  Volatile Memory:
+                RAM হলো volatile memory, অর্থাৎ power on থাকলে ডেটা থাকে।
+                এটি সরাসরি electronic circuits ব্যবহার করে ডেটা ধরে রাখে → তাই Access অনেক দ্রুত।
+
+            2.  No Moving Parts:
+                RAM-এ কোনো mechanical part নেই।
+                তাই ডেটা fetch বা write করতে Milliseconds বা Nanoseconds লাগে।
+
+            3.  Designed for CPU Access:
+                CPU RAM এর সাথে Directly connected থাকে।
+                Data Bus এবং Cache ব্যবহার করে CPU RAM থেকে খুব দ্রুত ডেটা নিতে পারে।
+
+            ✔  Speed: সাধারণ DDR4 RAM ≈ 20-30 ns (nanoseconds)
+
+        2.  Hard Disk কেন ধীরে?
+            মূল কারণগুলো:
+
+            1.  Mechanical Movement:
+                Hard Disk (HDD) spinning platters + moving read/write head ব্যবহার করে।
+                Head কে ঠিক জায়গায় পাঠাতে Milliseconds লাগে → তাই slow।
+                
+            2.  Longer Access Time:
+                Hard Disk-এ ডেটা sequentially stored।
+                Random access করতে অনেক delay হয়।
+
+            3.  Interface Limitations:
+                HDD সাধারণত SATA interface ব্যবহার করে → Max speed limited (~100-600 MB/s)
+
+            ✔  Speed: Hard Disk ≈ 5-10 ms (milliseconds) → RAM এর তুলনায় অনেক ধীরে
+
+        ✔  সংক্ষেপে:
+            1.  RAM: শুধু electronics, কোনো moving part নেই → fast
+            2.  Hard Disk: Mechanical + moving parts → slow
+
+=>  Revision (Short)
+    1.  Computer Architecture = system design
+    2.  CPU = ALU + CU + Registers
+    3.  Cycle = Fetch → Decode → Execute
+    4.  Memory = hierarchy based
+    5.  Bus = communication system
+-->

@@ -2,32 +2,19 @@
     padding: 0 3%;
     display: flex;
     gap: 25px;
-    /* margin: 25px; */
 }
 
 .shop {
-    width: 75vw;
+    width: 70vw;
 }
 
 .cart {
-    width: 25vw;
+    width: 22vw;
+    height: 77vh;
     margin: 0 auto;
     text-align: center;
     background-color: white;
-}
-/* 
-.cart h2 {
-    font-weight: 500;
-    font-size: 25px;
-}
-
-.cart-content {
-    text-align: left;
-    display: flex;
-    justify-content: space-between;
+    position: fixed;
+    right: 25px;
     margin-top: 25px;
 }
-
-.cart-content .price {
-    text-align: right;
-} */

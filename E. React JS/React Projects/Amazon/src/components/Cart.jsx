@@ -1,7 +1,15 @@
 import '../assets/style/Cart.css'
 
-function Cart({ cart }) {
-    const totalPrice = cart.reduce((total, cart) => total + cart.price, 0);
+function Cart(props) {
+    const cart = props.cart;
+
+    const totalQuantity = cart.reduce((total, qty) => total + qty.quantity, 0);
+
+    let totalPrice = 0;
+    for (let i = 0; i < cart.length; i++) {
+        const product = cart[i];
+        totalPrice = totalPrice + product.price * product.quantity;
+    }
 
     let shipping = 0;
     if (totalPrice > 35) {
@@ -23,7 +31,7 @@ function Cart({ cart }) {
     return (
         <>
             <h2>Order Summary</h2>
-            <p className='items-ordered'>Items Ordered: {cart.length}</p>
+            <p className='items-ordered'>Items Ordered: {totalQuantity}</p>
             <div className="cart-content">
                 <span className='content'>
                     <p>Items: </p>
@@ -33,14 +41,16 @@ function Cart({ cart }) {
                     <h3>Order Total:</h3>
                 </span>
                 <span className='price'>
-                    <p>{cart.length}</p>
+                    <p>{totalQuantity}</p>
                     <p>${formateNumber(shipping)}</p>
                     <p>${formateNumber(totalPrice)}</p>
                     <p>${formateNumber(tax)}</p>
                     <h3>${formateNumber(grandTotal)}</h3>
                 </span>
             </div>
-            <button className='review-btn'>Review your order</button>
+            {
+                props.children
+            }
         </>
     )
 }

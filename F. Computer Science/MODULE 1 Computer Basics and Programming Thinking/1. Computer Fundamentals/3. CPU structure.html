@@ -1,0 +1,295 @@
+<!--
+3.  CPU structure
+
+P1: CPU কী? (Story দিয়ে বুঝি)
+    ভাবো তুমি একটা অফিস চালাচ্ছো
+        1.  Boss → সিদ্ধান্ত নেয়
+        2.  Worker → কাজ করে
+        3.  Assistant → তথ্য ধরে রাখে
+
+    ✔  Computer-এ: CPU = Boss + Worker + Assistant সব একসাথে
+    ✔  তাই CPU-কে বলা হয়: “Brain of Computer”
+
+P2: CPU Structure (ভিতরের আসল গঠন)
+    ✔  CPU মূলত 3টা core অংশ নিয়ে গঠিত:
+    1.  ALU (Arithmetic Logic Unit)
+        “Calculator + Decision Maker”
+
+        কাজ:
+            1.  Math: +, −, ×, ÷
+            2.  Logic: AND, OR, NOT, True/False
+
+        Example:
+            1.  5 + 3 = 8
+            2.  10 > 5 = True
+
+    2.  Control Unit (CU)
+        “Manager / Controller”
+
+        কাজ:
+            1.  কোন instruction কখন execute হবে
+            2.  কোন data কোথায় যাবে
+            3.  সব components কে control করা
+
+        সহজভাবে: “CU বলে — কে কী করবে”
+
+    3.  Registers
+        “Ultra-fast Memory”
+
+        কাজ:
+            1.  Temporary data রাখা
+            2.  Instruction ধরে রাখা
+            3.  খুব দ্রুত access দেওয়া
+            4.  RAM থেকেও faster
+
+P3: CPU-এর ভিতরের Flow (Core Concept)
+    CPU শুধু parts না — এগুলো একসাথে কাজ করে
+
+    Step-by-step:
+        1.  Instruction আসে (RAM থেকে)
+        2.  Control Unit সেটাকে বুঝে
+        3.  ALU কাজ করে
+        4.  Result Register-এ রাখে
+
+P4: Instruction Cycle (CPU-এর জীবনচক্র)
+    এটা CPU-এর heartbeat
+
+    Instructions do work in 3 Steps:
+        1.  Fetch
+            RAM থেকে instruction নেয়
+
+        2.  Decode
+            বুঝে — কি করতে হবে
+
+        3.  Execute
+            কাজ করে
+
+    ✔  Flow: Fetch → Decode → Execute
+
+P5: Important Registers
+    1.  Program Counter (PC)
+        ✔  পরবর্তী instruction এর address রাখে
+
+    2.  Instruction Register (IR)
+        ✔  current instruction রাখে
+
+    3.  Accumulator
+        ✔  ALU result রাখে
+
+    4.  Memory Address Register (MAR)
+        ✔  কোথা থেকে data আনবে
+
+    5.  Memory Data Register (MDR)
+        ✔  data ধরে রাখে
+
+P6: CPU + Memory Connection
+    CPU একা কাজ করতে পারে না
+    RAM এর সাথে connected থাকতে হয়
+
+    Example:
+        1.  CPU → “5+3 আনো”
+        2.  RAM → data দেয়
+        3.  CPU → result করে
+
+P7: Real-Life Analogy
+    CPU = Restaurant Kitchen
+
+    Role        CPU Part
+    Chef	    ALU
+    Manager	    CU
+    Table notes	Registers
+
+P8: Performance Factors (CPU fast কেন হয়?)
+    1.  Clock Speed (GHz)
+    2.  Number of cores
+    3.  Cache memory
+    4.  Register speed
+
+=>  Practice Task
+    1.  CPU কী?
+        CPU (Central Processing Unit) হলো কম্পিউটারের প্রধান processing unit, যা instruction execute করে, calculation করে এবং পুরো সিস্টেমকে control করে।
+        সহজভাবে: CPU = যে অংশ সব কাজ করে এবং নিয়ন্ত্রণ করে
+
+        ✔  CPU এর প্রধান কাজ
+            1.  Instruction execute করা
+                Software থেকে instruction নিয়ে কাজ করে
+
+            2.  Calculation করা
+                যোগ, বিয়োগ, তুলনা ইত্যাদি
+
+            3.  Control করা
+                কোন device কখন কাজ করবে তা নিয়ন্ত্রণ করে
+
+        ✔  CPU এর প্রধান অংশ (Components)
+            1.  ALU (Arithmetic Logic Unit)
+
+                কাজ:
+                    1.  Arithmetic: +, −, ×, ÷
+                    2.  Logic: AND, OR, NOT, Comparison
+
+            2.  Control Unit (CU)
+
+                কাজ:
+                    1.  Instruction বুঝে
+                    3.  CPU এর সব অংশকে নির্দেশ দেয়
+
+            3.  Register
+
+                কাজ:
+                    1.  খুব দ্রুত temporary memory
+                    2.  Data সাময়িকভাবে রাখে
+
+        ✔  CPU কীভাবে কাজ করে?
+            CPU Fetch-Decode-Execute Cycle অনুসরণ করে:
+                1.  Fetch → Instruction আনে
+                2.  Decode → বুঝে
+                3.  Execute → কাজ করে
+
+        ✔  Real Life Example
+            তুমি Calculator এ 10 + 5 দিলে CPU → বুঝে → হিসাব করে → Result দেয় (15)
+
+        ✔  CPU কোথায় থাকে?
+            1.  CPU থাকে Motherboard এর উপর
+            2.  এটাকে Processor-ও বলা হয়
+
+        ✔  Key Points
+            1.  CPU ছাড়া কম্পিউটার কাজ করতে পারে না
+            2.  এটি সব processing এর কেন্দ্র
+            3.  এটি RAM, Hard Disk, Input/Output সবকিছু control করে
+                
+    2.  ALU, CU, Register এর কাজ explain করো?
+
+        1.  ALU (Arithmetic Logic Unit)
+            ALU হলো CPU-এর সেই অংশ, যা সব ধরনের গাণিতিক ও লজিক্যাল কাজ করে।
+
+            কাজ:
+                Arithmetic:
+                    1.  Addition (যোগ)
+                    2.  Subtraction (বিয়োগ)
+                    3.  Multiplication
+                    4.  Division
+
+                Logical:
+                    1.  AND, OR, NOT
+                    2.  Comparison (>, <, =)
+            উদাহরণ:
+                5 + 3 = 8
+                ✔  এই হিসাবটা ALU করে
+
+        2.  CU (Control Unit)
+            CU (Control Unit) হলো CPU-এর manager / controller
+
+            কাজ:
+                1.  Instruction বুঝে (Decode করে)
+                2.  CPU-এর সব অংশকে নির্দেশ দেয়
+                3.  কোন কাজ কখন হবে তা ঠিক করে
+
+            সহজভাবে:
+                1.  CU = “Boss”
+                    কে কী কাজ করবে তা বলে দেয়
+
+            উদাহরণ: তুমি 5 + 3 লিখলে
+                1.  CU বুঝবে এটা addition
+                2.  ALU কে বলবে → “এইটা calculate করো”
+
+        3.  Register
+            Register হলো CPU-এর ভেতরের সবচেয়ে দ্রুত ছোট memory
+
+            কাজ:
+                1.  Data সাময়িকভাবে রাখা
+                2.  Instruction temporary রাখা
+                3.  Result অস্থায়ীভাবে রাখা
+
+            বৈশিষ্ট্য:
+                1.  খুবই fast (RAM থেকেও দ্রুত)
+                2.  Size ছোট
+
+            উদাহরণ:
+                1.  5 + 3 করার সময়
+                2.  5 এবং 3 আগে register-এ রাখা হয়
+                3.  Result (8) কিছু সময় register-এ থাকে
+
+        ✔  একসাথে কাজ করার Flow
+            Input → Register → CU → ALU → Register → Output
+
+        Step by Step:
+            1.  Data → Register এ আসে
+            2.  CU → Instruction বুঝে
+            3.  ALU → কাজ করে
+            4.  Result → Register এ রাখে       
+            5.  তারপর Output
+
+        Real Life Analogy
+            1.  ALU = Worker (হিসাব করে)
+            2.  CU = Boss (নির্দেশ দেয়)
+            3.  Register = Table (ডেটা রাখে)
+
+    3.  Fetch-Decode-Execute cycle নিজের ভাষায় বলো?
+        CPU প্রতিটি instruction প্রথমে memory থেকে fetch করে, তারপর decode করে instruction বুঝে, এবং শেষে execute করে কাজ সম্পন্ন করে—এই পুরো প্রক্রিয়াকেই Fetch-Decode-Execute Cycle বলা হয়।
+
+        কম্পিউটার যখন কোনো কাজ করে, তখন CPU একটার পর একটা instruction নিয়ে তিনটা ধাপে কাজ করে:
+        1.  Fetch (আনা)
+            CPU আগে Memory থেকে instruction নিয়ে আসে
+
+            সহজভাবে: “কি কাজ করতে হবে” → সেটা আগে নিয়ে আসে
+
+        2.  Decode (বোঝা)
+            তারপর CPU বুঝে instruction টা আসলে কী করতে বলছে
+
+            সহজভাবে: “এই কাজটা কী?” → সেটা বুঝে
+
+        3.  Execute (কাজ করা)
+            শেষে CPU সেই instruction অনুযায়ী কাজটা করে ফেলে
+
+            সহজভাবে: “যা করতে বলা হয়েছে” → সেটা করে
+
+        ✔  পুরোটা এক লাইনে
+            আগে আনে → তারপর বুঝে → তারপর কাজ করে → আবার নতুনটা আনে
+
+
+    4.  Registers কেন RAM থেকেও fast?
+        Registers CPU-এর ভিতরে অবস্থিত এবং direct access পাওয়া যায়, তাই কোনো bus delay থাকে না। এছাড়া এগুলোর size ছোট এবং high-speed flip-flop technology ব্যবহার করে তৈরি হওয়ায় Registers RAM থেকেও অনেক দ্রুত।
+
+        ✔  মূল কারণগুলো
+            1.  CPU-এর ভেতরে থাকে
+                Register সরাসরি CPU-এর ভিতরে built-in
+                RAM CPU-এর বাইরে (Motherboard এ)
+
+            তাই:
+                Register → Direct access
+                RAM → Bus দিয়ে access
+                Result: Register অনেক দ্রুত
+
+            2.  কোনো Delay (Latency) প্রায় নেই
+                Register থেকে data নিতে almost zero delay
+                RAM থেকে data আনতে কিছু সময় লাগে
+                কারণ RAM → Data Bus দিয়ে আসতে হয়
+
+            3.  Size ছোট
+                Register খুব ছোট (few bytes)
+                RAM অনেক বড় (GB level)
+
+            ✔  ছোট হলে:
+                Access time কম হয়
+                Search & fetch দ্রুত হয়
+
+            4.  High-speed Technology ব্যবহার করে
+                Register তৈরি হয় flip-flop circuits দিয়ে
+                RAM (DRAM) capacitor-based
+                Flip-flop → faster
+                DRAM → একটু slow
+
+        Short Summary
+            Register fast কারণ:
+            1.  CPU-এর ভিতরে থাকে
+            2.  Direct access
+            3.  Size ছোট
+            4.  Advanced circuit ব্যবহার করে            
+
+=>  Quick Revision
+    1.  CPU = ALU + CU + Registers
+    2.  ALU = calculation
+    3.  CU = control
+    4.  Registers = fastest memory
+    5.  Cycle = Fetch → Decode → Execute
+-->

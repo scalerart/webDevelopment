@@ -1,9 +1,10 @@
 import React from 'react'
 import '../assets/style/Product.css'
 import { RiShoppingBagLine, } from "@remixicon/react";
+import { Link } from 'react-router';
 
-function Product({ product, addProdCart }) {
-    const { img, name, price, stock, seller, features } = product;
+function Product({ product, addProdCart, showAddToCart, removeProduct, removeCart, showQuantity, showStock, showDetails }) {
+    const { img, name, price, stock, seller, features, key, quantity } = product;
 
     return (
         <div className='product'>
@@ -12,13 +13,17 @@ function Product({ product, addProdCart }) {
             </div>
 
             <div className="product-content">
-                <h4 className='product-tittle'>{name}</h4>
+                <h4 className='product-tittle'><Link to={showDetails && "/product/" + key}>{name}</Link></h4>
                 <div className='product-detail'>
                     <span>
                         <p>By: {seller}</p>
                         <h3 className='price'>${price}</h3>
-                        <p>Only {stock} left in stock - order soon</p>
-                        <button onClick={() => addProdCart(product)} className='add-to-cart'><RiShoppingBagLine /> Add to Cart</button>
+                        {showStock && <p>Only {stock} left in stock - order soon</p>}
+                        {showQuantity && <p>Quantity: {quantity}</p>}
+
+                        {showAddToCart && <button onClick={() => addProdCart(product)} className='add-to-cart'><RiShoppingBagLine /> Add to Cart</button>}
+
+                        {removeCart && <button onClick={() => removeProduct(product.key)} className='add-to-cart'><RiShoppingBagLine /> Remove</button>}
                     </span>
                     <span className='featues'>
                         <h4>Featues</h4>

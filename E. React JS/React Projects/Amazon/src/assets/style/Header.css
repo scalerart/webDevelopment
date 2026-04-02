@@ -1,4 +1,8 @@
-.header {
+a {
+    color: inherit;
+}
+
+header {
     position: sticky;
     top: 0;
     width: 100%;
@@ -81,6 +85,10 @@
 
 .nav-link a:hover {
     border: 1px solid #fff;
+}
+
+.nav-link .active {
+    border-color: #fff;
 }
 
 /* right section */

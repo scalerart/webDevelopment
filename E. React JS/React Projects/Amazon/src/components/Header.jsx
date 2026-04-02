@@ -1,19 +1,18 @@
 import { useState } from "react"
 import '../assets/style/Header.css'
 import logo from '../assets/images/logo.png'
+import { Link, NavLink } from "react-router";
 
 import { RiShoppingBagLine, RiSearchLine, RiMenuLine, RiCloseLine } from "@remixicon/react";
-
 
 function Header() {
 
     const [menuOpen, setMenuOpen] = useState(false)
 
+
     return (
-        <div className='header'>
-            <a href="/" className="logo">
-                <img src={logo} alt="" />
-            </a>
+        <header>
+            <Link to="/" className="logo"><img src={logo} alt="" /></Link>
 
             <nav className={menuOpen ? "nav active" : "nav"}>
                 <div className="search-box">
@@ -23,17 +22,17 @@ function Header() {
                 </div>
 
                 <div className="nav-link">
-                    <a href="/shop">Shop</a>
-                    <a href="/review">Order Review</a>
-                    <a href="/manage">Manage Inventory</a>
+                    <NavLink className={({ isActive }) => isActive ? "active" : ""} to="/shop">Shop</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? "active" : ""} to="/review">Order Review</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? "active" : ""} to="/inventory">Manage Inventory</NavLink>
                 </div>
             </nav>
 
 
             <div className="right-section">
                 <div id="cart-icon">
-                    <RiShoppingBagLine size={33} color='#fff' />
-                    <span className="cart-item-count">0</span>
+                    <Link to="/cart"><RiShoppingBagLine size={33} color='#fff' /></Link>
+                    {/* <span className="cart-item-count">0</span> */}
                 </div>
 
                 <div
@@ -47,7 +46,8 @@ function Header() {
                     }
                 </div>
             </div>
-        </div>
+
+        </header >
     )
 }
 
