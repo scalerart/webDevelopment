@@ -1,0 +1,87 @@
+<!--
+1.  Binary
+
+P1: Concept
+    ভাবো একটা সুইচ
+        OFF = 0
+        ON = 1
+
+    ✔  Computer-এর ভিতরে লক্ষ-কোটি transistor থাকে
+    ✔  এগুলো শুধু ON/OFF বুঝে
+    ✔  তাই Computer-এর language = 0 এবং 1
+    ✔  এক লাইনে: Binary = Computer-এর natural language
+
+P2: Binary কী?
+    Binary হলো base-2 number system যেখানে শুধু 0 এবং 1 ব্যবহার হয়
+
+    ✔  Decimal (Base 10): 0–9
+    ✔  Binary (Base 2): 0–1
+
+P3: Position Value
+    ✔  Binary-তে প্রতিটি digit এর weight হয় power of 2
+
+    Binary: 1011₂
+
+    মানে:
+        1×2³ = 8
+        0×2² = 0
+        1×2¹ = 2
+        1×2⁰ = 1
+    ✔  Total = 11
+
+    ✔  তাই: 1011₂ = 11₁₀
+
+P4: Conversion
+    1.  Binary → Decimal
+
+    ✔  নিয়ম: প্রতিটি digit × power of 2 সব যোগ করো
+
+    Example: 1101₂
+        = 8 + 4 + 0 + 1
+        = 13
+
+    2.  Decimal → Binary
+
+    ✔  নিয়ম: 2 দিয়ে divide remainder লিখো নিচ থেকে উপরে পড়ো
+
+    Example (10):
+        10 ÷ 2 = 5 r0
+        5 ÷ 2 = 2 r1
+        2 ÷ 2 = 1 r0
+        1 ÷ 2 = 0 r1
+
+    Result: 10₁₀ = 1010₂
+
+P5: Binary Addition
+    ✔  Rules:
+        0 + 0 = 0  
+        0 + 1 = 1  
+        1 + 0 = 1  
+        1 + 1 = 10 (carry)
+
+    Example:
+        101
+      + 011
+      ------
+        1000
+
+P6: Key Terms
+    ✔  Bit = 1 binary digit
+    ✔  Byte = 8 bits
+
+    Example: 10101010 = 1 byte
+
+P7: WHY
+    ✔  Computer কেন Binary use করে?
+        1.  ON/OFF represent করা সহজ
+        2.  Electrical circuit simple
+        3.  Error কম হয়
+
+    ✔  Decimal ব্যবহার করলে hardware complex হয়ে যেত
+
+=>  Practice Task
+    1.  Binary কী?
+    2.  Computer কেন binary use করে?
+    3.  Bit vs Byte?
+    4.  1+1 = 10 কেন?
+-->

@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import '../assets/css/Course.css'
-import { RiStarFill, RiStarHalfLine } from "@remixicon/react";
+import { RiStarFill, RiStarHalfLine } from '@remixicon/react';
+import { CartContext } from '../Context/ContextProvider';
 
 function Course({ course }) {
-    const { image, title, instructor, rating, price } = course;
+    const { image, title, instructor, rating, price, id } = course;
+
+    const { dispatch } = useContext(CartContext)
 
     return (
         <div className='course-box'>
@@ -21,7 +24,7 @@ function Course({ course }) {
                 </div>
                 <p className='price'>{price}  <span> <s>$59.99</s></span></p>
                 <div className="button">
-                    <button>Add to Cart</button>
+                    <button onClick={() => dispatch({ type: "Add", course })}>Add to Cart</button>
                     <span>Bestseller</span>
                 </div>
             </div>

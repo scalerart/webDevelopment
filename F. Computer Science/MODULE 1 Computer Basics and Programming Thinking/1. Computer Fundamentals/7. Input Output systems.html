@@ -1,0 +1,104 @@
+<!--
+7.  Input Output systems
+
+P1: Story দিয়ে বুঝি (Super Easy)
+    ভাবো তুমি কম্পিউটারে কিছু লিখছো
+
+    1.  Keyboard দিয়ে টাইপ করছো → Input
+    2.  CPU সেটা process করছে → Processing
+    3.  Screen-এ দেখাচ্ছে → Output
+
+    ✔  এটা হলো পুরো I/O system এর কাজ
+        Input → CPU → Output
+
+P2: Input / Output System কী?
+    Input/Output system হলো এমন একটি ব্যবস্থা যার মাধ্যমে কম্পিউটার বাইরের পৃথিবী (user/devices) এর সাথে যোগাযোগ করে
+
+    ✔  শর্টে: “Computer ↔ User communication system”
+
+P3: Input Devices (ডাটা ঢোকে)
+    ✔  Input devices দিয়ে computer data নেয়
+
+    Examples:
+        1.  Keyboard
+        2.  Mouse
+        3.  Scanner
+        4.  Microphone
+
+    ✔  কাজ: User → Computer data পাঠানো
+
+P4: Output Devices (ফলাফল বের হয়)
+    ✔  Output devices দিয়ে result দেখা যায়
+
+    Examples:
+        1.  Monitor
+        2.  Printer
+        3.  Speaker
+
+    ✔  কাজ: Computer → User result দেখানো
+
+P5: I/O System কীভাবে কাজ করে?
+    ✔  Step-by-step:
+        1.  User input দেয় (Keyboard)
+        2.  Input device → CPU-তে পাঠায়
+        3.  CPU process করে
+        4.  Output device → result দেখায়
+
+    ✔  Flow: Input Device → CPU → Output Device
+                  ↓
+                Memory
+
+P6: I/O Controller (Important Concept)
+    ✔  CPU সব device সরাসরি handle করে না তাই লাগে I/O Controller
+
+    কাজ:
+        1.  Device control করা
+        2.  Data transfer manage করা
+        3.  CPU-এর workload কমানো
+
+    Example:
+        1.  Keyboard controller
+        2.  Disk controller
+
+P7: Interrupt
+    ✔  Interrupt মানে “Attention please!”
+
+    যখন I/O device CPU-কে বলে: “আমার কাজ হয়ে গেছে” বা “আমার দরকার আছে”
+
+    Example: তুমি টাইপ করছো
+        → Keyboard CPU-কে interrupt দেয়
+
+    ✔  CPU তখন current কাজ pause করে
+        → I/O handle করে
+
+P8: I/O Techniques (Basic Idea)
+    1.  Programmed I/O
+        ✔  CPU নিজে check করে (slow)
+
+    2.  Interrupt-driven I/O
+        ✔  Device signal দেয় (better)
+
+    3.  DMA (Direct Memory Access)
+        ✔  Device সরাসরি memory-তে data পাঠায় (fastest)
+
+P9: WHY (Concept Clear)
+    ✔  I/O system ছাড়া কী হবে?
+        1.  User input দিতে পারবে না
+        2.  Result দেখতে পারবে না
+        3.  Computer useless
+
+    ✔  তাই I/O = User interaction system
+
+=>  Practice Task
+    1.  Input / Output system কী?
+    2.  Input device এবং Output device পার্থক্য বলো?
+    3.  Interrupt কী? Example সহ explain করো?
+    4.  CPU সব I/O নিজে handle করলে সমস্যা কী?
+
+=>  Quick Revision
+    1.  Input = data in
+    2.  Output = result out
+    3.  I/O system = communication
+    4.  Interrupt = signal to CPU
+    5.  DMA = fast transfer
+-->

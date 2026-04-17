@@ -1,0 +1,95 @@
+<!--
+6.  Bus System
+
+P1: Story দিয়ে বুঝি (Super Easy)
+    ভাবো একটা শহর
+        1.  বাড়ি = Memory
+        2.  অফিস = CPU
+        2.  দোকান = Input/Output devices
+
+    ✔  এখন এগুলোর মধ্যে চলাচলের জন্য কী লাগে?
+        রাস্তা (Road)
+
+    ✔  Computer-এ এই “রাস্তা”-টাই হলো Bus
+
+P2: Bus System কী?
+    Bus হলো একটি communication system যা CPU, Memory, এবং I/O devices এর মধ্যে data, address, এবং control signals আদান-প্রদান করে।
+
+    ✔  শর্টে: “Bus = data চলাচলের রাস্তা”
+
+P3: Bus এর Types (Most Important)
+    1.  Data Bus
+        ডাটা বহন করে
+
+        ✔  CPU ↔ Memory ↔ I/O
+        ✔  Bidirectional (দুইদিকে যায়)
+
+        ✔  Example: 5 + 3 এর data CPU-তে যাচ্ছে
+
+    2.  Address Bus
+        লোকেশন বলে দেয়
+
+        ✔  CPU → Memory
+        ✔  Unidirectional (একদিকে যায়)
+
+        ✔  Example: “RAM এর এই address থেকে data আনো”
+
+    3.  Control Bus
+        control signal দেয়
+
+        ✔  Read / Write signal
+        ✔  Interrupt signal
+
+        ✔  Example: “Data read করো”
+            “Data write করো”
+
+P4: Bus কীভাবে কাজ করে? (Flow)
+    ধরো CPU data আনতে চায়:
+
+    ✔  Step-by-step:
+        1.  CPU → Address Bus দিয়ে location পাঠায়
+        2.  Control Bus → “Read” signal দেয়
+        3.  Memory → Data Bus দিয়ে data পাঠায়
+        4.  CPU → data process করে
+
+    ✔  Flow:
+        1.  CPU → Address Bus → Memory
+        2.  CPU → Control Bus → Read
+        3.  Memory → Data Bus → CPU
+
+P5: Comparison (Easy Table)
+    Bus Type	    কাজ	            Direction
+    Data Bus	    Data বহন	    Both
+    Address Bus	    Address পাঠায়	 One way
+    Control Bus	    Signal দেয়	    Both
+
+P6: Bus Width (Important Concept)
+    ✔  Bus width মানে একবারে কত data transfer করতে পারে
+        1.  8-bit bus → 8 bit data
+        2.  32-bit bus → 32 bit data
+        3.  64-bit bus → বেশি fast
+
+    ✔  Rule: Bus width ↑ ⇒ Speed ↑
+
+P8: WHY (Concept Clear)
+    ✔  Bus ছাড়া কী হবে?
+        1.  CPU, Memory, I/O connect হবে না
+        2.  Data transfer সম্ভব না
+        3.  পুরো system dead
+
+    ✔  তাই Bus = System backbone
+
+=>  Practice Task
+    1.  Bus System কী?
+    2.  Data Bus, Address Bus, Control Bus explain করো?
+    3.  CPU কীভাবে memory থেকে data আনে? (Bus ব্যবহার করে)?
+    4.  Bus width বেশি হলে performance কেন বাড়ে?
+    
+=>  Quick Revision
+    1.  Bus = communication system
+    2.  Types = Data, Address, Control
+    3.  Data Bus = data
+    4.  Address Bus = location
+    5.  Control Bus = signal
+    6.  Bus width ↑ ⇒ speed ↑
+-->

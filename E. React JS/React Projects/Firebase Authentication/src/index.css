@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/* 
+import { FaGoogle } from 'react-icons/fa'
+import './App.css'
+import { initializeApp } from "firebase/app";
+import firebaseConfig from './Auth/firebaseConfig';
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import { useState } from 'react';
+
+initializeApp(firebaseConfig);
+
+function App() {
+  const [user, setUser] = useState({
+    isSignedIn: false,
+    name: '',
+    email: ''
+  });
+
+  const provider = new GoogleAuthProvider();
+
+  const handleSignIn = () => {
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then(res => {
+        const { displayName, email } = res.user;
+        const signedInUser = {
+          isSignedIn: true,
+          name: displayName,
+          email: email,
+        };
+        setUser(signedInUser);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  };
+
+  const handleSignOut = () => {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        const signedOutUser = {
+          isSignedIn: false,
+          name: '',
+          email: '',
+        };
+        setUser(signedOutUser)
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  return (
+    <div>
+      <div className='flex items-center justify-center mt-15'>
+        {
+          user.isSignedIn ? <button onClick={handleSignOut} className='px-8 py-2 bg-green-700 text-3xl text-white cursor-pointer rounded-full flex items-center gap-2'>Sign Out <FaGoogle size={26} /></button> : <button onClick={handleSignIn} className='px-8 py-2 bg-green-700 text-3xl text-white cursor-pointer rounded-full flex items-center gap-2'>Sign In <FaGoogle size={26} /></button>
+        }
+      </div>
+
+      <div className='flex flex-col justify-center items-center mt-8 text-4xl text-center'>
+        {
+          user.isSignedIn && <div>
+            <h2 className='font-bold'>Welecome, {user.name}</h2>
+            <h3>Your email: {user.email}</h3>
+          </div>
+        }
+      </div>
+    </div>
+  )
+}
+
+export default App
+
+*/

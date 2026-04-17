@@ -1,0 +1,95 @@
+<!--
+5.  RAM / Cache / Register
+
+P1: Story দিয়ে বুঝি
+    ভাবো তুমি পড়াশোনা করছো
+        1.  তোমার মাথায় যা আছে → Register (instant access)
+        2.  টেবিলে রাখা বই → Cache (দ্রুত পাওয়া যায়)
+        3.  পাশে রাখা ব্যাগ → RAM (কিছুটা সময় লাগে)
+
+    ✔  এই তিনটাই temporary memory
+    ✔  কিন্তু speed আলাদা
+
+P2: Register কী?
+    Register হলো CPU-এর ভিতরের সবচেয়ে ছোট এবং সবচেয়ে দ্রুত memory।
+
+    1.  Features:
+        1.  CPU-এর ভিতরে থাকে
+        2.  Fastest
+        3.  খুব ছোট size
+        4.  Temporary data রাখে
+
+    ✔  Example:
+        1.  ALU calculation result
+        2.  Current instruction
+
+    ✔  শর্টে: “Register = CPU-এর personal memory”
+
+P3: Cache Memory কী?
+    Cache হলো CPU-এর কাছে থাকা high-speed memory যা frequently used data রাখে
+
+    1.  Features:
+        1.  RAM থেকে faster
+        2.  CPU-এর কাছে থাকে
+        3.  Frequently used data রাখে
+
+    2.  Types:
+        1.  L1 (সবচেয়ে fast)
+        2.  L2
+        3.  L3
+
+    ✔  Example:
+        বারবার ব্যবহৃত instruction
+
+    ✔  শর্টে: “Cache = shortcut memory”
+
+P4: RAM কী?
+    RAM (Random Access Memory) হলো main memory যেখানে program run করার সময় data রাখা হয়
+
+    1.  Features:
+        1.  Temporary
+        2.  Power off হলে data delete
+        3.  CPU এখান থেকে data নেয়
+
+    ✔  Example:
+        Chrome open করলে RAM use হয়
+
+    ✔  শর্টে: “RAM = working memory”
+
+P5: Relationship (সবচেয়ে গুরুত্বপূর্ণ)
+    ✔  এরা একসাথে কাজ করে:
+        Hard Disk → RAM → Cache → Register → CPU
+
+    ✔  Step:
+        1.  Data আসে Hard Disk থেকে
+        2.  RAM-এ load হয়
+        3.  Frequently used data Cache-এ যায়
+        4.  CPU Register-এ নিয়ে কাজ করে
+
+P6: Comparison Table (Must Know)
+    Feature     Register	    Cache	        RAM
+    Location	CPU ভিতরে	    CPU এর কাছে	    Motherboard
+    Speed       Fastest         Very Fast	    Fast
+    Size        Very Small	    Small	        Large
+    Cost        Highest	        High	        Medium
+    Use         Immediate data	Frequent data	Running programs
+
+P7: WHY (Concept Clear করার জন্য)
+    প্রশ্ন: Cache কেন দরকার?
+    Answer:
+        1.  RAM slow CPU-এর তুলনায়
+        2.  তাই CPU wait করে
+        3.  Cache এই gap কমায়
+
+    প্রশ্ন: Register কেন দরকার?
+    Answer:
+        1.  CPU instant data চায়
+        2.  RAM/Cache থেকেও delay হয়
+        3.  তাই ultra-fast memory দরকার
+
+=>  Practice Task
+    1.  Register কী?
+    2.  Cache memory কেন দরকার?
+    3.  RAM, Cache, Register পার্থক্য explain করো?
+    4.  CPU সরাসরি RAM থেকে কাজ করলে সমস্যা কী?
+-->

@@ -1,4 +1,4 @@
-const courses = Array.from({ length: 100 }, (_, i) => ({
+const courses = Array.from({ length: 20 }, (_, i) => ({
     id: i + 1,
 
     title: [
@@ -14,6 +14,8 @@ const courses = Array.from({ length: 100 }, (_, i) => ({
         "Advanced JavaScript Projects"
     ][i % 10] + ` ${i + 1}`,
 
+    // quantity: 1,
+
     instructor: [
         "Angela Yu",
         "Colt Steele",
@@ -23,9 +25,7 @@ const courses = Array.from({ length: 100 }, (_, i) => ({
     ][i % 5],
 
     rating: (4.5 + (i % 4) * 0.1).toFixed(1),
-    price: `$${(9.99 + (i % 10)).toFixed(2)}`,
-
-    // guaranteed working images
+    price: `${(9.99 + (i % 10)).toFixed(2)}`,
     image: `https://picsum.photos/seed/course${i}/480/270`,
     link: "https://www.udemy.com/courses/development/web-development/"
 }));
