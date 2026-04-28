@@ -1,16 +1,25 @@
-import '../assets/style/Cart.css'
+import { useContext } from "react";
+import { UserContext } from "../context/ContextProvider";
 
-function Cart(props) {
-    const cart = props.cart;
+function Cart({ cart, children }) {
+    const {cartItem} = useContext(UserContext);
 
-    const totalQuantity = cart.reduce((total, qty) => total + qty.quantity, 0);
+    // Total Quantity
+    const totalQuantity = cart.reduce(
+        (total, item) => total + item.quantity,
+        0
+    );
 
-    let totalPrice = 0;
-    for (let i = 0; i < cart.length; i++) {
-        const product = cart[i];
-        totalPrice = totalPrice + product.price * product.quantity;
-    }
+    cartItem(totalQuantity);
 
+
+    // Total Price
+    const totalPrice = cart.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+    );
+
+    // Shipping
     let shipping = 0;
     if (totalPrice > 35) {
         shipping = 0;
@@ -20,39 +29,63 @@ function Cart(props) {
         shipping = 12.99;
     }
 
-    const tax = (totalPrice / 10);
-    const grandTotal = (totalPrice + shipping + tax);
+    // Tax & Grand Total
+    const tax = totalPrice * 0.1;
+    const grandTotal = totalPrice + shipping + tax;
 
-    const formateNumber = num => {
-        const precision = num.toFixed(2);
-        return Number(precision);
-    };
+    const format = (num) => num.toFixed(2);
 
     return (
-        <>
-            <h2>Order Summary</h2>
-            <p className='items-ordered'>Items Ordered: {totalQuantity}</p>
-            <div className="cart-content">
-                <span className='content'>
-                    <p>Items: </p>
-                    <p>Shipping:</p>
-                    <p>Total before Tax:</p>
-                    <p>Estimated Tax:</p>
-                    <h3>Order Total:</h3>
-                </span>
-                <span className='price'>
-                    <p>{totalQuantity}</p>
-                    <p>${formateNumber(shipping)}</p>
-                    <p>${formateNumber(totalPrice)}</p>
-                    <p>${formateNumber(tax)}</p>
-                    <h3>${formateNumber(grandTotal)}</h3>
-                </span>
+        <div className="bg-white rounded-2xl p-3 space-y-4">
+
+            {/* Title */}
+            <h2 className="text-xl font-semibold border-b pb-2 text-center">
+                Order Summary
+            </h2>
+
+            {/* Items */}
+            <p className="text-gray-600 text-sm text-center">
+                Items Ordered:{" "}
+                <span className="font-medium">{totalQuantity}</span>
+            </p>
+
+            {/* Price Breakdown */}
+            <div className="space-y-2 text-sm">
+
+                <div className="flex justify-between">
+                    <span>Items</span>
+                    <span>{totalQuantity}</span>
+                </div>
+
+                <div className="flex justify-between">
+                    <span>Shipping</span>
+                    <span>${format(shipping)}</span>
+                </div>
+
+                <div className="flex justify-between">
+                    <span>Total before Tax</span>
+                    <span>${format(totalPrice)}</span>
+                </div>
+
+                <div className="flex justify-between">
+                    <span>Estimated Tax</span>
+                    <span>${format(tax)}</span>
+                </div>
+
+                <hr />
+
+                <div className="flex justify-between text-lg font-bold text-orange-500">
+                    <span>Order Total</span>
+                    <span>${format(grandTotal)}</span>
+                </div>
             </div>
-            {
-                props.children
-            }
-        </>
-    )
+
+            {/* CTA Button / Extra Content */}
+            <div className="pt-2">
+                {children}
+            </div>
+        </div>
+    );
 }
 
-export default Cart
+export default Cart;
