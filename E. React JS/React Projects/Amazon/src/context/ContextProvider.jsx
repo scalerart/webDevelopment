@@ -48,7 +48,8 @@ const ContextProvider = ({ children }) => {
         saveUser,
         auth,
         cartItem,
-        item
+        item,
+        setItem
     };
 
     return (

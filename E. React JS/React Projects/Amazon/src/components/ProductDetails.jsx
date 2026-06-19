@@ -10,7 +10,7 @@ import Product from "./Product";
 const ProductDetails = ({ addProdCart }) => {
     const { productKey } = useParams();
     const navigate = useNavigate();
-    const { user } = useContext(UserContext);
+    const { user, setItem } = useContext(UserContext);
 
     const product = fakeData.find((p) => p.key === productKey);
 
@@ -142,7 +142,8 @@ const ProductDetails = ({ addProdCart }) => {
             </div>
 
             <div>
-                <h2 className="text-center text-2xl font-bold my-8 text-gray-600">RELATED PRODUCTS</h2>
+                <h2 className="text-center text-2xl font-bold mt-8 pb-2 text-gray-600">RELATED PRODUCTS</h2>
+                <hr className="w-58 h-1 m-auto bg-[#F54A00] border-0 mb-8" />
                 <div className='my-5'>
                     <div className='grid justify-between items-center gap-4 sm:gap-5 md:gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5'>
                         {

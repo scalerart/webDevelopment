@@ -1,8 +1,8 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../context/ContextProvider";
 
 function Cart({ cart, children }) {
-    const {cartItem} = useContext(UserContext);
+    const { cartItem } = useContext(UserContext);
 
     // Total Quantity
     const totalQuantity = cart.reduce(
@@ -10,7 +10,9 @@ function Cart({ cart, children }) {
         0
     );
 
-    cartItem(totalQuantity);
+    useEffect(() => {
+        cartItem(totalQuantity);
+    }, [totalQuantity, cartItem]);
 
 
     // Total Price

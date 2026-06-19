@@ -64,7 +64,7 @@ function Shop() {
                 {/* Products */}
                 <div className="lg:col-span-3">
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <div className="grid justify-between items-center gap-4 grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4">
 
                         {products.map((product) => (
                             <Product
