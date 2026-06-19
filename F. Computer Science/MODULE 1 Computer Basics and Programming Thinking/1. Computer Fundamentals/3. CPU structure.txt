@@ -1,4 +1,3 @@
-<!--
 3.  CPU structure
 
 P1: CPU কী? (Story দিয়ে বুঝি)
@@ -292,4 +291,3 @@ P8: Performance Factors (CPU fast কেন হয়?)
     3.  CU = control
     4.  Registers = fastest memory
     5.  Cycle = Fetch → Decode → Execute
--->

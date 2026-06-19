@@ -1,4 +1,3 @@
-<!--
 1.  Computer Architecture Introduction
 
 P1: Computer আসলে কীভাবে কাজ করে? (Story Style)
@@ -264,4 +263,3 @@ P7: Architecture Types
     3.  Cycle = Fetch → Decode → Execute
     4.  Memory = hierarchy based
     5.  Bus = communication system
--->

@@ -1,4 +1,3 @@
-<!--
 7.  Input Output systems
 
 P1: Story দিয়ে বুঝি (Super Easy)
@@ -101,4 +100,3 @@ P9: WHY (Concept Clear)
     3.  I/O system = communication
     4.  Interrupt = signal to CPU
     5.  DMA = fast transfer
--->

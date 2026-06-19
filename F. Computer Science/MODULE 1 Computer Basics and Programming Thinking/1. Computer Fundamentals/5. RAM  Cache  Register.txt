@@ -1,4 +1,3 @@
-<!--
 5.  RAM / Cache / Register
 
 P1: Story দিয়ে বুঝি
@@ -92,4 +91,3 @@ P7: WHY (Concept Clear করার জন্য)
     2.  Cache memory কেন দরকার?
     3.  RAM, Cache, Register পার্থক্য explain করো?
     4.  CPU সরাসরি RAM থেকে কাজ করলে সমস্যা কী?
--->

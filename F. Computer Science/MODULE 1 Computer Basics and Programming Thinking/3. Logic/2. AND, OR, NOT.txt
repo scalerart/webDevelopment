@@ -1,0 +1,121 @@
+2.  AND / OR / NOT
+
+P1: Computer কীভাবে সিদ্ধান্ত নেয়? (Story Style)
+    ভাবো তুমি বাইরে যাবে।
+
+    শর্ত:
+        1.  বৃষ্টি হচ্ছে AND ছাতা আছে → যাবে
+        2.  বাস আছে OR বাইক আছে → যাবে
+        3.  NOT রাত → বের হবে
+
+    এখানে তুমি অজান্তেই Logic ব্যবহার করছো।
+
+    ✔  Computer-ও ঠিক এভাবেই সিদ্ধান্ত নেয়।
+
+P2: AND / OR / NOT কী?
+    এগুলো হলো Logical Operators যা Boolean Logic-এর উপর কাজ করে।
+
+    ইনপুট নেয়:
+        1.  0 → False
+        2.  1 → True
+
+    Output দেয়:
+        1.  0 অথবা 1
+
+    ✔ মূল কথা: AND / OR / NOT = Computer-এর Decision Rules
+
+P3: AND Operation (সব সত্য হলে সত্য)
+    AND মানে: দুইটা শর্তই সত্য হতে হবে
+
+    Rule:
+        1.  1 AND 1 = 1
+        2.  বাকি সব = 0
+
+    Example
+        Exam Pass AND Attendance
+        দুইটাই থাকলে Pass।
+
+    ✔  AND = সবাই Yes হলে Yes
+
+P4: OR Operation (একটা সত্য হলেই সত্য)
+    OR মানে: যেকোনো একটা সত্য হলেই হবে
+
+    Rule:
+        1.  0 OR 0 = 0
+        2.  বাকি সব = 1
+
+    Example
+        বাস OR বাইক
+        একটা থাকলেই যাবে।
+
+    ✔  OR = একজন Yes হলেই Yes
+
+P5: NOT Operation (উল্টো করে)
+    NOT মানে: Value উল্টো করে দেয়
+
+    Rule:
+        1.  NOT 1 = 0
+        2.  NOT 0 = 1
+
+    Example
+        NOT Rain
+        মানে বৃষ্টি না।
+
+    ✔  NOT = বিপরীত
+
+P6: Combined Logic (Real Computer Thinking)
+    উদাহরণ:
+        (A AND B) OR C
+
+    যদি:
+        1.  A = 1
+        2.  B = 0
+        3.  C = 1
+
+    তাহলে:
+        (1 AND 0) OR 1 = 0 OR 1 = 1
+
+    ✔  Output = True
+
+P7: Computer-এ কোথায় ব্যবহার হয়?
+    AND / OR / NOT ব্যবহার হয়:
+        1.  CPU Decision
+        2.  Logic Gate
+        3.  Conditional Statement
+        4.  Search Query
+        5.  Database Filter
+        6.  Authentication System
+
+    উদাহরণ:
+        Username AND Password
+
+=>  Practice Task
+    1.  Output বের করো: 1 AND 1
+        লজিক: AND তখনই সত্য হয় যখন উভয় ইনপুটই সত্য (১) হয়। এখানে দুটিই সত্য।
+        আউটপুট: ১
+
+    2.  Output বের করো: 0 OR 1
+        লজিক: OR লজিকের নিয়ম হলো—যে কোনো একটি ইনপুট ১ (সত্য) হলেই আউটপুট ১ (সত্য) হয়ে যায়।
+        আউটপুট: ১
+
+    3.  Output বের করো: NOT(0)
+        লজিক: NOT লজিক ইনপুটকে উল্টে দেয়। ০-কে উল্টালে ১ পাওয়া যায়।
+        আউটপুট: ১
+
+    4.  Solve করো: (1 AND 0) OR 1
+        এটি সমাধানের জন্য আমরা ধাপে ধাপে ব্র্যাকেটের ভেতরের কাজ আগে করব:
+            ১.  (ব্র্যাকেটের কাজ): (1 AND 0)
+                আমরা জানি, AND লজিক অনুযায়ী একটি ০ থাকলে আউটপুট ০ হয়।
+                সুতরাং, (1 AND 0) = 0
+
+            ২.  (পুরো সমীকরণ): এখন সমীকরণটি দাঁড়ালো (0 OR 1)
+            ৩.  (চূড়ান্ত সমাধান): OR লজিক অনুযায়ী, একটি ১ থাকলেই আউটপুট ১ হয়।
+            ৪.  ফলাফল: ১
+
+=>  Revision (Short)
+    1.  AND → দুইটাই সত্য
+    2.  OR → একটা সত্য
+    3.  NOT → উল্টো
+    4.  Input = 0/1
+    5.  Output = 0/1
+    6.  এগুলো Boolean Logic-এর ভিত্তি

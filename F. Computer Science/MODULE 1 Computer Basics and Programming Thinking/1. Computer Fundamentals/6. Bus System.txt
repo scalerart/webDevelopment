@@ -1,4 +1,3 @@
-<!--
 6.  Bus System
 
 P1: Story দিয়ে বুঝি (Super Easy)
@@ -92,4 +91,3 @@ P8: WHY (Concept Clear)
     4.  Address Bus = location
     5.  Control Bus = signal
     6.  Bus width ↑ ⇒ speed ↑
--->
