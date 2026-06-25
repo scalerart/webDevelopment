@@ -1,0 +1,179 @@
+3. Pseudocode
+
+P1: Algorithm আর Code-এর মাঝখানে কী থাকে? (Story Style)
+    ভাবো তুমি একটা বাড়ি বানাবে
+    সরাসরি বাড়ি বানাও না।
+    
+    আগে কী করো?
+        Idea
+         ↓
+        Sketch
+         ↓
+        Real Building
+
+    Programming-এও একই—
+        Problem
+         ↓
+        Algorithm
+         ↓
+        Pseudocode
+         ↓
+        Program
+    অর্থাৎ Code লেখার আগে মানুষ যেভাবে চিন্তা লিখে—সেটাই Pseudocode।
+
+P2: Pseudocode কী?
+    Pseudocode হলো এমনভাবে Algorithm লেখা যেখানে—
+        1.  Programming logic থাকে
+        2.  কিন্তু কোনো নির্দিষ্ট Programming Language ব্যবহার করা হয় না
+        3.  মানুষের পড়তে সহজ হয়
+
+    ✔  মূল কথা:
+        Pseudocode = মানুষের ভাষায় লেখা Programming Logic
+
+P3: Pseudocode কেন ব্যবহার করা হয়?
+    Pseudocode ব্যবহার করলে—
+        1.  Problem সহজে বোঝা যায়
+        2.  Code লেখা সহজ হয়
+        3.  Logic আগে clear হয়
+        4.  Error কম হয়
+        5.  Language change করলেও Logic একই থাকে
+
+P4: Pseudocode-এর সাধারণ Structure
+    সাধারণ Pattern:
+        START
+        INPUT
+        PROCESS
+        OUTPUT
+        END
+
+    ✔  এটা মুখস্থ না—বোঝো।
+
+P5: Pseudocode Rules (Core Concept)
+    Pseudocode লেখার সময় সাধারণত:
+
+    1.  Input
+        INPUT A
+
+    2.  Output
+        PRINT Result
+
+    3.  Variable
+        SUM = A + B
+
+    4.  Condition
+        IF condition
+            Step
+
+        ELSE
+            Step
+
+    5.  Loop
+        REPEAT
+        UNTIL
+
+    ✔  এগুলো language না, শুধু logic।
+
+P6: Pseudocode Examples
+    Example 1: দুইটা সংখ্যা যোগ
+
+    Algorithm:
+        দুইটা সংখ্যা নাও
+        যোগ করো
+        দেখাও
+
+    Pseudocode:
+        START
+
+        INPUT A
+        INPUT B
+
+        SUM = A + B
+
+        PRINT SUM
+
+        END
+
+P7: Algorithm vs Flowchart vs Pseudocode
+    বিষয়	        Algorithm	Flowchart	Pseudocode
+    Form	        Text	    Diagram	    Structured Text
+    Readability	    Medium	    Easy	    Easy
+    Coding Ready	Low	        Low     	High
+
+    সম্পর্ক:
+        Algorithm
+          ↓
+        Flowchart
+          ↓
+        Pseudocode
+          ↓
+        Program
+
+P8: কেন Pseudocode গুরুত্বপূর্ণ?
+    কারণ—
+    Programming মানে Code না।
+
+    Programming মানে:
+        Thinking
+          ↓
+        Logic
+          ↓
+        Code
+
+    ✔  আর Logic সবচেয়ে সুন্দরভাবে ধরা যায় Pseudocode-এ।
+
+=>  Practice Task
+    1.  Explain করো: Pseudocode কী?
+        Pseudocode (সিউডোকোড) হলো প্রোগ্রামের একটি "নকল" সংস্করণ। এটি কোনো নির্দিষ্ট প্রোগ্রামিং ভাষার কোড নয় (যেমন- Python বা C++ নয়), বরং এটি মানুষের ভাষার কাছাকাছি এবং প্রোগ্রামিং স্ট্রাকচারের সংমিশ্রণ। এটি এমনভাবে লেখা হয় যাতে যে কেউ লজিকটি বুঝতে পারে, কিন্তু কম্পিউটার সরাসরি এটি রান করতে পারে না।
+
+        এটি ব্যবহার করা হয় প্রোগ্রামের মূল লজিকটি গুছিয়ে লেখার জন্য, যাতে পরবর্তীতে যেকোনো প্রোগ্রামিং ভাষায় সহজেই কোড লেখা যায়।
+
+    2.  Pseudocode লেখো: দুইটা সংখ্যা গুণ করো।
+        BEGIN
+            INPUT number1
+            INPUT number2
+            result = number1 * number2
+            PRINT result
+        END
+
+    3.  Pseudocode লেখো: সংখ্যা Positive নাকি Negative বের করো।
+        BEGIN
+            INPUT number
+            IF number > 0 THEN
+                PRINT "The number is Positive"
+
+            ELSE IF number < 0 THEN
+                PRINT "The number is Negative"
+
+            ELSE
+                PRINT "The number is Zero"
+
+            END IF
+        END
+
+    4.  Algorithm আর Pseudocode-এর পার্থক্য বলো।
+        Algorithm আর Pseudocode-এর পার্থক্যবৈশিষ্ট্য
+        অ্যালগরিদম (Algorithm)সিউডোকোড (Pseudocode)
+        ১.  ধরন
+            এটি ধাপভিত্তিক নির্দেশাবলী (Step-by-step)।
+            এটি কোডিংয়ের মতো গঠন (Structure)।
+        
+        ২.  ভাষা
+            যেকোনো সাধারণ ভাষায় লেখা যায়।
+            প্রোগ্রামিং ল্যাঙ্গুয়েজের ফরম্যাট মেনে লেখা হয়।
+        
+        ৩.  ডিটেইলস
+            এটি খুব সাধারণ এবং ছোট হতে পারে।
+            এটি কোড করার মতো ডিটেইলড হয়।
+            
+        ৪.  উদ্দেশ্য
+            সমস্যা সমাধানের ধাপ ঠিক করা।
+            কোড লেখার আগে খসড়া বা রূপরেখা তৈরি করা।
+        
+        একটি ছোট টিপস: অ্যালগরিদম হলো তোমার 'মস্তিষ্কের চিন্তা', ফ্লোচার্ট হলো সেই চিন্তার 'ছবি', আর সিউডোকোড হলো সেই চিন্তার 'কোড-সদৃশ খসড়া'।
+
+=>  Revision (Short)
+    1.  Pseudocode = মানুষের ভাষায় Algorithm
+    2.  Code না, Logic
+    3.  START → INPUT → PROCESS → OUTPUT → END
+    4.  Condition লেখা যায়
+    5.  Code লেখার আগে ব্যবহার হয়

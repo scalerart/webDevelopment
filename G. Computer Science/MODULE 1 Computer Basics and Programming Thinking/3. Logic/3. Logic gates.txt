@@ -1,0 +1,133 @@
+3.  Logic gates
+
+P1: Computer কীভাবে সিদ্ধান্তকে Hardware-এ রূপ দেয়? (Story Style)
+    আগের টপিকে আমরা শিখেছি—
+        1.  AND
+        2.  OR
+        3.  NOT
+
+    এগুলো ছিল Logic Rules।
+
+    ✔  কিন্তু Computer শুধু নিয়ম জানলেই হয় না—
+        এগুলোকে Circuit দিয়ে বাস্তবেও কাজ করাতে হয়।
+
+    এই কাজটাই করে Logic Gates
+    ✔  Logic + Electronic Circuit = Logic Gate
+
+P2: Logic Gate কী?
+    Logic Gate হলো এমন একটি Electronic Circuit যা—
+        1.  এক বা একাধিক Input নেয়
+        2.  Logical operation করে
+        3.  একটি Output দেয়
+
+    Input ও Output হয়:
+        1.  0 → False
+        2.  1 → True
+
+    ✔  মূল কথা: Logic Gate = Computer-এর Decision Circuit
+
+P3: Logic Gate কীভাবে কাজ করে?
+    Flow:
+    Input
+      ↓
+    Logic Gate
+      ↓
+    Output
+
+    উদাহরণ: 1 AND 1 = 1
+
+P4: Basic Logic Gates
+    1.  AND Gate
+        Rule:
+            সব Input সত্য হলে সত্য
+
+        উদাহরণ:
+            Password AND Username
+            দুইটাই ঠিক হলে Login।
+
+    2.  OR Gate
+        Rule:
+            যেকোনো একটা সত্য হলেই সত্য
+
+        উদাহরণ:
+            WiFi OR Mobile Data
+
+    3.  NOT Gate
+        Rule:
+            Output উল্টো করে
+
+        উদাহরণ:
+            NOT Active
+
+    Universal Gates
+
+    4.  NAND Gate
+        মানে:
+            NOT(AND)
+
+        ✔  AND-এর উল্টো
+
+    5.  NOR Gate
+        মানে:
+            NOT(OR)
+            
+        ✔  OR-এর উল্টো
+
+    Special Gates
+
+    6.  XOR Gate
+        Rule:
+            আলাদা হলে সত্য
+
+        ✔  Different → True
+
+    7.  XNOR Gate
+        Rule:
+            একই হলে সত্য
+
+P5: Logic Gate কোথায় ব্যবহার হয়?
+    Logic Gate ছাড়া Computer হয় না।
+
+    ব্যবহার হয়:
+        1.  CPU
+        2.  Memory
+        3.  Calculator
+        4.  Processor
+        5.  Digital Circuit
+        6.  Decision System
+
+    উদাহরণ:
+        CPU
+          ↓
+        Logic Gates
+          ↓
+        Calculation
+
+P6: কেন Logic Gate গুরুত্বপূর্ণ?
+    কারণ— সব বড় System তৈরি হয় ছোট Gate দিয়ে।
+
+=>  Practice Task
+    1.  AND Gate Output: 1 , 0
+        AND গেটের নিয়ম হলো—সব ইনপুট '১' হলেই আউটপুট '১' হবে। যেহেতু এখানে একটি '০' আছে, তাই আউটপুট হবে ০।
+
+    2.  OR Gate Output: 0 , 1
+        OR গেটের নিয়ম হলো—অন্তত একটি ইনপুট '১' হলেই আউটপুট '১' হয়। এখানে একটি '১' আছে, তাই আউটপুট হবে ১।
+
+    3.  NOT(1)= ?
+        NOT গেট ইনপুটকে উল্টে দেয়। ১ এর উল্টো হলো ০।
+
+    4.  XOR(1,1)= ?
+        XOR (Exclusive OR) গেটের নিয়ম হলো—ইনপুটগুলো যদি ভিন্ন হয় তবে আউটপুট '১' হবে, আর ইনপুটগুলো যদি একই হয় (যেমন: ১,১ অথবা ০,০) তবে আউটপুট '০' হবে। যেহেতু এখানে দুটিই ১ (একই), তাই আউটপুট হবে ০।
+
+    5.  NAND(1,1)= ?
+        NAND হলো "NOT-AND"। প্রথমে AND গেটের আউটপুট বের করতে হবে, তারপর তাকে উল্টে দিতে হবে (NOT)।
+
+=>  Revision (Short)
+    1.  Logic Gate = Decision Circuit
+    2.  AND → সব সত্য
+    3.  OR → একটা সত্য
+    4.  NOT → উল্টো
+    5.  NAND → NOT(AND)
+    6.  NOR → NOT(OR)
+    7.  XOR → Different
+    8.  XNOR → Same

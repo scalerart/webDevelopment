@@ -1,0 +1,185 @@
+2.  Flowchart
+
+P1: Algorithm দেখে সবসময় বোঝা সহজ হয়?
+    ভাবো তুমি কাউকে রান্নার রেসিপি লিখে দিলে।
+
+    পানি গরম করো
+    চা দাও
+    চিনি দাও
+
+    ✔  সবাই দ্রুত বুঝবে না।
+        কিন্তু যদি ছবি বা তীর চিহ্ন দিয়ে দেখাও—
+
+        Start
+          ↓
+        পানি
+          ↓
+        চা
+          ↓
+        শেষ
+
+        তাহলে বোঝা সহজ হয়।
+
+    ✔  Programming-এ Algorithm-এর এই চিত্রভিত্তিক উপস্থাপনাকেই Flowchart বলে।
+
+P2: Flowchart কী?
+    Flowchart হলো কোনো Algorithm বা Process-এর graphical representation।
+
+    অর্থাৎ— Step গুলোকে Symbol + Arrow দিয়ে দেখানো হয়।
+
+        Algorithm
+          ↓
+        Diagram
+          ↓
+        Flowchart
+
+    ✔  মূল কথা: Flowchart = Algorithm-এর ছবি
+
+P3: Flowchart কেন ব্যবহার করা হয়?
+    Flowchart ব্যবহার করলে—
+        1.  Problem সহজে বোঝা যায়
+        2.  Logic visualize করা যায়
+        3.  Code লেখার আগে plan করা যায়
+        4.  Error কমে
+        5.  Team communication সহজ হয়
+
+P4: Flowchart Symbols
+    এগুলো অবশ্যই জানতে হবে।
+
+    1.  Start / End (Terminator)
+        কাজ শুরু বা শেষ বোঝায়
+
+        Shape: (Oval)
+
+        উদাহরণ:
+            Start
+            End
+
+    2.  Process
+        কোনো কাজ করা
+
+        Shape: [Rectangle]
+
+        উদাহরণ:
+            Sum = A + B
+
+    3.  Input / Output
+        Data নেওয়া বা দেখানো
+
+        Shape: /Parallelogram/
+
+        উদাহরণ:
+            Input A
+            Print Result
+
+    4.  Decision
+        সিদ্ধান্ত নেওয়া
+
+        Shape: ◇ Diamond
+
+        উদাহরণ:
+            A > B ?
+        Output:
+            Yes / No
+
+    5.  Arrow
+        Flow দেখায়
+        ↓
+        →
+
+P5: Flowchart কীভাবে পড়তে হয়?
+    Rule:
+
+    Start
+      ↓
+    Input
+      ↓
+    Process
+      ↓
+    Decision
+      ↓
+    Output
+      ↓
+    End
+
+    ✔  উপর থেকে নিচে।
+
+P6: Flowchart Example (Core Concept)
+    সমস্যা: দুইটা সংখ্যা যোগ করো
+
+    Flowchart:
+
+    (Start)
+     ↓
+    Input A,B
+     ↓
+    Sum=A+B
+     ↓
+    Print Sum
+     ↓
+    (End)
+
+P7: Algorithm vs Flowchart
+    বিষয়	        Algorithm	Flowchart
+    Form	        Text	    Diagram
+    বোঝা	        Medium	    Easy
+    Representation  Step	    isual
+
+    উদাহরণ:
+        1.  Recipe → Algorithm
+        2.  Recipe Picture → Flowchart
+
+P8: Flowchart কোথায় ব্যবহার হয়?
+    1.  Programming
+    2.  Software Design
+    3.  Business Process
+    4.  System Analysis
+    5.  Problem Solving
+
+=>  Practice Task
+    1.  Explain করো: Flowchart কী?
+        ফ্লোচার্ট হলো কোনো অ্যালগরিদমের চিত্রভিত্তিক বা ডায়াগ্রাম রূপ। একটি অ্যালগরিদমে আমরা ধাপগুলো বাংলায় বা ইংরেজিতে লিখি, কিন্তু ফ্লোচার্টে আমরা বিভিন্ন জ্যামিতিক আকৃতি (যেমন: ওভাল, আয়তক্ষেত্র, ডায়মন্ড) ব্যবহার করে কাজের প্রবাহ বা 'ফ্লো' দেখাই। এটি দেখে খুব সহজেই বোঝা যায় ডেটা কোথা থেকে আসছে, কী প্রসেস হচ্ছে এবং ফলাফল কী হবে।
+
+    2.  দুইটা সংখ্যা গুণ করার Flowchart লেখো।
+        ফ্লোচার্ট তৈরির সময় স্ট্যান্ডার্ড প্রতীকগুলো মাথায় রাখতে হয়। নিচে গুণ করার ফ্লোচার্টের ধাপগুলো বর্ণনা করা হলো:
+            1.  START (ওভাল বা ডিম্বাকৃতি): প্রক্রিয়া শুরু।
+            2.  INPUT (সামান্তরিক): সংখ্যা দুটি (A ও B) ইনপুট নেওয়া।
+            3.  PROCESS (আয়তক্ষেত্র): গুণফল নির্ণয় করা (Result = A X B)।
+            4.  OUTPUT (সামান্তরিক): গুণফলটি প্রদর্শন করা।
+            5.  END (ওভাল): প্রক্রিয়া শেষ।
+
+    3.  Decision Symbol-এর কাজ কী?
+        ফ্লোচার্টে ডায়মন্ড আকৃতির (Diamond shape) প্রতীকটিকে বলা হয় ডিসিশন সিম্বল।
+            1.  কাজ:
+                এর প্রধান কাজ হলো লজিক্যাল সিদ্ধান্ত নেওয়া। এটি সাধারণত একটি প্রশ্নের আকারে থাকে (যেমন: A > B?)।
+
+            2.  প্রবাহ:
+                এই বক্স থেকে সাধারণত দুটি পথ বের হয়—একটি 'হ্যাঁ' (Yes/True) এর জন্য এবং অন্যটি 'না' (No/False) এর জন্য। প্রোগ্রামে যখনই কোনো শর্ত বা কন্ডিশন (if-else) থাকে, তখনই আমরা ডিসিশন সিম্বল ব্যবহার করি।
+
+    4.  Algorithm আর Flowchart-এর পার্থক্য বলো।
+        Algorithm আর Flowchart-এর পার্থক্য
+            ১.  ধরন
+                এটি লিখিত বা বর্ণনামূলক। অ্যালগরিদম (Algorithm)
+                এটি চিত্রভিত্তিক বা গ্রাফিক্যাল। ফ্লোচার্ট (Flowchart)
+        
+            ২.  জটিলতা
+                জটিল সমস্যার সমাধান সহজে লেখা যায়। অ্যালগরিদম (Algorithm)
+                অনেক বড় সমস্যা হলে ফ্লোচার্ট বিশাল ও জটিল হয়ে যায়। ফ্লোচার্ট (Flowchart)
+
+            ৩.  বুঝতে পারা
+                এটি বুঝতে কিছুটা সময় লাগতে পারে। অ্যালগরিদম (Algorithm)
+                এটি দেখেই কাজের প্রবাহ দ্রুত বোঝা যায়। ফ্লোচার্ট (Flowchart)
+            
+            ৪.  তৈরি করা
+                খুব দ্রুত এবং সহজে লেখা যায়। অ্যালগরিদম (Algorithm)
+                আঁকতে সময় ও বিশেষ প্রতীকের প্রয়োজন হয়। ফ্লোচার্ট (Flowchart)
+        
+        সহজ কথা: অ্যালগরিদম হলো তোমার পরিকল্পনা বা ব্লু-প্রিন্ট, আর ফ্লোচার্ট হলো সেই পরিকল্পনার একটি ম্যাপ বা নকশা।
+
+=>  Revision (Short)
+    1.  Flowchart = Algorithm-এর Diagram
+    2.  Oval = Start / End
+    3.  Rectangle = Process
+    4.  Parallelogram = Input / Output
+    5.  Diamond = Decision
+    6.  Arrow = Flow
