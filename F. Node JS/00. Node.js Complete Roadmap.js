@@ -25,22 +25,30 @@ MODULE 1 — JavaScript Deep Foundation (Node.js শুরু করার আ�
             1.  Arithmetic Operators
             2.  Assignment Operators
             3.  Comparison Operators
-            4.  Logical Operators
+            4.  Logical 
+            
+        5.  Control Flow & Logic Building
+            1.  if, else, switch
+            2.  Loops: for, while, do...while
+            3.  Break & Continue
+            4.  Truthy / Falsy
+            5.  Nested loops
+            6.  Basic Time Complexity(intro)
 
-        5.  Functions
+        6.  Functions
             1.  Function Declaration
             2.  Expression
             3.  Arrow Function
             4.  Callback
             5.  Higher Order Function
 
-        6.  Objects
+        7.  Objects
             1.  Object Methods
             2.  Destructuring
             3.  Spread
             4.  Rest
 
-        7.  Arrays
+        8.  Arrays
             1.  map
             2.  filter
             3.  reduce
@@ -48,7 +56,17 @@ MODULE 1 — JavaScript Deep Foundation (Node.js শুরু করার আ�
             5.  some
             6.  every
 
-        8.  Modern JS
+        9.  DOM Manipulation(Real World)
+            1.  DOM basics
+            2.  Selectors
+            3.  Event handling
+            4.  Event bubbling & delegation
+            5.  DOM traversal
+            6.  Form handling & validation
+            7.  Dynamic element create
+            8.  DOM performance basics            
+
+        10.  Modern JS
             1.  Template literals
             2.  Destructuring
             3.  Modules(import/export)
@@ -58,7 +76,7 @@ MODULE 1 — JavaScript Deep Foundation (Node.js শুরু করার আ�
             7.  Symbol(basic)
             8.  Generators(intro)
 
-        9.  Asynchronous JavaScript(CORE)
+        11.  Asynchronous JavaScript(CORE)
             1.  Callbacks
             2.  Promises
             3.  async / await
@@ -70,7 +88,7 @@ MODULE 1 — JavaScript Deep Foundation (Node.js শুরু করার আ�
             9.  Parallel vs Sequential async
             10. AbortController
 
-        10.  OOP in JavaScript
+        12.  OOP in JavaScript
             1.  OOP concepts
             2.  Classes & Constructor
             3.  Inheritance
@@ -79,7 +97,7 @@ MODULE 1 — JavaScript Deep Foundation (Node.js শুরু করার আ�
             6.  Factory function
             7.  Composition vs Inheritance
 
-        11. Advanced JavaScript Concepts
+        13. Advanced JavaScript Concepts
             1.  Execution Context
             2.  Call Stack
             3.  Closures(deep)
@@ -91,13 +109,42 @@ MODULE 1 — JavaScript Deep Foundation (Node.js শুরু করার আ�
             9.  Lexical Environment
             10. Temporal Dead Zone
 
-        12. Debugging & Error Handling
+        14. Functional Programming
+            1.  Pure function
+            2.  Immutability
+            3.  Composition
+            4.  Memoization
+            5.  map vs reduce real use
+
+        15. Browser & Web APIs
+            1.  LocalStorage / SessionStorage
+            2.  Cookies
+            3.  Geolocation API
+            4.  Fetch vs Axios
+            5.  IndexedDB(intro)
+            6.  Intersection Observer            
+
+        16. Debugging & Error Handling
             1.  try/catch
             2.  Custom errors
             3.  DevTools debugging
             4.  Console methods
             5.  Network tab
             6.  Performance tab
+
+        17. Performance Optimization
+            1.  Debounce & Throttle
+            2.  Lazy loading
+            3.  Memory management
+            4.  Code splitting(intro)
+            5.  Critical rendering path
+
+        18. Testing & Clean Code
+            1.  Unit testing basics
+            2.  Jest(intro)
+            3.  Code structure
+            4.  Naming convention
+            5.  DRY principle
 
 MODULE 2 — Node.js Fundamentals
     লক্ষ্য: Node.js কীভাবে কাজ করে বুঝা।
