@@ -22,8 +22,8 @@
         }
 
         processUserInput(sayHello); // আউটপুট: Hello Rahim
-        অ্যাসিঙ্ক্রোনাস উদাহরণ (টাইমআউট):
 
+        অ্যাসিঙ্ক্রোনাস উদাহরণ (টাইমআউট):
         JavaScript
         console.log("Start");
 

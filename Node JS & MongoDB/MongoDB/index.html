@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Modern Form</title>
+  </head>
+
+  <body
+    class="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 flex items-center justify-center p-3"
+  >
+    <div class="w-full max-w-2xl">
+      <!-- Card -->
+      <div
+        class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl"
+      >
+        <div class="mb-3 text-center">
+          <h1 class="text-3xl font-bold text-white">Node JS & MongoDB</h1>
+          <p class="text-slate-300 mt-2">I have been practiced MongoDB CURD Operation with Node JS</p>
+        </div>
+
+        <form class="space-y-2">
+          <!-- Product Name -->
+          <div>
+            <label class="block text-sm text-slate-200 mb-2">Product Name</label>
+            <input
+              type="text"
+              placeholder="Product Name"
+              name="name"
+              class="w-full rounded-xl bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+
+          <!-- Price & Stock -->
+          <div class="grid md:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-sm text-slate-200 mb-2">Price</label>
+              <input
+                type="text"
+                placeholder="Price"
+                name="price"
+                class="w-full rounded-xl bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+            <div>
+              <label class="block text-sm text-slate-200 mb-2">Stock</label>
+              <input
+                type="text"
+                placeholder="Stock"
+                name="stock"
+                class="w-full rounded-xl bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label class="block text-sm text-slate-200 mb-2">Description</label>
+            <input
+              type="text"
+              placeholder="Description"
+              name="description"
+              class="w-full rounded-xl bg-white/10 border border-white/20 px-4 py-3 mb-3 text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+
+          <!-- Add Product Button -->
+          <button
+            type="submit"
+            class="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold hover:scale-[1.01] transition"
+          >
+            Add Product
+          </button>
+        </form>
+      </div>
+
+      <!-- Products List Container -->
+      <div class="mt-6">
+        <ul id="products-list" class="space-y-2 text-white"></ul>
+      </div>
+
+      <!-- Update Product Details -->
+       <div class="mt-6">
+        <div id="update"></div>
+      </div>
+    </div>
+    </div>
+
+    <script>
+      const form = document.querySelector("form");
+      const productsBox = document.getElementById("products-list");
+
+      // Handle Form Submit
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const dataObject = Object.fromEntries(formData.entries());
+
+        try {
+          const response = await fetch("http://localhost:3000/addProduct", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dataObject),
+          });
+
+          if (response.ok) {
+            alert("Product added successfully!");
+            form.reset();
+            loadProducts(); // Refresh list automatically
+          } else {
+            alert("Server error occurred.");
+          }
+        } catch (error) {
+          console.error("Network Error:", error);
+        }
+      });
+
+      // Load All Products
+      const loadProducts = () => {
+        fetch("http://localhost:3000/products")
+          .then((res) => res.json())
+          .then((products) => {
+            productsBox.innerHTML = ""; // Clear old UI list before rendering
+
+            products.forEach((product) => {
+              const item = document.createElement("li");
+              item.className ="flex items-center bg-white/5 p-2 rounded-xl border border-white/10 mb-2";
+              item.innerHTML = `
+                <button onclick="deleteProduct('${product._id}')" class="w-7 h-7 rounded-full bg-red-600 text-white font-bold hover:bg-red-700 transition cursor-pointer">X</button>
+
+                <button onclick="loadProduct('${product._id}')" class="px-3 py-1 ml-2 rounded bg-green-600 text-white font-semibold hover:bg-green-700 transition cursor-pointer">Update</button>
+
+                <span class="ml-4"><strong>${product.name}</strong> — Price: $${product.price} — Stock: ${product.stock}</span>
+              `;
+              productsBox.append(item);
+            });
+          })
+          .catch((err) => console.error("Fetch error:", err));
+      };
+
+      // Initial Load
+      loadProducts();
+
+      // Delete Product
+      const deleteProduct = (id) => {
+        fetch(`http://localhost:3000/delete/${id}`, {
+            method: "DELETE"
+        })
+          .then((res) => res.json())
+          .then(() => {
+            console.log("Deleted Successfully");
+            loadProducts(); // Refresh list automatically
+          })
+          .catch((err) => console.error(err));
+      };
+
+      // Load Product
+      const loadProduct = (id) => {
+        fetch(`http://localhost:3000/product/${id}`)
+          .then((res) => res.json())
+          .then((product) => {
+            const update = document.getElementById('update');
+            update.className ="flex items-center bg-white/5 p-2 rounded-xl border border-white/10 mb-2";
+            update.innerHTML = `
+            <div class="grid md:grid-cols-3 gap-3 p-2 items-center justify-center">
+                    <!-- Product Name -->
+                <div>
+                    <label class="block text-sm text-slate-200 mb-2">Product Name</label>
+                    <input
+                        type="text"
+                        placeholder="Product Name"
+                        id="name"
+                        name="name"
+                        value ='${product.name}'
+                        class="w-full rounded-xl bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-indigo-500"
+                    />
+                </div>
+
+                <!-- Price & Stock -->
+                <div>
+                    <label class="block text-sm text-slate-200 mb-2">Price</label>
+                    <input
+                        type="text"
+                        placeholder="Price"
+                        id="price"
+                        value ='${product.price}'
+                        name="price"
+                        class="w-full rounded-xl bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-indigo-500"
+                    />
+                </div>
+
+                <div>
+                    <label class="block text-sm text-slate-200 mb-2">Stock</label>
+                    <input
+                        type="text"
+                        placeholder="Stock"
+                        id="stock"
+                        value ='${product.stock}'
+                        name="stock"
+                        class="w-full rounded-xl bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-indigo-500"
+                    />
+                </div>
+
+                <!-- Update Product Button -->
+                <button
+                    onclick="updateProduct('${product._id}')"
+                    type="submit"
+                    class="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold hover:scale-[1.01] transition"
+                >
+                    Update Product
+                </button>    
+            </div>`;
+          })
+          .catch((err) => console.error(err));
+      };
+
+    //   Update Product
+    const updateProduct = (id)=>{
+        const name = document.getElementById('name').value;
+        const price = document.getElementById('price').value;
+        const stock = document.getElementById('stock').value;
+        const product = {id, name, price, stock}
+
+        fetch(`http://localhost:3000/update/${id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(product),
+        })
+          .then((res) => res.json())
+          .then(() => {
+            loadProducts(); // Refresh list automatically
+          })
+    }
+    </script>
+
+    
+  </body>
+</html>

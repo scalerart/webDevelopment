@@ -18,7 +18,8 @@
 
         // প্রমিজ চেইনিং
         fetchData().then(data => console.log(data));
-        async / await (আধুনিক স্টাইল):
+
+    async / await (আধুনিক স্টাইল):
 
     JavaScript
         async function getData() {

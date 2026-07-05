@@ -423,7 +423,5 @@ MODULE 20 — Professional Developer Mindset
         5.  Communication
         6.  Team Workflow
         7.  AI Assisted Development
-        8.  Long-term Learning
-
-        
+        8.  Long-term Learning 
 */
