@@ -151,7 +151,6 @@
         })
           .then((res) => res.json())
           .then(() => {
-            console.log("Deleted Successfully");
             loadProducts(); // Refresh list automatically
           })
           .catch((err) => console.error(err));
@@ -232,6 +231,9 @@
           .then((res) => res.json())
           .then(() => {
             loadProducts(); // Refresh list automatically
+            const update = document.getElementById('update');
+            update.className ="";
+            update.innerHTML = "";
           })
     }
     </script>

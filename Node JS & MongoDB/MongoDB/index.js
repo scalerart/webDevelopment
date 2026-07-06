@@ -1,15 +1,15 @@
-const express = require("express");
-const cors = require("cors");
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb"); //  Fixed Import Here
+const express = require('express');
+const cors = require('cors');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb'); //  Fixed Import Here
 
 // Set up the basic server settings
 const app = express();
 const port = 3000;
 
 // Your database connection details
-const password = "YDPLXHFhQjupZJXZ";
-const dbName = "scalerArtDB";
-const collectionName = "products";
+const password = 'YDPLXHFhQjupZJXZ';
+const dbName = 'scalerArtDB';
+const collectionName = 'products';
 const uri = `mongodb+srv://scalerArt:${password}@cluster0.kdbixyc.mongodb.net/?appName=Cluster0`;
 
 // Prepare the MongoDB connection helper
@@ -34,14 +34,14 @@ async function connectDB() {
   try {
     // Try connecting to the internet database
     await client.connect();
-    console.log("Successfully connected to MongoDB!");
+    console.log('Successfully connected to MongoDB!');
 
     // Select the database and the specific collection (table) inside it
     const db = client.db(dbName);
     collection = db.collection(collectionName);
   } catch (error) {
     // If something goes wrong, show the error and stop the server
-    console.error("Failed to connect to MongoDB:", error);
+    console.error('Failed to connect to MongoDB:', error);
     process.exit(1);
   }
 }
@@ -50,18 +50,17 @@ connectDB();
 // Server Routes / URLs
 
 // 1. Home Link (http://localhost:3000/)
-app.get("/", (req, res) => {
-  res.send("I am Working."); // Just a test message to see if server is alive
+app.get('/', (req, res) => {
+  res.send('I am Working.'); // Just a test message to see if server is alive
 });
 
 // 2. Get Products Link (http://localhost:3000/products)
-app.get("/products", async (req, res) => {
+app.get('/products', async (req, res) => {
   try {
     // FIX: Check if the collection is initialized
     if (!collection) {
       return res.status(503).json({
-        message:
-          "Database connection is still initializing. Please refresh in a moment.",
+        message: 'Database connection is still initializing. Please refresh in a moment.',
       });
     }
 
@@ -71,13 +70,13 @@ app.get("/products", async (req, res) => {
     // Send the list back to whoever asked for it
     res.status(200).json(products);
   } catch (error) {
-    console.error("Error fetching products:", error);
-    res.status(500).json({ message: "Server error", error: error.message });
+    console.error('Error fetching products:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 
 // 3. Add Product Link (http://localhost:3000/addProduct)
-app.post("/addProduct", async (req, res) => {
+app.post('/addProduct', async (req, res) => {
   try {
     // Grab the product data that was sent in the request body
     const product = req.body;
@@ -87,20 +86,18 @@ app.post("/addProduct", async (req, res) => {
 
     // Tell the user it worked and give them the new database ID
     res.status(201).json({
-      message: "Product added successfully!",
+      message: 'Product added successfully!',
       insertedId: result.insertedId,
     });
   } catch (error) {
     // If saving fails, show the error
-    console.error("Error inserting product:", error);
-    res
-      .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+    console.error('Error inserting product:', error);
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 });
 
 // 4. Delete Product Link (http://localhost:3000/delete/:id)
-app.delete("/delete/:id", async (req, res) => {
+app.delete('/delete/:id', async (req, res) => {
   try {
     const userId = req.params.id;
 
@@ -109,26 +106,20 @@ app.delete("/delete/:id", async (req, res) => {
     const result = await collection.deleteOne(query);
 
     if (result.deletedCount === 1) {
-      console.log("Successfully deleted one product");
-      return res
-        .status(200)
-        .json({ success: true, message: "Product deleted" });
+      console.log('Successfully deleted one product');
+      return res.status(200).json({ success: true, message: 'Product deleted' });
     } else {
-      console.log("No documents matched the query. Deleted 0 documents.");
-      return res
-        .status(404)
-        .json({ success: false, message: "Product not found" });
+      console.log('No documents matched the query. Deleted 0 documents.');
+      return res.status(404).json({ success: false, message: 'Product not found' });
     }
   } catch (error) {
     console.error(error);
-    return res
-      .status(500)
-      .json({ success: false, message: "Internal server error" });
+    return res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
 // 5. Load Single Product Link (http://localhost:3000/product/:id)
-app.get("/product/:id", async (req, res) => {
+app.get('/product/:id', async (req, res) => {
   try {
     const userId = req.params.id;
     const query = { _id: new ObjectId(userId) };
@@ -136,22 +127,18 @@ app.get("/product/:id", async (req, res) => {
     const result = await collection.findOne(query);
 
     if (!result) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Product not found" });
+      return res.status(404).json({ success: false, message: 'Product not found' });
     }
 
     res.json(result);
   } catch (error) {
     console.error(error);
-    return res
-      .status(500)
-      .json({ success: false, message: "Internal server error" });
+    return res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
-// 6. Update Product L
-app.patch("/update/:id", async (req, res) => {
+// 6. Update Product Link (http://localhost:3000/update/:id)
+app.patch('/update/:id', async (req, res) => {
   try {
     const productId = req.params.id;
     const name = req.body.name;
@@ -162,17 +149,17 @@ app.patch("/update/:id", async (req, res) => {
 
     const updateProduct = {
       $set: {
-        name: name,
-        price: price,
-        stock: stock,
+        name,
+        price,
+        stock,
       },
     };
 
     const result = await collection.updateOne(query, updateProduct);
     res.json(result);
   } catch (error) {
-    console.error("Update route error:", error);
-    res.status(500).json({ error: "Failed to update product" });
+    console.error('Update route error:', error);
+    res.status(500).json({ error: 'Failed to update product' });
   }
 });
 
