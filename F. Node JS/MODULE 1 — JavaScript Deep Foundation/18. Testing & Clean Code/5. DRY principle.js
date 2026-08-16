@@ -17,7 +17,6 @@ DRY এর পূর্ণরূপ হলো "Don't Repeat Yourself"। এট�
 
 ২.  কোড উদাহরণ (Bad vs Good)
     Bad (DRY লঙ্ঘন):
-
     JavaScript
         function greetUser(user) {
             console.log("Hello, " + user.name);

@@ -1,0 +1,104 @@
+আন্তর্জাতিক কোম্পানিগুলোতে কাজ করার জন্য শুধু কোড লিখতে পারাই যথেষ্ট নয়; কোডটি কতটা গুছানো (Scalable), কতটা টেস্টেবল (Testable) এবং ক্লিন (Clean) তা তারা সবচেয়ে বেশি যাচাই করে।
+
+আজকে আমরা শিখব বড় প্রজেক্টের Folder Structure, Clean Code Pattern, এবং React Testing Library (RTL)।
+
+১.  Scalable Folder Structure (Feature-Based Architecture)
+    নতুনরা সাধারণত ফাইলের ধরন অনুযায়ী ফোল্ডার বানায় (যেমন: সব components একসাথে, সব hooks একসাথে)। কিন্তু বড় প্রজেক্টে Feature-Based (বা Feature-Sliced Design) ফলো করা হয়।
+
+    ইন্ডাস্ট্রি স্ট্যান্ডার্ড আর্কিটেকচার:
+
+    Plaintext
+    src/
+    ├── assets/          # ছবি, আইকন, ফন্ট
+    ├── components/      # শেয়ার্ড বা গ্লোবাল কম্পোনেন্ট (যেমন: Button, Modal)
+    ├── hooks/           # গ্লোবাল কাস্টম হুকস (যেমন: useAuth)
+    ├── lib/             # থার্ড-পার্টি লাইব্রেরি কনফিগারেশন (যেমন: axios, queryClient)
+    ├── store/           # Redux বা Zustand স্টোর
+    ├── features/        # ⭐️ অ্যাপের মূল ফিচারগুলো (Feature-based)
+    │    ├── authentication/
+    │    │    ├── components/
+    │    │    ├── hooks/
+    │    │    ├── services/   # API calls
+    │    │    └── authSlice.ts
+    │    ├── shoppingCart/
+    │    └── userProfile/
+    ├── pages/           # রাউটার পেইজগুলো (যা features-কে কল করবে)
+    └── App.tsx
+
+    =>  সুবিধা:
+        একটি ফিচারের (যেমন Authentication) সব লজিক, কম্পোনেন্ট, এপিআই এক ফোল্ডারে থাকে। ফলে কোড মেইনটেইন করা এবং নতুন ডেভেলপারদের প্রজেক্ট বোঝা সহজ হয়।
+
+২.  Separation of Concerns (UI এবং Logic আলাদা করা)
+    একটি রিয়েল-ওয়ার্ল্ড প্রজেক্টে কম্পোনেন্টের ভেতরেই API Call, State Management এবং UI Design একসাথে লেখা হয় না। একে বলা হয় Container-Presentational Pattern বা Custom Hook Pattern।
+
+    ১.  খারাপ অভ্যাস (সব এক জায়গায়):
+        একটি Login.tsx-এর ভেতরেই fetch কল করা, useState লেখা এবং HTML/JSX লেখা।
+
+    ২.  ইন্ডাস্ট্রি স্ট্যান্ডার্ড:
+        লজিকগুলো একটি কাস্টম হুকে (যেমন useLogin) সরিয়ে ফেলা এবং Login.tsx-এ শুধু UI রেন্ডার করা।
+
+৩.  Automated Testing (Jest & React Testing Library)
+    তুমি যে কোডটি লিখেছ তা ভবিষ্যতে অন্য কেউ চেঞ্জ করলে ভেঙে যাবে কি না, তা নিশ্চিত করার জন্য Automated Test লেখা হয়।
+
+    ইন্টারন্যাশনাল রিমোট জবের জন্য React Testing Library (RTL) জানা বাধ্যতামূলক। RTL-এর মূল দর্শন হলো: "টেস্টগুলো সেভাবেই লেখা উচিত, যেভাবে একজন ইউজার তোমার অ্যাপটি ব্যবহার করবে।"
+
+    একটি সহজ টেস্টিং উদাহরণ:
+    ধরে নাও আমাদের একটি Greeting কম্পোনেন্ট আছে যা ইউজারের নাম দেখায়।
+
+    TypeScript
+    // Greeting.tsx
+    export const Greeting = ({ name }) => {
+      return <h1>Hello, {name}!</h1>;
+    };
+    এই কম্পোনেন্টটির Test Code (Greeting.test.tsx):
+
+    TypeScript
+    import { render, screen } from '@testing-library/react';
+    import { Greeting } from './Greeting';
+
+    // টেস্ট স্যুট
+    describe('Greeting Component', () => {
+
+      test('renders the correct name', () => {
+        // ১. কম্পোনেন্টটি ভার্চুয়াল DOM-এ রেন্ডার করা
+        render(<Greeting name="Rahim" />);
+
+        // ২. স্ক্রিনে "Hello, Rahim!" লেখাটি খুঁজবে
+        const headingElement = screen.getByText(/Hello, Rahim!/i);
+
+        // ৩. অ্যাসার্শন (Assertion): লেখাটি স্ক্রিনে আছে কি না নিশ্চিত করা
+        expect(headingElement).toBeInTheDocument();
+      });
+
+    });
+
+=>  International Interview Questions & Answers
+১.  Unit Testing এবং Integration Testing-এর মধ্যে পার্থক্য কী?
+    উত্তর:
+
+    ১.  Unit Testing:
+        একটি নির্দিষ্ট বা সিঙ্গেল কম্পোনেন্ট/ফাংশন (যেমন: একটি Button বা একটি Custom Hook) স্বাধীনভাবে ঠিকমতো কাজ করছে কি না তা পরীক্ষা করা।
+
+    ২.  Integration Testing:
+        একাধিক কম্পোনেন্ট একসাথে যুক্ত হওয়ার পর তারা একে অপরের সাথে সঠিকভাবে ডেটা আদান-প্রদান করছে কি না তা পরীক্ষা করা (যেমন: ফর্মে ডেটা দিয়ে সাবমিট করলে API কল হচ্ছে কি না এবং সাকসেস মেসেজ দেখাচ্ছে কি না)।
+
+=>  অনুশীলনী:
+    ধরে নাও তুমি একটি User Registration (Sign Up) পেজ বানাচ্ছ। ইউজারের নাম, ইমেইল এবং পাসওয়ার্ড নেওয়ার জন্য ৩টি ইনপুট ফিল্ড এবং একটি সাবমিট বাটন আছে।
+
+    "Separation of Concerns" বা ক্লিন কোড আর্কিটেকচার অনুযায়ী, তুমি কি API Call-এর লজিক, Form Validation-এর লজিক এবং JSX (UI) সব একই ফাইলের (SignUp.tsx) ভেতরে লিখবে? যদি না লেখো, তবে এগুলোকে কীভাবে আলাদা বা স্ট্রাকচার করবে?
+
+    উত্তর:
+    না, "Separation of Concerns" এবং ক্লিন কোড আর্কিটেকচার অনুযায়ী সব লজিক একই ফাইলে লেখা উচিত নয়। সব কিছু এক ফাইলে লিখলে কোড রিডেবিলিটি কমে যায়, টেস্টিং কঠিন হয় এবং কোড রিইউজ করা যায় না।
+    এই লজিকগুলোকে আলাদা এবং সুগঠিত করার জন্য Custom Hooks এবং Service Layer ব্যবহার করা সবচেয়ে সেরা উপায়।
+
+    লজিক ও UI আলাদা না করলে Unit Test করা অসম্ভব হয়ে পড়ে। কাস্টম হুক ও সার্ভিস লেয়ার আলাদা করার এই নিয়মটিই বর্তমান আন্তর্জাতিক সফটওয়্যার ইঞ্জিনিয়ারিংয়ের মূল স্ট্যান্ডার্ড।
+
+                +---------------------------------------+
+                |        SignUp.tsx (Pure UI)           |
+                +-------------------+-------------------+
+                                    |
+            +-----------------------+-----------------------+
+            |                                               |
+[ useSignUpForm Hook ]                        [ authService.ts ]
+- Handles State & Inputs                      - Pure API Fetching
+- Form Validation Logic                       - Axios / Fetch Logic

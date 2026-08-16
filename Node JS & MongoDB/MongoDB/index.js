@@ -51,7 +51,7 @@ connectDB();
 
 // 1. Home Link (http://localhost:3000/)
 app.get('/', (req, res) => {
-  res.send('I am Working.'); // Just a test message to see if server is alive
+  res.send('Hello World.'); // Just a test message to see if server is alive
 });
 
 // 2. Get Products Link (http://localhost:3000/products)

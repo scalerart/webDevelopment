@@ -1,0 +1,143 @@
+Advanced Concepts, TypeScript with React & Data Fetching
+আন্তর্জাতিক মার্কেটে ২০২৬ সালে TypeScript ছাড়া React Developer পাওয়া প্রায় অসম্ভব। তার সাথে যুক্ত হয়েছে TanStack Query (React Query) এবং React Router v6+।
+
+                       +-----------------------------------+
+                       |    Modern React Stack (Step 4)    |
+                       +-----------------+-----------------+
+                                         |
+         +-------------------------------+-------------------------------+
+         |                               |                               |
+ [ TypeScript ]                 [ TanStack Query ]              [ Advanced Patterns ]
+ - Static Type-Checking         - Server State Management       - Code Splitting & Lazy
+ - Catch Errors at Compile-time  - Automatic Caching & Retry     - Custom Router Design
+
+১.  TypeScript with React (Props, State & Events)
+    JavaScript-এ টাইপ না থাকায় বড় প্রজেক্টে বুগ (Bug) বেশি হয়। TypeScript কোড রান করার আগেই (Compile-time) ভুল ধরে ফেলে।
+
+    =>  React-এ TypeScript-এর মৌলিক নিয়ম:
+        TypeScript
+        import React, { useState } from 'react';
+
+        // ১. Props-এর টাইপ বা Interface ডিফাইন করা
+        interface UserCardProps {
+          name: string;
+          age: number;
+          role?: 'admin' | 'user'; // Optional and Literal type
+          onDelete: (id: number) => void;
+        }
+
+        // ২. Component-এ Interface ব্যবহার করা
+        export const UserCard: React.FC<UserCardProps> = ({ name, age, role = 'user', onDelete }) => {
+          // ৩. State-এ TypeScript
+          const [isHovered, setIsHovered] = useState<boolean>(false);
+
+          // ৪. Event Handlers-এ Type Safety
+          const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+            console.log("Clicked:", e.clientX);
+          };
+
+          return (
+            <div>
+              <h3>{name} ({age})</h3>
+              <p>Role: {role}</p>
+              <button onClick={handleClick}>Click</button>
+            </div>
+          );
+        };
+
+২.  Client State vs Server State (TanStack Query / React Query)
+    React প্রজেক্টে স্টেট মূলত দুই প্রকার:
+      ১.  Client State:
+          থিম, মোডাল খোলা/বন্ধ, ফর্ম ইনপুট (যা ব্রাউজারে থাকে)।
+
+      ২.  Server State:
+          API থেকে আসা ডাটা (যা সার্ভারে থাকে এবং ব্যাকগ্রাউন্ডে পরিবর্তন হতে পারে)।
+
+    =>  useEffect দিয়ে API Call করা কেন প্রাচীন নিয়ম?
+        useEffect দিয়ে API ফেচ করলে ক্যাশিং (Caching), রি-ট্রাই (Retry), লোডিং/এরর স্টেট, বা ব্যাকগ্রাউন্ড অটো-রিফ্রেশ নিজেকে ম্যানুয়ালি কোড লিখে বানাতে হয়।
+
+    TanStack Query-এর সুবিধা:
+    এটি Server State অটোমেটিক ক্যাশ করে, পেকেগ্রাউন্ডে রি-ফেচ করে এবং নেটওয়ার্ক ব্যর্থ হলে অটোমেটিক রি-ট্রাই করে।
+
+        TypeScript
+        import { useQuery } from '@tanstack/react-query';
+
+        const fetchUsers = async () => {
+          const res = await fetch('https://api.example.com/users');
+          return res.json();
+        };
+
+        function UsersList() {
+          // মাত্র এক লাইনে Data, Loading, Error এবং Auto-Caching!
+          const { data, isLoading, isError, error } = useQuery({
+            queryKey: ['users'],
+            queryFn: fetchUsers,
+            staleTime: 1000 * 60 * 5, // ৫ মিনিট ডাটা ফ্রেশ থাকবে (ক্যাশ থেকে দেখাবে)
+          });
+
+          if (isLoading) return <p>Loading users...</p>;
+          if (isError) return <p>Error: {error.message}</p>;
+
+          return (
+            <ul>
+              {data.map((user: any) => (
+                <li key={user.id}>{user.name}</li>
+              ))}
+            </ul>
+          );
+        }
+
+৩.  Code Splitting & Performance (React.lazy + Suspense)
+    বড় React প্রজেক্টের সম্পূর্ণ JavaScript ফাইল শুরুতে একসাথে ব্রাউজারে ডাউনলোডের প্রয়োজন নেই। ইউজার যে পেজে যাবে, শুধু সেই পেজের কোডটুকু লোড হওয়াকে Code Splitting বলে।
+
+    TypeScript
+    import React, { lazy, Suspense } from 'react';
+
+    // Lazy loading the component
+    const Dashboard = lazy(() => import('./Dashboard'));
+
+    function App() {
+      return (
+        <div>
+          {/* Suspense দিয়ে লোডিং স্টেট দেখানো */}
+          <Suspense fallback={<div>Page Loading...</div>}>
+            <Dashboard />
+          </Suspense>
+        </div>
+      );
+    }
+
+=>  International Interview Questions & Answers
+১.  Client-side State Management (Redux/Zustand) এবং Server-side State Management (TanStack Query)-এর মধ্যে মূল তফাত কী?
+    উত্তর:
+    ১.  Redux / Zustand:
+        ক্লায়েন্ট অ্যাপ্লিকেশনের লোকাল ইউজার ইন্টারফেস স্টেট (যেমন: শপিং কার্ট, থিম, ফর্ম ড্রাফট) ধরে রাখার জন্য সেরা।
+
+    ২.  TanStack Query (React Query):
+        অ্যাসিঙ্ক্রোনাস সার্ভার ডাটা ফেচিং, ক্যাশিং, প্যাগিনেশন, এবং স্টেট সিনক্রোনাইজেশনের জন্য নির্মিত। এটি ব্যবহার করলে Redux-এর ৯০% API ফেচিং কোড লেখার প্রয়োজনই পড়ে না।
+
+=>  অনুশীলনী:
+    ধরো তুমি একটি Button কম্পোনেন্ট বানাবে যা title (string) এবং onClick (function) প্রপ্স নিবে।
+    TypeScript-এ এই ButtonProps ইন্টারফেসটি কেমন হবে এবং onClick ফাংশনের সঠিক টাইপিং কী হবে?
+
+    TypeScript
+    // নিচে TypeScript টাইপিংটি সম্পূর্ণ করো:
+    interface ButtonProps {
+      // ...?
+    }
+
+    TypeScript-এ ButtonProps ইন্টারফেসটি তৈরি করতে title-এর জন্য string এবং onClick-এর জন্য সঠিক ফাংশন টাইপ ব্যবহার করতে হবে। onClick প্রপ্সের সঠিক টাইপিং হলো () => void (যদি কোনো আর্গুমেন্ট না নেয়) অথবা ইভেন্ট হ্যান্ডলারের জন্য নির্দিষ্ট ইভেন্ট টাইপ।
+    টাইপস্ক্রিপ্টে ইভেন্ট হ্যান্ডলারের জন্য React.MouseEvent ব্যবহার করাটাই সবচেয়ে নিরাপদ।
+
+    TypeScript
+    import React from 'react';
+
+    // তোমার বলা সঠিক ইন্টারফেসটি
+    interface ButtonProps {
+      title: string;
+      onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    }
+
+    const Button: React.FC<ButtonProps> = ({ title, onClick }) => {
+      return <button onClick={onClick}>{title}</button>;
+    };

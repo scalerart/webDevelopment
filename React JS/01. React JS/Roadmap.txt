@@ -1,0 +1,79 @@
+২০২৬ সালে আন্তর্জাতিক রিমোট বা অন-সাইট মার্কেটে React Developer হিসেবে কাজ করার জন্য শুধু বেসিক সিনট্যাক্স শেখাই যথেষ্ট নয়। ইন্ডাস্ট্রি এখন Architecture, Performance Optimization, TypeScript, এবং Modern State Management জানা ডেভেলপারদের প্রাধান্য দেয়।
+
+তোমার জন্য বেসিক থেকে এডভান্সড এবং ইন্টারভিউ-রেডি পর্যন্ত একটি ৬-ধাপের মাস্টার রোডম্যাপ তৈরি করা হলো:
+
+১.  সলিড ফাউন্ডেশন (JavaScript & Web Fundamentals)
+    React শেখার আগে JavaScript ES6+ ফিচার এবং DOM Manipulations সম্পর্কে একদম পরিষ্কার ধারণা থাকতে হবে।
+
+    1.  মূল বিষয়:
+        Arrow Functions, Destructuring, Spread/Rest Operator, Array Methods (map, filter, reduce), Async/Await, Promises, Closures, Event Loop.
+
+    2.  ইন্টারভিউ ফোকাস:
+        1.  var, let, const-এর স্কোপ এবং Hoisting কীভাবে কাজ করে?
+        2.  JavaScript Engine কীভাবে Async Operation প্রসেস করে (Event Loop & Microtask Queue)?
+
+২.  React Core Concepts & Fundamental Architecture
+    React কীভাবে আন্ডার-দ্য-হুড কাজ করে তা বোঝা ইন্টারভিউয়ের সবচেয়ে গুরুত্বপূর্ণ অংশ।
+
+    1.  মূল বিষয়:
+        JSX Syntax, Components (Functional), Props vs State, Component Lifecycle, Conditional Rendering, Controlled vs Uncontrolled Components.
+
+    2.  গভীর অনুধাবন: Virtual DOM, Reconciliation Algorithm, Diffing Algorithm, React Fiber.
+
+    3.  ইন্টারভিউ ফোকাস:
+        1.  Virtual DOM কীভাবে আসল DOM-এর পারফরম্যান্স সমস্যা সমাধান করে?
+        2.  State পরিবর্তন করলে React কীভাবে Re-render ডিক্লেয়ার করে?
+
+৩.  Master Essential Hooks & State Management
+    আধুনিক React-এ Hooks-এর দক্ষতা এবং স্টেট ম্যানেজমেন্ট ছাড়া আন্তর্জাতিক স্ট্যান্ডার্ড ধরা অসম্ভব।
+
+    1.  Built-in Hooks: useState, useEffect, useRef, useContext, useReducer, useMemo, useCallback.
+    2.  State Management:
+        1.  Local vs Global State.
+        2.  Context API (ছোট থেকে মাঝারি প্রজেক্টের জন্য)।
+        3.  Redux Toolkit (RTK) অথবা Zustand (লার্জ-স্কেল ইন্ডাস্ট্রিয়াল অ্যাপ্লিকেশনের জন্য)।
+
+    3.  ইন্টারভিউ ফোকাস:
+        1.  useMemo এবং useCallback-এর পার্থক্য কী এবং এগুলো কখন ব্যবহার করা উচিত বা উচিত নয়?
+        2.  Custom Hook কীভাবে তৈরি করতে হয় এবং এটি কখন প্রয়োজন?
+
+৪.  Advanced Concepts & Performance Optimization
+    আন্তর্জাতিক ক্লায়েন্ট বা কোম্পানিগুলো হাই-পারফর্মিং এবং স্কেলেবল অ্যাপ্লিকেশন চায়।
+
+    1.  অ্যাডভান্সড টপিক:
+        React Router (v6+), Lazy Loading, Code Splitting (React.lazy, Suspense), Error Boundaries, Custom Hooks Design Pattern.
+
+    2.  ডাটা ফেচিং:
+        TanStack Query (React Query) বা RTK Query (Client-side caching এবং background re-fetching-এর জন্য)।
+
+    3.  টাইপসেফটি:
+        TypeScript with React (Props Interface, Event Handling, Generic Components).
+
+    4.  ইন্টারভিউ ফোকাস:
+        1.  একটি বড় React অ্যাপ্লিকেশনের Unnecessary Re-render কীভাবে কমানো যায়?
+        2.  React Query ব্যবহারের সুবিধা কী এবং এটি Redux/Zustand থেকে কীভাবে আলাদা?
+
+৫.  Real-World Industry Projects & Testing
+    ইন্টারন্যাশনাল জব মার্কেটে থিওরির চেয়ে প্রজেক্ট পোর্টফোলিও বেশি গুরুত্বপূর্ণ।
+
+    1.  প্রজেক্ট ১ (মাঝারি): Real-time Dashboard (React + Zustand + Chart.js + Tailwind CSS)।
+    2.  প্রজেক্ট ২ (এডভান্সড):
+        Full-fledged E-commerce / SaaS Platform (React + TypeScript + Redux Toolkit/TanStack Query + Stripe Payment Integration)।
+
+    3.  টেস্টিং: Unit & Integration Testing using Jest and React Testing Library (RTL).
+
+    4.  ইন্টারভিউ ফোকাস:
+        1.  Clean Code Architecture এবং Folder Structure বজায় রাখার নিয়ম।
+        2.  Automated Unit Testing করার সঠিক পদ্ধতি।
+
+৬.  Production Deployment, CI/CD & Portfolio Prep
+    ভার্সন কন্ট্রোল ও ডিপ্লয়মেন্ট: Git, GitHub Actions (CI/CD), Vercel / Netlify / AWS S3 + CloudFront deployment.
+
+    1.  পোর্টফোলিও ও ইন্টারভিউ:
+        Live Links সহ GitHub Repo সাজানো, System Design (Front-end Architecture) শেখা, এবং Live Coding Round-এর জন্য LeetCode/HackerRank-এ JavaScript Problem Solving অনুশীলন করা।
+
+=>  আমরা যেভাবে একসাথে শুরু করব:
+    আমরা রোডম্যাপের একদম ধাপ ১ (JavaScript Foundation & DOM) থেকে শেখা শুরু করব। প্রতিটি টপিক শেখার সাথে সাথেই আমরা:
+    1.  কনসেপ্ট গভীরভাবে বুঝব।
+    2.  কোড লিখে প্র্যাকটিস করব।
+    3.  ওই টপিকের উপর আন্তর্জাতিক ইন্টারভিউতে আসা প্রশ্ন ও উত্তর সমাধান করব।

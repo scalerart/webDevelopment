@@ -1,0 +1,128 @@
+=>  Asynchronous JavaScript, Event Loop, Promises & Async/Await
+    React-এ API থেকে ডাটা ফেচিং (Data Fetching), State Updates, এবং Async Actions বোঝার জন্য JavaScript Engine কীভাবে ব্যাকগ্রাউন্ডে কাজ করে তা জানা অপরিহার্য।
+
+১.  JavaScript কীভাবে Single-Threaded হওয়া সত্ত্বেও Async কাজ করে?
+    JavaScript মূলত একটি Single-threaded ল্যাঙ্গুয়েজ, অর্থাৎ এটি একসাথে একটিমাত্র কাজ বা কোডলাইন এক্সিকিউট করতে পারে।
+
+    তাহলে সার্ভার থেকে ডাটা লোড হওয়ার সময় পুরো অ্যাপ্লিকেশন ফ্রিজ (Freeze) না হয়ে কীভাবে স্মুথলি কাজ করে? এর উত্তর হলো JavaScript Runtime Environment (Browser বা Node.js)।
+
+    ব্রাউজার আর্কিটেকচারে মূলত ৪টি গুরুত্বপূর্ণ অংশ থাকে:
+      1.  Call Stack:
+          যেখানে Synchronous কোডগুলো একের পর এক এসে এক্সিকিউট হয়। (LIFO - Last In First Out)
+
+      2.  Web APIs:
+          ব্রাউজারের দেওয়া থার্ড-পার্টি ফিচার (যেমন: setTimeout, fetch, DOM Events)। এগুলো ব্যাকগ্রাউন্ডে টাইম হিসাব করে বা ডাটা আনে।
+
+      3.  Task Queue (Callback Queue):
+          setTimeout বা setInterval-এর কলব্যাক ফাংশনগুলো কাজ শেষে এখানে এসে লাইনে দাঁড়ায়।
+
+      4.  Microtask Queue:
+          Promises (.then/catch), async/await, এবং queueMicrotask-এর কলব্যাকগুলো এখানে দাঁড়ায়। (গুরুত্বপূর্ণ: Microtask Queue-এর প্রাধিকার/Priority, Task Queue-এর চেয়ে বেশি!)
+
+      5.  Event Loop:
+          এটি সারাক্ষণ নজর রাখে Call Stack ফাঁকা আছে কিনা। Call Stack ফাঁকা হলেই সে প্রথমে Microtask Queue এবং তারপর Task Queue থেকে কোড নিয়ে Call Stack-এ পাঠায়।
+
+২.  Promise ও Async/Await
+    Asynchronous কোড সহজে ম্যানেজ করার জন্য ES6-এ Promise এবং ES8-এ Async/Await আনা হয়।
+
+    Promise-এর ৩টি স্টেট থাকে:
+      1.  Pending: প্রসেস চলছে।
+      2.  Fulfilled: সফল হয়েছে (resolve())।
+      3.  Rejected: এরর বা ব্যর্থ হয়েছে (reject())।
+
+    JavaScript
+    const fetchData = () => {
+      return new Promise((resolve, reject) => {
+        let success = true;
+        if (success) {
+          resolve("Data fetched successfully!");
+        } else {
+          reject("Error occurred!");
+        }
+      });
+    };
+
+    // Async/Await দিয়ে হ্যান্ডেল করা (Cleanest Syntax)
+    async function getData() {
+      try {
+        const result = await fetchData();
+        console.log(result);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+=>  International Interview Questions & Answers
+    আন্তর্জাতিক ইন্টারভিউ বা কোডিং টেস্টে Event Loop থেকে এই ধরনের ট্রিকি সিকোয়েন্স প্রশ্ন প্রায়ই করা হয়।
+
+১.  নিচের কোডটি এক্সিকিউট করলে কনসোলে কোন অর্ডারে/আউটপুটে প্রিন্ট হবে?
+    JavaScript
+    console.log("1. Start");
+
+    setTimeout(() => {
+      console.log("2. Timeout");
+    }, 0);
+
+    Promise.resolve().then(() => {
+      console.log("3. Promise");
+    });
+
+    console.log("4. End");
+    আউটপুট ক্রম (Output Sequence):
+
+    Plaintext
+    1. Start
+    4. End
+    3. Promise
+    2. Timeout
+
+  কেন এমন হলো? (Step-by-Step Step):
+    1.  console.log("1. Start")
+        সোজাসুজি Call Stack-এ গেল এবং সাথে সাথে প্রিন্ট হলো 1. Start।
+
+    2.  setTimeout
+        Web API-তে গেল,timer শেষ হয়ে ব্রাউজার এর কলব্যাককে Task Queue-তে পাঠিয়ে দিল।
+
+    3.  Promise.resolve().then()
+        এই মাইক্রোটাস্কটি গিয়ে জমা হলো Microtask Queue-তে।
+
+    4.  console.log("4. End")
+        Synchronous কোড, তাই সরাসরি প্রিন্ট হলো 4. End।
+
+    5.  এখন Call Stack একদম ফাঁকা!
+        Event Loop প্রথমে Microtask Queue চেক করল এবং Promise-এর কলব্যাক রান করে প্রিন্ট করল 3. Promise।
+
+    6.  সবশেষে
+        Event Loop Task Queue থেকে setTimeout-এর কলব্যাক নিয়ে প্রিন্ট করল 2. Timeout।
+
+=>  অনুশীলনী:
+    ইন্টারভিউ বোর্ডের মতো একটু চিন্তা করে নিচের কোডটির আউটপুট সিকোয়েন্স বলো:
+
+      JavaScript
+      console.log("A");
+
+      async function asyncTask() {
+        console.log("B");
+        await Promise.resolve();
+        console.log("C");
+      }
+
+      asyncTask();
+
+      console.log("D");
+
+    সঠিক আউটপুট ক্রম হবে: A, B, D, C
+
+    কারণ ও বিহাইন্ড দ্য সিন ব্যাখ্যা:
+    1.  console.log("A"): Synchronous কোড, তাই শুরুতেই প্রিন্ট হবে A।
+    2.  asyncTask() কল হলো:
+        ফাংশনের ভেতরের console.log("B") লাইনটি await-এর আগে থাকায় তা Synchronous-ভাবে সাথে সাথেই রান করবে এবং প্রিন্ট হবে B।
+
+    3.  await Promise.resolve():
+        await কিওয়ার্ডটি পাওয়ার সাথে সাথে JavaScript Engine ফাংশনের বাকি অংশকে (অর্থাৎ console.log("C")) ঝুলিয়ে রেখে Microtask Queue-তে পাঠিয়ে দেয় এবং asyncTask() থেকে সাময়িকভাবে বের হয়ে আসে।
+
+    4.  console.log("D"):
+        Call Stack-এ থাকা পরবর্তী Synchronous কোড রান করে প্রিন্ট হবে D।
+
+      5.  Call Stack ফাঁকা হলো:
+          এখন Event Loop চেক করে Microtask Queue থেকে মুলতুবি থাকা কোডটুকু এনে প্রিন্ট করবে C।

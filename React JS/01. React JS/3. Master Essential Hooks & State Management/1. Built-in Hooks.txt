@@ -1,0 +1,132 @@
+React 16.8 ভার্সনে Hooks আসার পর Functional Component-ই এখন ইন্ডাস্ট্রি স্ট্যান্ডার্ড। একজন ইন্টারন্যাশনালি কম্পিটিটিভ React Developer হতে হলে হুকস-এর ব্যবহার এবং বিহাইন্ড-দ্য-সিন মেকানিজম খুব ভালোভাবে জানতে হবে।
+
+  আজকে আমরা প্রথম ৩টি সবচেয়ে মৌলিক হুক শিখব:
+    1.  useState
+    2.  useEffect
+    3.  useRef
+
+১.  useState (Local State Management)
+    কম্পোনেন্টের ভেতরে পরিবর্তনশীল ডাটা ধরে রাখার জন্য useState ব্যবহৃত হয়।
+
+    JavaScript
+    const [state, setState] = useState(initialState);
+
+    =>  স্পেশাল: Functional State Update
+        যখন আগের স্টেটের ওপর নির্ভর করে নতুন স্টেট আপডেট করতে হয়, তখন সরাসরি মান না বসিয়ে Functional Updater ব্যবহার করা উচিত।
+
+        JavaScript
+        // ভুল নিয়ম (Batching-এর কারণে ৩ বার বাড়বে না, মাত্র ১ বাড়বে)
+        const handleClickBad = () => {
+          setCount(count + 1);
+          setCount(count + 1);
+          setCount(count + 1);
+        };
+
+        // সঠিক নিয়ম (আগের স্টেটের রেফারেন্স পেয়ে ৩-ই বাড়বে)
+        const handleClickGood = () => {
+          setCount(prev => prev + 1);
+          setCount(prev => prev + 1);
+          setCount(prev => prev + 1);
+        };
+
+২.  useEffect (Handling Side Effects)
+    React কম্পোনেন্ট কোনো খাঁটি UI তৈরি করার পাশাপাশি যখন বাইরের দুনিয়ার সাথে যোগাযোগ করে (যেমন: API Call, Event Listener যুক্ত করা, DOM সরাসরি ম্যানিপুলেট করা), তাকে Side Effect বলে।
+
+    useEffect-এর ৩টি ব্যবহারের ধরন (Lifecycle Analogy):
+      JavaScript
+      useEffect(() => {
+        // ১. Execution Logic
+
+        return () => {
+          // ২. Cleanup Function
+        };
+      }, [dependencies]); // ৩. Dependency Array
+
+    1.  Dependency Array
+        কখন রান হবে?
+        Class Component Lifecycle এর সাথে তুলনা
+
+    2.  Array না দিলে (undefined)
+        প্রাথমিক রেন্ডার এবং প্রতিটি Re-render-এর পর
+        componentDidMount + componentDidUpdate
+
+    3.  ফাঁকা Array দিলে ([])
+        শুধু কম্পোনেন্টটি স্ক্রিনে আসার পর একবারই (Mount)
+        componentDidMount
+
+    4.  ভ্যালু দিলে ([count])
+        প্রাথমিক রেন্ডারে এবং count পরিবর্তন হলেই
+        componentDidUpdate (conditional)
+
+    =>  Cleanup Function কী এবং কেন দরকার?
+        কম্পোনেন্ট যখন স্ক্রিন থেকে মুছে যায় (Unmount হয়) বা আবার রি-রেন্ডার হয়, তখন পুরোনো মেমোরি লিক (Memory Leak) বন্ধ করার জন্য Cleanup Function ব্যবহার করা হয়। (যেমন: setInterval বন্ধ করা বা Event Listener রিমুভ করা)।
+
+৩.  useRef (Persistent Reference without Re-render)
+    useRef-এর দুটি প্রধান কাজ:
+      1.  সরাসরি HTML DOM উপাদানে প্রবেশ বা রেফারেন্স তৈরি করা (যেমন: Input Box-এ Focus করা)।
+      2.  এমন কোনো মান মেমোরিতে ধরে রাখা যা পরিবর্তন হলেও কম্পোনেন্টকে Re-render করার দরকার নেই।
+
+      JavaScript
+      import { useRef } from 'react';
+
+      function Timer() {
+        const countRef = useRef(0); // { current: 0 }
+
+        const handleIncrement = () => {
+          countRef.current++; // মান পরিবর্তন হচ্ছে, কিন্তু UI Re-render হবে না!
+          console.log("Current count:", countRef.current);
+        };
+
+        return <button onClick={handleIncrement}>Click Me</button>;
+      }
+
+=>  International Interview Questions & Answers
+    ১.  useState এবং useRef-এর মধ্যে প্রধান পার্থক্য কী?
+        0.  বৈশিষ্ট্য
+            useState
+            useRef
+
+        1.  UI Re-render
+            মান পরিবর্তন হলে কম্পোনেন্ট Re-render হয়
+            মান পরিবর্তন হলে কম্পোনেন্ট Re-render হয় না
+
+        2.  মেমোরি পারসিস্টেন্স
+            রেন্ডারের মাঝে মান ধরে রাখে
+            রেন্ডারের মাঝে মান ধরে রাখে
+
+        3.  ডাটা এক্সেস
+            state সরাসরি
+            ref.current-এর মাধ্যমে
+
+        4.  Primary Use Case
+            UI-তে দেখানো ডাটা ম্যানেজ করতে
+            DOM Access বা এমন ভ্যালু যা রেন্ডার ট্রিগার করবে না
+
+২.  React 18 / React 19-এ useEffect Strict Mode-এ ডেভেলপমেন্টে কেন দুবার রেন্ডার/কল হয়?
+    React Strict Mode-এ ডেভেলপমেন্ট করার সময় intentional-ভাবে useEffect-কে দুইবার রান করায় (Mount => Unmount => Remount)।
+
+    কারণ: ডেভেলপার যেন বুঝতে পারে তার তৈরি useEffect-এর ভেতরে Cleanup Function সঠিকভাবে লেখা হয়েছে কিনা। প্রোডাকশন বিল্ডে (Production Build) কিন্তু এটি দুবার রান হয় না, মাত্র একবারই হয়।
+
+=>  অনুশীলনী:
+    ধরে নাও তুমি একটি সার্চ বক্স বানাচ্ছ যেখানে ইউজার টাইপ করলে API Call হবে। তুমি এমন একটি কাউন্টার বা টাইমার তৈরি করতে চাও যা হিসাব রাখবে ইউজার মোট কতবার টাইপ করেছে, কিন্তু ওই কাউন্টার বাড়ার কারণে পুরো কম্পোনেন্ট যেন বার বার Re-render না হয়।
+
+    এই কাজের জন্য তুমি useState ব্যবহার করবে নাকি useRef ব্যবহার করবে এবং কেন?
+
+    এখানে useRef ব্যবহার করাটাই সবচেয়ে সেরা ইন্ডাস্ট্রি প্র্যাকটিস।
+
+    কেন useRef সঠিক পছন্দ?
+      ১.  Re-render বন্ধ করা:
+          ইউজার প্রতিবার টাইপ করার সাথে সাথে যদি আমরা useState দিয়ে কাউন্ট বাড়াতাম, তবে প্রতি ক্যারেক্টার টাইপ করার পর পুরো কম্পোনেন্ট এবং সার্চ বক্স রি-রেন্ডার হতো। এতে পারফরম্যান্স খারাপ হতো।
+
+      ২.  মান ধরে রাখা:
+          useRef ব্যবহার করলে countRef.current-এর মান মেমোরিতে সঠিকভাবেই বাড়তে থাকবে, কিন্তু এটি কম্পোনেন্টকে অপ্রয়োজনে রি-রেন্ডার করবে না।
+
+          JavaScript
+          // বাস্তব কোড উদাহরণ:
+          const searchCountRef = useRef(0);
+
+          const handleSearch = (e) => {
+            searchCountRef.current += 1; // রি-রেন্ডার ছাড়াই মান সংরক্ষিত থাকছে
+            console.log(`User has typed ${searchCountRef.current} times`);
+            // API Call logic here...
+          };

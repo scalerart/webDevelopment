@@ -1,0 +1,84 @@
+=>  Production Deployment, CI/CD & Interview Mastery
+    আমাদের রোডম্যাপের একদম শেষ ও চূড়ান্ত ধাপে স্বাগতম! ২০২৬ সালের আন্তর্জাতিক জব মার্কেটে একজন রিমোট ডেভেলপারের কাজ শুধু নিজের কম্পিউটারে (localhost) কোড রান করানোতেই শেষ হয় না।
+
+    কোড কীভাবে নিরাপদে ক্লাউডে ডিপ্লয় করতে হয়, সিআই/সিডি (CI/CD) পাইপলাইন দিয়ে টেস্ট অটোমেট করতে হয় এবং টেকনিক্যাল ইন্টারভিউ ক্র্যাক করতে হয়—তা জানা অত্যন্ত জরুরি।
+
+১.  Production Build Optimization & Security
+    প্রোডাকশনে অ্যাপ ডিপ্লয় করার আগে ডেভেলপমেন্ট কোডকে অপটিমাইজ এবং সিকিউর করতে হয়।
+    ১.  Environment Variables (.env):
+        কখনো API Key, Database URL বা প্রাইভেট তথ্য সরাসরি কোডে দেওয়া যাবে না।
+
+    ২.  Vite / React প্রজেক্টে:
+        .env ফাইলে রাখতে হবে এবং সেটি .gitignore-এ যুক্ত করতে হবে।
+
+    ৩.  Build Tooling (Vite / ESBuild):
+        npm run build দিয়ে কোডকে মিনিফাই (Minify) এবং মানসম্মত JavaScript বানাতে হয়।
+
+    ৪.  Security Best Practices:
+        XSS (Cross-Site Scripting) আক্রমণ ঠেকাতে React-এর ইন-বিল্ট এস্কেপিং ফিচার ব্যবহার করা।
+
+        CSRF (Cross-Site Request Forgery) ঠেকাতে Secure Cookies এবং SameSite Attribute ব্যবহার করা।
+
+২.  CI/CD & Automated Deployment (GitHub Actions + Vercel)
+    আন্তর্জাতিক টিমগুলোতে তুমি যখনই GitHub-এ কোনো কোড push বা Pull Request (PR) দেবে, সাথে সাথে অটোমেটিক প্রসেস শুরু হয়ে যায়।
+
+    ১.  CI (Continuous Integration):
+        GitHub Actions অটোমেটিক তোমার কোডটি বিল্ড করে এবং Jest দিয়ে সব Unit Test চালিয়ে দেখে কোথাও ভুল আছে কি না।
+
+    ২.  CD (Continuous Deployment):
+        টেস্ট পাস হলে সাথে সাথে অ্যাপটি Vercel, Netlify, বা AWS CloudFront-এ লাইভ হয়ে যায়।
+
+        YAML
+        # GitHub Actions (.github/workflows/deploy.yml)-এর সাধারণ স্ট্রাকচার
+        name: Build and Test React App
+        on: [push]
+
+        jobs:
+          build:
+            runs-on: ubuntu-latest
+            steps:
+              - uses: actions/checkout@v3
+              - name: Install Dependencies
+                run: npm install
+              - name: Run Tests
+                run: npm test
+              - name: Build Project
+                run: npm run build
+
+৩.  আন্তর্জাতিক জব ও রিমোট ইন্টারভিউ প্রস্তুতি (How to Crack the Interview)
+    ইন্টারন্যাশনাল রিমোট জবের জন্য সাধারণত ৪টি টেকনিক্যাল ধাপ থাকে:
+
+    [ Resume / Portfolio ] ---> [ Screening Call ] ---> [ Live Coding / System Design ] ---> [ Culture Fit ]
+
+১.  Portfolio Projects (থিউরির চেয়ে কাজের প্রমাণ)
+    GitHub-এ ২ থেকে ৩টি হাই-কোয়ালিটি প্রজেক্ট লাইভ লিংক সহ থাকতে হবে।
+
+    Project 1: Full-stack SaaS / E-commerce App (React + TypeScript + Zustand/Redux + Tailwind CSS + TanStack Query + Auth).
+
+    Project 2: Real-time Collaborative Tool / Dashboard (React + WebSockets / Socket.io + Chart.js).
+
+২.  Technical Interview Strategy
+    ১.  System Design (Front-end):
+        "How to build Twitter/Facebook Feed in React?"—এরকম প্রশ্নে স্টেট ডিজাইন, প্যাজিনেশন, ভার্চুয়ালাইজড লিস্ট (React Window), এবং ক্যাশিং লজিক বোর্ডে এঁকে বোঝাতে হবে।
+
+    ২.  Machine Coding Round:
+        ১ ঘণ্টার ইন্টারভিউতে বলা হবে একটি Autocomplete Search Box বা Kanban Board বানিয়ে দেখাতে। ক্লিন কোড এবং টাইপসেফটির ওপর ভিত্তি করে তারা মার্কস দেয়।
+
+=>  International Interview Questions & Answers
+    প্রশ্ন: একটি React অ্যাপ্লিকেশনের Performance Slow হয়ে গেলে তুমি কী কী পদক্ষেপ নিয়ে তা ডায়াগনোজ এবং অপটিমাইজ করবে?
+
+    উত্তর:
+    ১.  Diagnose:
+        ব্রাউজারের React Developer Tools (Profiler Tab) এবং Lighthouse ব্যবহার করে অপ্রয়োজনীয় রি-রেন্ডার এবং ধীরগতির কম্পোনেন্ট চিহ্নিত করব।
+
+    ২.  Optimization Steps:
+        ১.  Code Splitting:
+            React.lazy এবং Suspense দিয়ে রুট লেভেলে বান্ডেল সাইজ কমাব।
+
+        ২.  State Placement:
+            স্টেটকে গ্লোবাল না রেখে যতটা সম্ভব লোকাল (Component Level)-এ নামিয়ে আনব।
+
+        ৩.  Memoization:
+            ভারী ফিল্টারিং বা কাজের জন্য useMemo এবং চাইল্ড রি-রেন্ডার আটকাতে useCallback / React.memo ব্যবহার করব।
+
+        ৪.  Asset Optimization: ইমেজগুলো .webp ফরম্যাটে রূপান্তর এবং Lazy Load করব।

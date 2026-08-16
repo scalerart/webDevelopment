@@ -1,0 +1,80 @@
+এখান থেকেই আমাদের আসল React JS শেখা শুরু। React কীভাবে কাজ করে তা গভীরে না বুঝে সরাসরি কোড লিখলে বড় অ্যাপ্লিকেশনে Performance Issue তৈরি হয়।
+
+১.  React কী এবং এটি কেন Component-Based?
+    React হলো ইউজার ইন্টারফেস (UI) তৈরি করার জন্য একটি Declarative এবং Component-Based JavaScript লাইব্রেরি।
+
+    1.  Imperative (Traditional JS):
+        কীভাবে করতে হবে তা ধাপে ধাপে বলে দেওয়া (যেমন: document.createElement, appendChild করা)।
+
+    2.  Declarative (React):
+        UI কেমন দেখতে হবে তা বলে দেওয়া, React নিজে থেকে সেটা DOM-এ রেন্ডার করে নেয়।
+
+২.  Virtual DOM, Reconciliation & Diffing Algorithm (ইন্টারভিউয়ের প্রিয় টপিক!)
+    React কেন এত দ্রুত কাজ করে? এর মূল কারণ হলো Virtual DOM।
+
+    [Real DOM] <--- (Reconciliation / Fiber) ---> [Virtual DOM (In Memory)]
+
+    1.  Virtual DOM কী?
+        Virtual DOM হলো আসল Real DOM-এর একটি হালকা (Lightweight) এবং ইন-মেমোরি অবজেক্ট কপি।
+
+    2.  Browser-এর Real DOM ধীরগতির কেন?
+        যখনই Real DOM-এ কোনো পরিবর্তন করা হয়, ব্রাউজারকে পুরো পাতা রি-পেইন্ট (Repaint) এবং রি-ফ্লো (Reflow) করতে হয়। এটি কম্পিউটেশনালি অনেক ব্যয়বহুল।
+
+    3.  React কীভাবে এটি সমাধান করে? (The Reconciliation Process)
+        1.  Initial Render:
+            অ্যাপ্লিকেশন চালু হলে React পুরো UI-এর একটি Virtual DOM ট্রি মেমোরিতে তৈরি করে।
+
+        2.  State/Props Change:
+            যখন কোনো কম্পোনেন্টের State বা Props পরিবর্তন হয়, React সাথে সাথে একটি নতুন Virtual DOM Tree তৈরি করে।
+
+        3.  Diffing Algorithm:
+            React তার আগের Virtual DOM-এর সাথে নতুন Virtual DOM-এর তুলনা (Difference) করে দেখে যে ঠিক কোন নির্দিষ্ট জায়গায় পরিবর্তন এসেছে।
+
+        4.  Reconciliation (Batch Update):
+            পুরো DOM রি-রেন্ডার না করে, React শুধু সেই পরিবর্তিত অংশটুকুই Real DOM-এ আপডেট করে দেয়।
+
+    ৩.  React Fiber (Modern Architecture)
+        React 16 থেকে নতুন একটি কোর আর্কিটেকচার আনা হয়েছে, যার নাম React Fiber।
+          1.  কেন আনা হলো?
+              পুরোনো Reconciliation অ্যালগরিদম ছিল Synchronous (বাগে বাঁধা)। বড় ইউজার ইন্টারফেসে অনেক ডেটা পরিবর্তন হলে ইউজার ইন্টারফেস জমে (Freeze হয়ে) যেত।
+
+          2.  React Fiber-এর কাজ:
+              এটি পুরো রেন্ডারিং প্রসেসকে ছোট ছোট Units of Work বা টুকরোতে ভাগ করে ফেলে। এটি রেন্ডারিং এর কাজকে Pause, Abort, বা Priority অনুযায়ী রেজ্যুম (Resume) করতে পারে (যেমন: ইউজার টাইপিং বা অ্যানিমেশনকে উচ্চ প্রাধিকার/High Priority দিয়ে Background Fetching-কে Low Priority দেওয়া)।
+
+=>  International Interview Questions & Answers
+১.  React-এ key প্রপ কেন ব্যবহার করা হয় এবং Lists-এ index-কে key হিসেবে দেওয়া কেন খারাপ অভ্যাস?
+    1.  key কেন লাগে:
+        React যখন কোনো তালিকার (List) উপাদানগুলো Diffing Algorithm দিয়ে চেক করে, তখন key দেখে সে বুঝতে পারে কোন আইটেমটি যোগ হয়েছে, মুছে গেছে বা পরিবর্তিত হয়েছে।
+
+    2.  index দেওয়া কেন খারাপ:
+        যদি তালিকার আইটেম ফিল্টার করা হয়, সর্ট করা হয় বা মাঝখান থেকে কোনো আইটেম মুছে দেওয়া হয়, তবে আইটেমের Index বদলে যায়। ফলে React বিভ্রান্ত হয়ে ভুল কম্পোনেন্ট রি-রেন্ডার করে বা স্টেট মিক্সড-আপ হয়ে যায়।
+
+    3.  সঠিক নিয়ম: সবসময় Unique ID (যেমন: item.id) key হিসেবে দেওয়া উচিত।
+
+২.  Uncontrolled vs Controlled Component-এর পার্থক্য কী?
+    1.  State Management
+        Form Data নিয়ন্ত্রণ করে React State (useState), Form Data নিয়ন্ত্রণ করে সরাসরি Browser DOM
+
+    2.  Data Access
+        Value প্রপ এবং onChange হ্যান্ডলার দিয়ে, useRef দিয়ে সরাসরি DOM থেকে মান পড়া হয়
+
+    3.  Use Case
+        "Validation, Instant UI update-এর ক্ষেত্রে", সহজ ফর্ম বা থার্ড-পার্টি নন-রিয়েক্ট লাইব্রেরি ইন্টিগ্রেশনে
+
+=>  অনুশীলনী:
+    ধরে নাও একটি ই-কমার্স ওয়েবসাইটে পণ্যের তালিকা দেখানো হচ্ছে। তুমি একটি ফিল্টার বাটনে ক্লিক করলে ১০০টি পণ্যের মধ্যে ১০টি পণ্য ফিল্টার হয়ে এলো।
+    1.  বিহাইন্ড দ্য সিন-এ React-এর Virtual DOM এবং Diffing Algorithm কীভাবে কাজ করবে তা সংক্ষেপে ব্যাখ্যা করো।
+    উত্তর: Diffing Algorithm-এর মাধ্যমে পুরোনো ও নতুন ভার্চুয়াল DOM তুলনা করে। শুধু ১০টি পণ্যের পরিবর্তন বা পার্থক্যগুলো বের করে React সেগুলোকে আসল বা রিয়েল DOM-এ আপডেট করে, যার ফলে পুরো পেজ রেন্ডার না হয়ে দ্রুত কাজ হয়।
+
+    Virtual DOM ও Diffing Algorithm-এর কাজ
+        1.  Virtual DOM তৈরি:
+            স্টেট বা ডেটা বদলালে React পুরো ইউজার ইন্টারফেসের একটি হালকা ইন-মেমোরি কপি বা Virtual DOM তৈরি করে।
+
+        2.  তুলনা বা Diffing:
+            React পুরোনো Virtual DOM ট্রি-র সাথে নতুন Virtual DOM ট্রি-র তুলনা করে দেখে কোথায় পরিবর্তন এসেছে।
+
+        3.  টাইপ ও কি (Key) মেলানো:
+            উপাদানগুলোর টাইপ এক কি না এবং key প্রপস ঠিক আছে কি না তা দেখে উপাদানগুলো মুছে ফেলা হয়েছে নাকি রাখা হয়েছে তা বুঝে নেয়।
+
+        4.  ন্যূনতম পরিবর্তন (Minimization):
+            অপ্রয়োজনীয় পুরো পেজ রেন্ডার না করে, শুধু যে ১০টি পণ্য থাকবে তাদের রেখে বাকি ৯০টি পণ্য DOM থেকে সরিয়ে দেয়।

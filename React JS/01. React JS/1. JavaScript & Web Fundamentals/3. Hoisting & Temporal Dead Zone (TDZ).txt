@@ -1,0 +1,96 @@
+=>  Hoisting এবং Temporal Dead Zone (TDZ)
+    Hoisting হলো JavaScript Engine-এর একটি বিল্ট-ইন মেকানিজম, যেখানে কোড এক্সিকিউট করার আগে মেমোরি অ্যালোকেশন ফেজে (Memory Allocation Phase) সমস্ত ভ্যারিয়েবল এবং ফাংশন ডিক্লারেশনকে তাদের স্কোপের একদম উপরে নিয়ে যাওয়া হয়।
+
+1.  var-এর ক্ষেত্রে Hoisting:
+    var দিয়ে তৈরি ভ্যারিয়েবল Hoist হয় এবং মেমোরিতে শুরুতেই undefined মান বসিয়ে দেওয়া হয়।
+
+    JavaScript
+    console.log(a); // আউটপুট: undefined (এরর দেবে না)
+    var a = 5;
+
+    ব্যাখ্যা: বিহাইন্ড দ্য সিন কোডটি এভাবে এক্সিকিউট হয়:
+    JavaScript
+    var a; // Hoisted
+    console.log(a); // undefined
+    a = 5;
+
+2.  let ও const-এর ক্ষেত্রে Hoisting এবং TDZ:
+    let এবং const-ও কিন্তু Hoist হয়, তবে তারা undefined দিয়ে ইনিশিয়ালাইজ হয় না।
+
+    ভ্যারিয়েবলটি মেমোরিতে ডিক্লেয়ার হওয়ার পর থেকে যতক্ষণ না কোডে তার প্রকৃত মান দেওয়া (Initialization) হচ্ছে, মাঝখানের এই সময় বা স্থানকে বলা হয় Temporal Dead Zone (TDZ)। TDZ-এর মধ্যে ওই ভ্যারিয়েবলকে এক্সেস করতে গেলে ReferenceError দেবে।
+
+    JavaScript
+    console.log(b); // ReferenceError: Cannot access 'b' before initialization
+    let b = 10; // এখানে b ইনিশিয়ালাইজ হলো, এর আগ পর্যন্ত b ছিল TDZ-এ।
+
+=>  International Interview Questions & Answers
+    ইন্টারন্যাশনাল টেকনিক্যাল ইন্টারভিউতে বা কোডিং রাউন্ডে এই টপিক থেকে কীভাবে প্রশ্ন করা হয়, তা নিচে দেওয়া হলো:
+
+১.  নিচের কোডটির আউটপুট কী হবে এবং কেন?
+      JavaScript
+      for (var i = 0; i < 3; i++) {
+        setTimeout(() => {
+          console.log(i);
+        }, 1000);
+      }
+
+    উত্তর: আউটপুট হবে: 3, 3, 3 (এক সেকেন্ড পর পর নয়, একসাথে ৩ বার ৩ প্রিন্ট হবে)।0
+
+    কারণ: var হলো ফাংশন স্কোপড। পুরো লুপে i-এর জন্য মেমোরিতে একটিমাত্র রেফারেন্স থাকে। ১ সেকেন্ড পর যখন setTimeout-এর কলব্যাক রান করে, ততক্ষণে লুপ শেষ হয়ে i-এর মান 3 হয়ে গেছে।
+
+    সমাধান (let ব্যবহার করে):
+    JavaScript
+    for (let i = 0; i < 3; i++) {
+      setTimeout(() => {
+        console.log(i);
+      }, 1000);
+    }
+    let ব্লক স্কোপড হওয়ায় লুপের প্রতিটা ইটারেশনে (Iteration) নতুন করে i-এর একটি আলাদা স্কোপ বা বাইন্ডিং তৈরি হয়। ফলে আউটপুট আসবে: 0, 1, 2।
+
+২.  const দিয়ে ডিক্লেয়ার করা Array বা Object-এর উপাদান কী পরিবর্তন করা যায়?
+    JavaScript
+    const user = { name: "Rahim" };
+    user.name = "Karim"; // এটা কি কাজ করবে?
+
+    উত্তর: হ্যাঁ, কাজ করবে।
+
+    কারণ: const মেমোরি রেফারেন্স বা পয়েন্টারকে ইমিউটেবল (Immutable) করে, ভেতরের ভ্যালুকে নয়। user.name = "Karim" করার মাধ্যমে আমরা একই অবজেক্টের ভেতরের প্রপার্টি পরিবর্তন করছি, অবজেক্টের মেমোরি রেফারেন্স পরিবর্তন করছি না।
+
+    তবে যদি আমরা পুরো অবজেক্ট রি-অ্যাসাইন করার চেষ্টা করি (যেমন: user = { name: "Karim" }), তবে TypeError দেবে।
+
+=>  অনুশীলনী:
+    নিচের কোডটি দেখলে কী আউটপুট আসবে বলে মনে হয়?
+
+      JavaScript
+      var name = "React";
+
+      function test() {
+        console.log(name);
+        var name = "Next.js";
+      }
+
+      test();
+
+    চল বিহাইন্ড দ্য সিন (Behind the Scenes) মেকানিজমটা ভেঙে দেখে নেওয়া যাক:
+      JavaScript
+      var name = "React";
+
+      function test() {
+        console.log(name);
+        var name = "Next.js";
+      }
+
+      test();
+
+    =>  কেন undefined আসবে?
+        JavaScript-এ ফাংশনের ভেতরে আলাদা একটি স্কোপ তৈরি হয়। test() ফাংশনটি রান করার সময়, ফাংশনের ভেতরের var name = "Next.js"; ডিক্লারেশনটি Hoisting-এর কারণে তার নিজস্ব স্কোপের (ফাংশন স্কোপ) একদম উপরে চলে যায়।
+
+    কোডটি বিহাইন্ড দ্য সিন এভাবে এক্সিকিউট হয়:
+      JavaScript
+      function test() {
+        var name; // Local variable hoisted with value 'undefined'
+        console.log(name); // প্রিন্ট হবে undefined
+        name = "Next.js"; // মান অ্যাসাইন করা হলো
+      }
+
+    যদি ফাংশনের ভেতরে var name ডিক্লেয়ার না করা হতো, তাহলে এটি গ্লোবাল স্কোপের name অর্থাৎ "React" প্রিন্ট করতো।

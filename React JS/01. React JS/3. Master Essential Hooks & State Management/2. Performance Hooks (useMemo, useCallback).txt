@@ -1,0 +1,180 @@
+React-এর আন্তর্জাতিক লেভেল ইন্টারভিউতে Performance Optimization থেকে প্রশ্ন করা হবেই। যখন একটি অ্যাপ্লিকেশন বড় হতে থাকে, তখন অপ্রয়োজনীয় রি-রেন্ডার এবং ভারী কম্পিউটেশন (Heavy Computation) অ্যাপকে স্লো করে দেয়।
+
+আজকে আমরা শিখব কীভাবে useMemo, useCallback, এবং Custom Hooks ব্যবহার করে এই সমস্যার সমাধান করা হয়।
+
+১.  useMemo (Expensive Calculations Cache করা)
+    useMemo একটি মানকে (Value) মেমোরিতে জমা বা Cache (Memoize) করে রাখে। এটি ভারী কোনো হিসাব-নিকাশ (Heavy Computation) প্রতি রেন্ডারে পুনরায় করা থেকে আটকে দেয়।
+
+    JavaScript
+    import { useMemo } from 'react';
+
+    function ProductList({ products, filterText }) {
+      // useMemo ছাড়া: প্রতিবার যেকোনো স্টেটের কারণে কম্পোনেন্ট রি-রেন্ডার হলে এই লুপটি আবার চলবে।
+      // const filteredProducts = expensiveFilter(products, filterText);
+
+      // useMemo দিয়ে: শুধু products বা filterText পরিবর্তন হলেই এটি পুনরায় হিসাব করবে।
+      const filteredProducts = useMemo(() => {
+        return expensiveFilter(products, filterText);
+      }, [products, filterText]);
+
+      return <div>{/* Render filteredProducts */}</div>;
+    }
+
+২.  useCallback (Function Reference Cache করা)
+    JavaScript-এ প্রতিবার কম্পোনেন্ট রি-রেন্ডার হওয়ার সময় সব অভ্যন্তরীণ ফাংশন নতুন মেমোরি এড্রেসে (New Reference) পুনরায় তৈরি হয়।
+
+    useCallback কোনো মানকে ক্যাশ করে না, বরং এটি একটি ফাংশনের রেফারেন্সকে মেমোরিতে ক্যাশ করে রাখে।
+
+    JavaScript
+    import { useState, useCallback } from 'react';
+    import ChildComponent from './ChildComponent';
+
+    function Parent() {
+      const [count, setCount] = useState(0);
+
+      // useCallback দিয়ে ফাংশন মেমোইজ করা হলো
+      const handleClick = useCallback(() => {
+        console.log("Button Clicked!");
+      }, []); // ফাঁকা ডিটেনডেন্সি মানে ফাংশন রেফারেন্স কখনো বদলাবে না
+
+      return (
+        <div>
+          <button onClick={() => setCount(count + 1)}>Count: {count}</button>
+          {/* ChildComponent-এ প্রপ্স হিসেবে পাস করা হলো */}
+          <ChildComponent onClick={handleClick} />
+        </div>
+      );
+    }
+
+    React.memo + useCallback প্যাক: চাইল্ড কম্পোনেন্টকে যদি React.memo দিয়ে র‍্যাপ করা থাকে, তবে useCallback ব্যবহার করলে প্যারেন্ট কম্পোনেন্ট রি-রেন্ডার হলেও চাইল্ড কম্পোনেন্ট আর রি-রেন্ডার হবে না।
+
+৩.  Custom Hooks (Reusing Component Logic)
+    যখন একাধিক কম্পোনেন্টে একই ধরনের লজিক (যেমন: API ফেচিং, ফর্ম হ্যান্ডলিং, বা লোকাল স্টোরেজ আপডেট) বারবার লিখতে হয়, তখন সেই লজিককে আলাদা একটি ফাংশনে রূপান্তর করাকেই Custom Hook বলে।
+
+    নিয়ম: Custom Hook-এর নাম অবশ্যই use দিয়ে শুরু হতে হবে (যেমন: useFetch, useLocalStorage)।
+
+    =>  একটি ইন্ডাস্ট্রি-স্ট্যান্ডার্ড Custom Hook উদাহরণ (useFetch):
+        JavaScript
+        import { useState, useEffect } from 'react';
+
+        // Custom Hook definition
+        function useFetch(url) {
+          const [data, setData] = useState(null);
+          const [loading, setLoading] = useState(true);
+          const [error, setError] = useState(null);
+
+          useEffect(() => {
+            setLoading(true);
+            fetch(url)
+              .then(res => res.json())
+              .then(data => {
+                setData(data);
+                setLoading(false);
+              })
+              .catch(err => {
+                setError(err);
+                setLoading(false);
+              });
+          }, [url]);
+
+          return { data, loading, error };
+        }
+
+        // যেকোনো কম্পোনেন্টে এটি সহজে ব্যবহার করা যাবে:
+        function UserProfile() {
+          const { data: user, loading, error } = useFetch('https://api.example.com/user/1');
+
+          if (loading) return <p>Loading...</p>;
+          if (error) return <p>Error loading user!</p>;
+          return <h1>{user.name}</h1>;
+        }
+
+=>  International Interview Questions & Answers
+১.  useMemo এবং useCallback-এর মূল পার্থক্য কী?
+    বৈশিষ্ট্য,useMemo,useCallback
+    1.  কী মেমোইজ করে?
+        কোনো ফাংশনের রিটার্নকৃত ভ্যালু বা ফলাফল
+        পুরো ফাংশনটির রেফারেন্স
+
+    2.  ব্যবহারের সময়
+        "useMemo(() => computeValue(a, b), [a, b])"
+        "useCallback(() => { doSomething(a); }, [a])"
+
+    3.  মেইন পারপাস
+        ভারী গাণিতিক বা ফিল্টারিং কাজ ক্যাশ করা
+        চাইল্ড কম্পোনেন্টে ফাংশন প্রপ হিসেবে পাঠালে রি-রেন্ডার আটকানো
+
+২.  প্রতিটি ফাংশন বা ভ্যালুতেই কি useMemo / useCallback ব্যবহার করা উচিত?
+    উত্তর: না, এটি একটি এন্টি-প্যাটার্ন (Anti-pattern)।
+
+    useMemo এবং useCallback নিজে ব্যবহারেরও একটি অতিরিক্ত মেমোরি ও কম্পিউটেশনাল কস্ট (Optimization Cost) রয়েছে। খুব সাধারণ কোনো গাণিতিক কাজ বা ছোট ফাংশনের জন্য এগুলো ব্যবহার করলে মেমোরি খরচ কমার বদলে আরও বেড়ে যেতে পারে।
+
+      কখন ব্যবহার করবে: শুধু যখন ডাটা প্রসেসিং সত্যি অনেক ভারী হয়, অথবা React.memo ব্যবহার করা চাইল্ড কম্পোনেন্টে প্রপ্স হিসেবে ফাংশন পাস করা হয়।
+
+=>  অনুশীলনী:
+    ধরে নাও তোমার একটি বড় React প্রজেক্টে Dark Mode এবং Light Mode থিম সুইচার ফিচার দরকার। ইউজার যেকোনো পেজে থিম চেঞ্জ করলে পুরো ওয়েবসাইটের কালার বদলে যাবে, এবং ব্রাউজার রিফ্রেশ দিলেও LocalStorage-এ সেই থিম সেভ থাকবে।
+
+    এই কাজটির জন্য তুমি কীভাবে একটি Custom Hook (useLocalStorage বা useTheme) ডিজাইন করবে—তার একটি মৌলিক ধারণা বা স্টেপগুলো সংক্ষেপে বলো।
+
+    উত্তর:
+    বড় প্রজেক্টে Context API এবং Custom Hook-এর এই যুগলবন্দি (Pattern)-কে ইন্ডাস্ট্রিতে Custom Context Provider Pattern বলা হয়। এটি ব্যবহার করলে কোড অনেক ক্লিন থাকে এবং যেকোনো কম্পোনেন্ট থেকে মাত্র এক লাইনে থিম ম্যানেজ করা যায়।
+
+    প্রফেশনাল ইন্ডাস্ট্রি কোড স্ট্রাকচার (ThemeContext + useTheme)
+    একটি রিয়েল-ওয়ার্ল্ড প্রজেক্টে এই প্যাটার্নটি যেভাবে ইমপ্লিমেন্ট করা হয়:
+
+    ১.  Context ও Custom Hook তৈরি করা (ThemeContext.jsx)
+        JavaScript
+        import { createContext, useContext, useState, useEffect } from 'react';
+
+        // ১. Context তৈরি
+        const ThemeContext = createContext();
+
+      // ২. Provider Component
+      export function ThemeProvider({ children }) {
+        // LocalStorage থেকে প্রাথমিক থিম পড়া
+        const [theme, setTheme] = useState(() => {
+          return localStorage.getItem('app-theme') || 'light';
+        });
+
+        // থিম পরিবর্তনের সাথে সাথে LocalStorage এবং DOM-এ ক্লাস আপডেট করা
+        useEffect(() => {
+          localStorage.setItem('app-theme', theme);
+          document.documentElement.setAttribute('data-theme', theme);
+        }, [theme]);
+
+        const toggleTheme = () => {
+          setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+        };
+
+        return (
+          <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            {children}
+          </ThemeContext.Provider>
+        );
+      }
+
+      // ৩. Custom Hook (সহজে ব্যবহারের জন্য)
+      export function useTheme() {
+        const context = useContext(ThemeContext);
+        if (!context) {
+          throw new Error('useTheme must be used within a ThemeProvider');
+        }
+        return context;
+      }
+
+  ২.  যেকোনো কম্পোনেন্টে ব্যবহার:
+      JavaScript
+      import { useTheme } from './ThemeContext';
+
+      function Navbar() {
+        const { theme, toggleTheme } = useTheme();
+
+        return (
+          <nav>
+            <p>Current Theme: {theme}</p>
+            <button onClick={toggleTheme}>
+              Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
+            </button>
+          </nav>
+        );
+      }

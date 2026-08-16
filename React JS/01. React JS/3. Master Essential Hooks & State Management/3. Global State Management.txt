@@ -1,0 +1,91 @@
+Global State Management (Context API vs Redux Toolkit vs Zustand)
+
+প্রজেক্টের সাইজ এবং জটিলতার ওপর ভিত্তি করে কোনটা ব্যবহার করবে তা বেছে নেওয়াই একজন সিনিয়র ডেভেলপারের কাজ।
+
+                  +--------------------------------+
+                  |    Global State Management     |
+                  +---------------+----------------+
+                                  |
+        +-------------------------+-------------------------+
+        |                         |                         |
+[ Context API ]          [ Redux Toolkit ]             [ Zustand ]
+- Lightweight            - Boilerplate/Complex        - Lightweight & Simple
+- Built-in React         - Large-scale Apps           - Modern Industry Favorite
+- High Re-render risk    - Time-travel debugging      - No Provider needed
+
+১.  Context API (কখন ব্যবহার করবে?)
+    ১.  সুবিধা:
+        React-এর সাথে বিল্ট-ইন থাকে, অতিরিক্ত কোনো প্যাকেজ ইনস্টল করতে হয় না।
+
+    ২.  সীমাবদ্ধতা:
+        Context-এর মান পরিবর্তন হলে সেই Context ব্যবহারকারী সব চাইল্ড কম্পোনেন্ট একসাথে Re-render হয়।
+
+    ৩.  কখন ব্যবহার করবে:
+        কম পরিবর্তনশীল ডাটার ক্ষেত্রে (যেমন: Theme, Language/Localization, User Auth Session)।
+
+২.  Redux Toolkit - RTK (ইন্ডাস্ট্রি স্ট্যান্ডার্ড Enterprise Solution)
+    বড় স্কেলের জটিল অ্যাপ্লিকেশনে যেখানে শত শত স্টেট একে অপরের ওপর নির্ভর করে, সেখানে Redux Toolkit ব্যবহার করা হয়।
+
+    =>  Redux-এর মূল ৩টি ধারণা:
+    ১.  Store:
+        অ্যাপ্লিকেশনের সমস্ত স্টেট একটি সিঙ্গেল গ্লোবাল অবজেক্টে সংরক্ষিত থাকে (Single Source of Truth)।
+
+    ২.  Slice/Reducer:
+        স্টেট কীভাবে পরিবর্তিত হবে সেই লজিক লেখা থাকে।
+
+    ৩.  Dispatch & Action:
+        স্টেট পরিবর্তন করার জন্য Event বা Action পাঠানো হয়।
+
+        JavaScript
+        // Redux Slice-এর উদাহরণ
+        import { createSlice } from '@reduxjs/toolkit';
+
+        const cartSlice = createSlice({
+          name: 'cart',
+          initialState: { items: [] },
+          reducers: {
+            addToCart: (state, action) => {
+              state.items.push(action.payload); // RTK-তে Immer.js থাকায় সরাসরি mutate করা যায়
+            }
+          }
+        });
+
+        export const { addToCart } = cartSlice.actions;
+        export default cartSlice.reducer;
+
+৩.  Zustand (২০২৬ সালের সবচেয়ে ট্রেন্ডিং ও আধুনিক বিকল্প)
+    বর্তমান আন্তর্জাতিক জব মার্কেটে Zustand দ্রুত জনপ্রিয় হচ্ছে কারণ এটি Redux-এর চেয়ে অনেক সহজ, অতিরিক্ত Boilerplate কোড লিখতে হয় না, এবং অ্যাপের পারফরম্যান্স চমৎকার থাকে।
+
+    সুবিধা: কোনো <Provider> দিয়ে পুরো অ্যাপ র‍্যাপ করতে হয় না। সরাসরি হুক হিসেবে যেকোনো জায়গা থেকে স্টেট এক্সেস করা যায়।
+
+    JavaScript
+    import { create } from 'zustand';
+
+    // Store তৈরি
+    const useCartStore = create((set) => ({
+      cart: [],
+      addToCart: (item) => set((state) => ({ cart: [...state.cart, item] })),
+      clearCart: () => set({ cart: [] }),
+    }));
+
+    // কম্পোনেন্টে ব্যবহার
+    function CartButton() {
+      const addToCart = useCartStore((state) => state.addToCart);
+      return <button onClick={() => addToCart({ id: 1, name: 'Laptop' })}>Add</button>;
+    }
+
+=>  অনুশীলনী:
+    ধরে নাও তোমাকে একটি বড় E-commerce Platform তৈরি করতে বলা হলো যেখানে:
+      ১.  ইউজার লগইন স্টেট এবং ওয়েবসাইট থিম ডাটায় খুব কম পরিবর্তন আসে।
+      ২.  কিন্তু প্রোডাক্ট ফিল্টারিং,
+          কার্ট (Cart) আইটেম যোগ/বিয়োগ, এবং নোটিফিকেশন সিস্টেম প্রতি মুহূর্তে আপডেট হয়।
+
+    তুমি কোন ডাটার জন্য Context API ব্যবহার করবে এবং কোন ডাটার জন্য Redux/Zustand ব্যবহার করবে?
+
+    উত্তর:
+    একটি রিয়েল-ওয়ার্ল্ড এন্টারপ্রাইজ প্রজেক্টে এই হাইব্রিড অ্যাপ্রোচই (Hybrid Approach) ফলো করা হয়:
+      ১.  User Login & Theme:
+          কম পরিবর্তনশীল ডাটা, তাই Context API দিয়ে সহজে ম্যানেজ করা যায়।
+
+      ২.  Cart, Filtering & Notifications:
+          দ্রুত এবং ফ্রিকুয়েন্ট আপডেট হওয়া ডাটা, তাই Redux Toolkit বা Zustand সেরা নির্বাচন (কারণ এরা অপ্রয়োজনীয় রি-রেন্ডার আটকায়)।

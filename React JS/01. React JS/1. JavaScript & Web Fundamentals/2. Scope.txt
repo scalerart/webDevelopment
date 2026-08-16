@@ -1,0 +1,27 @@
+=>  Scope (স্কোপ) কী?
+    স্কোপ নির্ধারণ করে আপনার তৈরি করা ভ্যারিয়েবলটি কোডের কোথায় ব্যবহার বা এক্সেস করা যাবে।
+
+ক.  Function Scope (var)
+    var দিয়ে তৈরি করা ভ্যারিয়েবল শুধু যে ফাংশনে তৈরি করা হয়েছে, তার ভেতরেই এক্সেস করা যায়। কিন্তু কোনো if ব্লক বা for লুপের ভেতরে ডিক্লেয়ার করলেও তা ব্লকের বাইরে এক্সেস করা সম্ভব।
+
+    JavaScript
+    function checkVar() {
+      if (true) {
+        var x = 10;
+      }
+      console.log(x); // আউটপুট: 10 (ব্লকের বাইরেও এক্সেস করা যাচ্ছে)
+    }
+    checkVar();
+
+খ.  Block Scope (let & const)
+    ES6-এ আসা let এবং const হলো ব্লক স্কোপড। যেকোনো কার্লি ব্র্যাকেট {} (যেমন: if, for, while) হলো এক একটি ব্লক।
+
+    JavaScript
+    function checkLet() {
+      if (true) {
+        let y = 20;
+        const z = 30;
+      }
+      console.log(y); // ReferenceError: y is not defined
+    }
+    checkLet();

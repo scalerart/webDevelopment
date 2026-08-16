@@ -18,6 +18,8 @@ import men_banner from './assets/banner_mens.png'
 import women_banner from './assets/banner_women.png'
 import kids_banner from './assets/banner_kids.png'
 
+
+
 const router = createBrowserRouter([
   {
     path: "/",

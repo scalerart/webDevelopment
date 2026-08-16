@@ -1,0 +1,147 @@
+=>  Component Architecture, JSX এবং Props vs State
+    আজকে আমরা React-এর তিনটি মূল পিলার বা স্তম্ভ নিয়ে আলোচনা করব।
+
+                  +-----------------------+
+                  |    React Component    |
+                  +-----------+-----------+
+                              |
+        +---------------------+---------------------+
+        |                                           |
+  [ State ] (Internal Data)                  [ Props ] (External Data)
+  - Managed inside Component                 - Passed from Parent to Child
+  - Mutable (Can be updated)                 - Immutable (Read-Only)
+
+১.  JSX (JavaScript XML) কী?
+    JSX হলো JavaScript-এর একটি প্রথাসিদ্ধ এক্সটেনশন (Syntax Extension)। এটি আমাদের JavaScript কোডের ভেতরেই HTML-এর মতো লেআউট লেখার সুবিধা দেয়।
+
+    JSX কিন্তু আসল HTML নয়!
+    ব্রাউজার সরাসরি JSX বুঝতে পারে না। Babel বা ESBuild-এর মতো ট্রান্সপাইলার (Transpiler) JSX-কে ব্যাকগ্রাউন্ডে খাঁটি JavaScript ফাংশন কলে রূপান্তর করে।
+
+    আমরা যা লিখি (JSX):
+      JavaScript
+      const element = <h1 className="title">Hello React!</h1>;
+
+    Babel বা Transpiler যা বানায় (Pure JS):
+      JavaScript
+      const element = React.createElement(
+        'h1',
+        { className: 'title' },
+        'Hello React!'
+      );
+
+    JSX-এর ৩টি গুরুত্বপূর্ণ নিয়ম:
+      1.  সবসময় একটি সিঙ্গেল প্যারেন্ট উপাদান (বা React.Fragment / <>...</>) দিয়ে র‍্যাপ বা বেষ্টন করতে হবে।
+      2.  HTML attributes উটের পিঠের মতো বা CamelCase হবে (যেমন: class-এর বদলে className, onclick-এর বদলে onClick)।
+      3.  সব ট্যাগ প্রপারলি ক্লোজ করতে হবে (যেমন: Self-closing tag <img />, <br />)।
+
+২.  Props vs State (পার্থক্য ও নিয়ম)
+    React-এ যেকোনো ডেটা ম্যানেজ করার জন্য Props এবং State ব্যবহার করা হয়।
+      0.  বৈশিষ্ট্য (Feature)
+          Props (Properties)
+          State
+
+      1.  সংজ্ঞা
+          কম্পোনেন্টের বাইরে (Parent) থেকে পাঠানো ডেটা
+          কম্পোনেন্টের ভেতরের নিজস্ব ডেটা
+
+      2.  Mutables (পরিবর্তনশীলতা)
+          Immutable (চাইলেও ভেতরে পরিবর্তন করা যাবে না)
+          Mutable (setState দিয়ে পরিবর্তন করা যায়)
+
+      3.  Data Flow
+          Unidirectional (Parent → Child)
+          Local (শুধু ওই কম্পোনেন্ট বা নিচে পাঠানো যায়)
+
+      4.  রেন্ডারিং
+          Props পরিবর্তন হলে Child কম্পোনেন্ট Re-render হয়
+          State পরিবর্তন হলে কম্পোনেন্ট Re-render হয়
+
+৩.  React Data Flow (Unidirectional Data Flow)
+    React-এ ডেটা সবসময় একমুখী (Top-to-Bottom) প্রবাহিত হয়।
+      1.  প্যারেন্ট কম্পোনেন্ট প্রপ্স (Props) হিসেবে চাইল্ড কম্পোনেন্টে ডেটা পাঠায়।
+      2.  চাইল্ড কম্পোনেন্ট সরাসরি প্যারেন্টের ডেটা বা স্টেট পরিবর্তন করতে পারে না।
+      3.  চাইল্ড থেকে প্যারেন্টে কোনো কিছু পাঠাতে হলে প্যারেন্ট থেকে একটি Callback Function প্রপ্স হিসেবে পাস করতে হয়।
+
+    JavaScript
+    // Parent Component
+    function Parent() {
+      const [message, setMessage] = useState("Hello");
+
+      const handleUpdate = (newMessage) => {
+        setMessage(newMessage);
+      };
+
+      return <Child onUpdate={handleUpdate} />;
+    }
+
+    // Child Component
+    function Child({ onUpdate }) {
+      return (
+        <button onClick={() => onUpdate("Updated from Child!")}>
+          Change Parent State
+        </button>
+      );
+    }
+
+=>  International Interview Questions & Answers
+১.  React-এ props কেন "Read-Only" হওয়া উচিত? (Pure Functions Principle)
+    React-এর ডিজাইন ফিলোসফি অনুযায়ী কম্পোনেন্টগুলোকে Pure Function হিসেবে আচরণ করা উচিত।
+
+    একটি Pure Function তার ইনপুট (Props)-কে কখনো পরিবর্তন করে না এবং একই ইনপুটের জন্য সবসময় একই আউটপুট দেয়। যদি কোনো চাইল্ড কম্পোনেন্ট তার পাওয়া Props পরিবর্তন করে ফেলে, তবে প্যারেন্ট এবং চাইল্ডের ডেটা সিঙ্ক্রোনাইজেশন ভেঙে যাবে (Side-effects তৈরি হবে), যা অ্যাপ্লিকেশনে অদ্ভুত বাগ (Bug) তৈরি করবে।
+
+২.  State সরাসরি পরিবর্তন করা কেন ভুল? (e.g., state.count = 5 কেন কাজ করে না?)
+    যদি আমরা সরাসরি state.count = 5 লিখি, তবে মেমোরিতে ভ্যালু ঠিকই পরিবর্তন হবে, কিন্তু React সেটি জানতে পারবে না।
+
+    React-এর State updater (যেমন setCount(5)) ডাকার অর্থ হলো React-কে জানানো যে "স্টেট পরিবর্তন হয়েছে, তুমি এবার নতুন Virtual DOM তৈরি করো এবং Re-render শুরু করো"। সরাসরি স্টেট মিউটেট করলে React রেন্ডার ট্রিগার করে না, ফলে UI আপডেট হয় না।
+
+=>  অনুশীলনী:
+    নিচের কোডটি দেখো এবং বলো button-এ ক্লিক করলে ৩ সেকেন্ড পর কনসোলে এবং স্ক্রিনে কত প্রিন্ট হবে?
+
+    JavaScript
+    function Counter() {
+      const [count, setCount] = useState(0);
+
+      const handleClick = () => {
+        setCount(count + 1);
+
+        setTimeout(() => {
+          console.log("Count in setTimeout:", count);
+        }, 3000);
+      };
+
+      return (
+        <div>
+          <p>Count: {count}</p>
+          <button onClick={handleClick}>Increment</button>
+        </div>
+      );
+    }
+
+    প্রশ্ন: বাটন একবার প্রেস করার ৩ সেকেন্ড পর:
+        1.  স্ক্রিনে Count: কত দেখাবে?
+        2.  কনসোলে Count in setTimeout:
+            কত প্রিন্ট হবে এবং কেন? (হিন্ট: Closure কনসেপ্টটি মনে করো!)
+
+        বিহাইন্ড দ্য সিন ব্যাখ্যা:
+            1.  স্ক্রিনে 1 দেখাবে:
+                কারণ setCount(count + 1) ডাকার কারণে React নতুন মান সহ কম্পোনেন্টকে Re-render করেছে।
+
+            2.  কনসোলে 0 দেখাবে:
+                এখানে আগের দিনের শেখা Closure কাজ করেছে! handleClick যখন প্রথমবার রান করেছিল, তখন count-এর মান ছিল 0 এবং setTimeout-এর কলব্যাক ফাংশনটি সেই 0 মানটিকেই ক্লোজারের মাধ্যমে তার মেমোরিতে ধরে রেখেছিল। ৩ সেকেন্ড পর যখন সেটি রান করেছে, সে পুরোনো 0-ই প্রিন্ট করেছে।
+
+    ১.  স্ক্রিনে কত দেখাবে?
+        উত্তর: স্ক্রিনে Count: 1 দেখাবে।
+        ব্যাখ্যা: বাটন ক্লিক করার সাথে সাথে setCount(count + 1) কল হয়। এর ফলে React স্টেট আপডেট করে কম্পোনেন্টটিকে পুনরায় রেন্ডার (Re-render) করে। তাই স্ক্রিনে মান ০ থেকে বেড়ে ১ হয়।
+
+    ২.  কনসোলে কত প্রিন্ট হবে এবং কেন?
+        উত্তর: কনসোলে Count in setTimeout: 0 প্রিন্ট হবে।
+
+        কারণ (Closure কনসেপ্ট):
+          1.  স্টেট ফ্রিজ (State Freeze):
+              জাভাস্ক্রিপ্টে setTimeout একটি ক্লোজার (Closure) তৈরি করে। যখন বাটনটি ক্লিক করা হয়েছিল, তখনকার রেন্ডারে count-এর মান ছিল 0।
+
+          2.  পুরোনো রেফারেন্স:
+              ক্লোজারের নিয়মানুযায়ী, setTimeout-এর ভেতরের ফাংশনটি ওই নির্দিষ্ট রেন্ডারের count ভ্যারিয়েবলটিকে লক বা আটকে (Capture) রাখে।
+
+          3.  ফলাফল:
+              ৩ সেকেন্ড পর যখন ফাংশনটি রান করে, তখন স্ক্রিনের মান আপডেট হয়ে ১ হলেও, ক্লোজারের ভেতরে থাকা count-এর মান আগের রেন্ডারের 0-ই থেকে যায়।

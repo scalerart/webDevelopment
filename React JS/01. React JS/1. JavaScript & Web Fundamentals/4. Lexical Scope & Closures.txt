@@ -1,0 +1,138 @@
+=>  Lexical Scope & Closures
+    React-এর Custom Hooks, State Management, এবং Event Handlers বোঝার জন্য Closure হলো সবচেয়ে মৌলিক এবং পাওয়ারফুল কনসেপ্ট।
+
+১.  Lexical Scope কী?
+    Lexical Scope (বা Static Scope) মানে হলো—কোনো একটি ফাংশন বা ভ্যারিয়েবল কোডের কোথায় লেখা হয়েছে (written), তার উপর ভিত্তি করে তার স্কোপ নির্ধারিত হয় (ফাংশনটি কোথা থেকে কল করা হচ্ছে তার উপর নয়)।
+
+    JavaScript-এ কোনো ইনার/নেস্টেড (Inner) ফাংশন তার বাইরের (Outer) ফাংশনের ভ্যারিয়েবলগুলোকে এক্সেস করার সুবিধা পায়।
+
+      JavaScript
+      function outerFunction() {
+        const outerVar = "I am outside!";
+
+        function innerFunction() {
+          console.log(outerVar); // বাইরের স্কোপের ভ্যারিয়েবল এক্সেস করছে
+        }
+
+        innerFunction();
+      }
+
+      outerFunction(); // আউটপুট: "I am outside!"
+
+২.  Closure (ক্লোজার) কী?
+    Closure হলো এমন একটি মেকানিজম, যেখানে একটি ইনার ফাংশন তার প্যারেন্ট বা আউটার ফাংশনের এক্সিকিউশন শেষ হয়ে যাওয়ার পরও আউটার ফাংশনের ভ্যারিয়েবলগুলোকে স্মৃতিতে (Memory Reference) ধরে রাখে বা মনে রাখতে পারে।
+
+    সহজ কথায়: Function + Environment (Lexical Scope) = Closure.
+
+    কোড উদাহরণ:
+      JavaScript
+      function createCounter() {
+        let count = 0; // Outer variable
+
+        return function increment() {
+          count++;
+          console.log(count);
+        };
+      }
+
+      const counter = createCounter(); // createCounter() রান হয়ে শেষ হয়ে গেল!
+
+      counter(); // আউটপুট: 1
+      counter(); // আউটপুট: 2
+      counter(); // আউটপুট: 3
+
+    =>  কী ঘটছে এখানে?
+        createCounter() ফাংশনটি যখন রান হয়ে শেষ হয়, তখন সাধারণ নিয়ম অনুযায়ী count ভ্যারিয়েবলটি মেমোরি থেকে মুছে যাওয়ার কথা।
+
+        কিন্তু যেহেতু এটি থেকে একটি ইনার ফাংশন increment রিটার্ন করা হয়েছে যা count-কে ব্যবহার করে, তাই JavaScript Engine এখানে একটি Closure তৈরি করে।
+
+        counter() কে যতবার কল করা হবে, সে পুরোনো count-এর রেফারেন্স ধরে রেখে মান বাড়াতে থাকবে।
+
+=>  React-এ Closure-এর বাস্তব উদাহরণ
+    React-এর useState হুক কীভাবে কাজ করে, তা ক্লোজারের মাধ্যমেই ডিজাইন করা।
+
+      JavaScript
+      // React-এর useState-এর একটি সিম্পল মক বা ধারণা
+      function useState(initialValue) {
+        let _state = initialValue; // Private variable via Closure
+
+        function state() {
+          return _state;
+        }
+
+        function setState(newValue) {
+          _state = newValue;
+        }
+
+        return [state, setState];
+      }
+
+      const [count, setCount] = useState(0);
+      console.log(count()); // 0
+      setCount(5);
+      console.log(count()); // 5
+
+=>  International Interview Questions & Answers
+1.  Encapsulation বা Private Variable তৈরিতে Closure কীভাবে সাহায্য করে?
+    JavaScript-এ ট্র্যাডিশনাল অবজেক্ট-ওরিয়েন্টেড প্রাইভেট প্রপার্টি না থাকলেও, Closure ব্যবহার করে ডেটা প্রাইভেট বা হাইড রাখা যায়।
+
+    JavaScript
+    function bankAccount(initialBalance) {
+      let balance = initialBalance; // Private Variable
+
+      return {
+        deposit: function (amount) {
+          balance += amount;
+          return balance;
+        },
+        withdraw: function (amount) {
+          balance -= amount;
+          return balance;
+        },
+        getBalance: function () {
+          return balance;
+        }
+      };
+    }
+
+    const myAccount = bankAccount(1000);
+    myAccount.deposit(500); // 1500
+    console.log(myAccount.balance); // undefined (সরাসরি অ্যাক্সেস করা অসম্ভব!)
+    console.log(myAccount.getBalance()); // 1500
+
+২.  React-এ "Stale Closure" কী এবং এটি কেন হয়?
+    উত্তর: React-এ useEffect বা useCallback-এ ডিপেনডেন্সি অ্যারে (dependency array) ভুল দিলে বা বাদ দিলে Stale Closure ঘটে।
+
+    কারণ: কোনো স্টেট পরিবর্তিত হলেও যদি এফেক্ট বা ফাংশনটি রি-ক্রিয়েট না হয়, তবে Closure পুরোনো বা বাঁসি (Stale) ভ্যালুর রেফারেন্স ধরে রাখে।
+
+=>  অনুশীলনী:
+    নিচের কোডটি রান করলে fn1() এবং fn2()-এর আউটপুট কী আসবে?
+
+    JavaScript
+    function outer() {
+      let x = 10;
+
+      return function inner() {
+        x++;
+        console.log(x);
+      };
+    }
+
+    const fn1 = outer();
+    const fn2 = outer();
+
+    fn1();
+    fn1();
+    fn2();
+
+    =>  সঠিক আউটপুট হবে: fn1() => 11; fn1() => 12; fn2() => 11
+
+    =>  কারণ ও বিহাইন্ড দ্য সিন ব্যাখ্যা:
+        1.  যখন প্রথমবার const fn1 = outer()
+            কল করা হলো, তখন outer() প্রথমবার রান করে মেমোরিতে x = 10 সহ একটি পৃথক স্কোপ ও Closure তৈরি করলো এবং তার সাথে fn1-কে যুক্ত করে দিল।
+            1.  ১ম বার fn1() কল করার পর => x বেড়ে 11 হলো।
+            2.  ২য় বার fn1() কল করার পর => ওই একই x-এর মান বেড়ে 12 হলো।
+
+      2.  এরপর যখন const fn2 = outer()
+          ডিক্লেয়ার করা হলো, তখন সম্পূর্ণ নতুন এবং স্বাধীন (independent) আরেকটি outer() এক্সিকিউশন শুরু হলো। মেমোরিতে সম্পূর্ণ নতুন একটি x = 10 সহ আলাদা একটি Closure তৈরি হলো যা fn2-এর সাথে যুক্ত।
+            1.  ৩য় বার যখন fn2() কল করা হলো, সে আগের fn1-এর মান বা মেমোরিকে এক্সেস করছে না, বরং নিজের নতুন x = 10 থেকে বাড়িয়ে 11 করল।
