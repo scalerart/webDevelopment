@@ -1,0 +1,105 @@
+/*
+=>  React Events
+        1.  onClick
+        2.  onChange
+        3.  onSubmit
+        4.  Event Handler
+        5.  Passing parameters
+        6.  Synthetic Events
+        7.  Prevent Default
+
+React-এ Events বা ইভেন্ট হ্যান্ডলিং হলো ব্রাউজারের ব্যবহারকারীর ইন্টারঅ্যাকশন (যেমন: ক্লিক, টাইপিং, ফর্ম সাবমিশন) ক্যাপচার ও রেসপন্ড করার মেকানিজম।
+
+React-এর ইভেন্ট হ্যান্ডলিং সরাসরি ব্রাউজারের নেটিভ DOM ইভেন্টের মতো কাজ করলেও পেছনের আর্কিটেকচারে বেশ কিছু গুরুত্বপূর্ণ পার্থক্য রয়েছে।
+
+১.  SyntheticEvent (React-এর নিজস্ব ইভেন্ট সিস্টেম)
+    React সরাসরি ব্রাউজারের DOM ইভেন্ট ব্যবহার করে না। বদলে এটি ব্রাউজার-ইন্ডিপেন্ডেন্ট SyntheticEvent নামক একটি Wrapper Class ব্যবহার করে।
+
+    =>  কেন SyntheticEvent ব্যবহার করা হয়?
+        ১.  Cross-Browser Compatibility:
+            সব ব্রাউজারে (Chrome, Firefox, Safari) যেন ইভেন্ট একই আচরণ (Cross-browser Consistency) করে।
+
+        ২.  Performance Optimization:
+            ইভেন্ট অবজেক্টগুলোকে মেমোরি বাঁচানোর জন্য কার্যকরভাবে রি-ইউজ বা পোলিং করা সহজ হয়।
+
+        JavaScript
+        function Button() {
+            const handleClick = (e) => {
+                // e এখানে একটি SyntheticEvent, Native DOM Event নয়
+                e.preventDefault(); // ব্রাউজারের ডিফল্ট বিহেভিয়ার আটকানো
+                console.log(e.target);
+            };
+
+            return <button onClick={handleClick}>Click Me</button>;
+        }
+২.  HTML Events vs React Events (প্রধান পার্থক্যসমূহ)
+    0.  বৈশিষ্ট্য
+        HTML / Native JS
+        React Events
+
+    1.  Naming Convention
+        "সব ছোট হাতের (e.g., onclick, onchange)"
+        "camelCase (e.g., onClick, onChange)"
+
+    2.  Event Handler
+        "String হিসেবে পাস করা হয় (onclick=""handleClick()"")"
+        Function Reference পাস করা হয় (onClick={handleClick})
+
+    3.  Default Action
+        return false লিখে আটকানো যায়
+        অবশ্যই e.preventDefault() ব্যবহার করতে হয়
+
+৩.  Event Delegation Architecture (React 17+ Update)
+    ইভেন্টের অভ্যন্তরীণ কাজের প্রক্রিয়া নিয়ে ডিপ প্রশ্ন করা হলে এই পয়েন্টটি সবচেয়ে গুরুত্বপূর্ণ:
+
+    ১.  React 16 ও তার পূর্বে:
+        সব Event Handler অ্যাপ্লিকেশনের মূল document নোডে Delegate করা হতো।
+
+    ২.  React 17 ও পরবর্তী (React 18/19):
+        React সব Event Handler মূল Root DOM Container-এ (যেখানে ReactDOM.createRoot কল করা হয়, যেমন #root) Attach করে।
+
+    সুবিধা:
+    এর ফলে একটি পেজে একাধিক React ভার্সন বা অন্য কোনো JS ফ্রেমওয়ার্ক থাকলে ইভেন্ট একে অপরের সাথে কনফ্লিক্ট বা ইভেন্ট বাবলিং সমস্যা তৈরি করে না।
+
+৪.  Event Handlers-এ আর্গুমেন্ট পাঠানো ও ইভেন্ট বাবলিং
+    ১.  Custom Argument পাস করা:
+        JavaScript
+        function UserList() {
+            const handleDelete = (id, e) => {
+                console.log(`Deleting ID: ${id}`, e);
+            };
+
+            return (
+                // Inline Arrow Function ব্যবহার করে Parameter পাঠানো হয়
+                <button onClick={(e) => handleDelete(123, e)}>Delete User</button>
+            );
+        }
+
+    ২.  Event Bubbling ও Propagation আটকানো:
+        চাইল্ড এলিমেন্টের ইভেন্ট যেন প্যারেন্টে ছড়িয়ে না পড়ে, সেজন্য e.stopPropagation() ব্যবহার করা হয়।
+
+        JavaScript
+        function Card() {
+            const handleCardClick = () => console.log('Card Clicked');
+            const handleButtonClick = (e) => {
+                e.stopPropagation(); // Parent-এর onClick চলা আটকাবে
+                console.log('Button Clicked');
+            };
+
+            return (
+                <div onClick={handleCardClick}>
+                    <button onClick={handleButtonClick}>Action</button>
+                </div>
+            );
+        }
+
+৫.  Questions & Answer
+    ১.  React-এ ইভেন্ট হ্যান্ডলারে handleClick() না লিখে handleClick কেন লেখা হয়?
+        উত্তর:
+
+        onClick={handleClick} লিখলে ফাংশনের রেফারেন্স দেওয়া হয়, যা বাটনে ক্লিক করলে তবেই এক্সিকিউট হয়। কিন্তু onClick={handleClick()} লিখলে কম্পোনেন্টটি রেন্ডার হওয়ার সাথে সাথেই ফাংশনটি রান করে ফেলে, যা প্রায়শই ইনফিনিট রেন্ডারিং লুপের সৃষ্টি করে।
+
+    ২.  React Events:
+        "React Events use a cross-browser wrapper called SyntheticEvent to ensure consistent behavior across all browsers.
+
+        Unlike native HTML events, React uses camelCase syntax and passes function references instead of strings. From React 17 onwards, event handlers are attached to the root DOM container rather than the document node, improving safety for micro-frontends and multi-version integration."

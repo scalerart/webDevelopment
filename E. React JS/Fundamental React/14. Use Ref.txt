@@ -1,0 +1,147 @@
+useRef হলো React-এর অত্যন্ত শক্তিধর এবং গুরুত্বপূর্ণ একটি হুক। রিয়েল-লাইফ প্রজেক্টে সরাসরি DOM অ্যাক্সেস করা থেকে শুরু করে অনাকাঙ্ক্ষিত Re-render এড়াতে useRef-এর ব্যবহার অপরিহার্য।
+
+১.  useRef কী এবং কেন? (Core Concept)
+    সংজ্ঞা:
+    useRef হলো এমন একটি React Hook যা কম্পোনেন্টের রি-রেন্ডার না ঘটিয়ে যেকোনো মান মেমোরিতে ধরে রাখতে (persist) এবং সরাসরি DOM Element-কে অ্যাক্সেস করতে ব্যবহৃত হয়।
+
+    এটি একটি অবজেক্ট রিটার্ন করে যা দেখতে এরকম: { current: initialValue }
+
+    =>  useState vs useRef (পার্থক্য):
+        1.  useState: এর মান পরিবর্তন হলে কম্পোনেন্ট Re-render হয় এবং UI আপডেট হয়।
+        2.  useRef: এর current প্রপার্টির মান পরিবর্তন হলে কম্পোনেন্ট Re-render হয় না।
+
+২.  useRef-এর ২টি প্রধান ব্যবহার (Use Cases)
+    ১.  Direct DOM Manipulation (DOM এলিমেন্ট অ্যাক্সেস করা)
+        React সাধারণত Virtual DOM পরিচালনা করে। কিন্তু কিছু নির্দিষ্ট কাজের জন্য আমাদের ব্রাউজারের আসল DOM এলিমেন্টে হাত দিতে হয়:
+            1.  Input Field-এ Focus দেওয়া
+            2.  Scroll Position পরিবর্তন করা
+            3.  Media Player (Video/Audio) Play/Pause করা
+            4.  Component-এর পিক্সেল সাইজ (Width/Height) মাপা
+
+        কোড উদাহরণ: Input Focus & Scroll
+        JavaScript
+        import React, { useRef } from 'react';
+
+        export function InputFocus() {
+        // ১. ref অবজেক্ট তৈরি
+        const inputRef = useRef(null);
+
+        const handleFocus = () => {
+            // ৩. current প্রপার্টির মাধ্যমে সরাসরি DOM API ব্যবহার
+            inputRef.current.focus();
+            inputRef.current.style.border = '2px solid blue';
+        };
+
+        return (
+            <div>
+                {/* ২. JSX-এর ref অ্যাট্রিবিউটে পাস করা */}
+                <input ref={inputRef} type="text" placeholder="Click button to focus..." />
+                <button onClick={handleFocus}>Focus Input</button>
+            </div>
+        );
+        }
+
+    ২.  Mutable Reference Preserving (Re-render না ঘটিয়ে ডেটা জমা রাখা)
+        এমন কিছু ডেটা থাকে যা আমাদের মনে রাখা দরকার, কিন্তু সেই ডেটা চেঞ্জ হলে UI-তে কোনো প্রভাব পড়ে না। সেখানে useState ব্যবহার করলে অহেতুক Re-render হয়ে পারফরম্যান্স নষ্ট হয়।
+
+        রিয়েল প্রজেক্ট উদাহরণ: Timer / Interval ID ট্র্যাক করা
+        JavaScript
+        import React, { useState, useRef } from 'react';
+
+        export function Timer() {
+            const [seconds, setSeconds] = useState(0);
+            // Timer ID ধরে রাখার জন্য useRef (কারণ এটি UI-তে দেখানোর বিষয় নয়)
+            const timerRef = useRef(null);
+
+            const startTimer = () => {
+                if (timerRef.current !== null) return;
+
+                timerRef.current = setInterval(() => {
+                setSeconds(prev => prev + 1);
+                }, 1000);
+            };
+
+            const stopTimer = () => {
+                clearInterval(timerRef.current);
+                timerRef.current = null; // Reset ref
+            };
+
+            return (
+                <div>
+                <h1>Time: {seconds}s</h1>
+                <button onClick={startTimer}>Start</button>
+                <button onClick={stopTimer}>Stop</button>
+                </div>
+            );
+        }
+
+৩.  রিয়েল প্রজেক্ট এডভান্সড ট্রিকস (Advanced Real-World Patterns)
+    ১.  Previous State ট্র্যাক করা
+        React-এ বাই-ডিফল্ট Previous State পাওয়ার সুবিধা নেই। useRef এবং useEffect ব্যবহার করে সহজেই আগের স্টেটের মান ধরে রাখা যায়:
+
+        JavaScript
+        import { useState, useEffect, useRef } from 'react';
+
+        export function TrackPrevious() {
+            const [count, setCount] = useState(0);
+            const prevCountRef = useRef();
+
+            useEffect(() => {
+                // রেন্ডার হওয়ার পর current-এ নতুন মান অ্যাসাইন হয়
+                prevCountRef.current = count;
+            }, [count]);
+
+            return (
+                <div>
+                <p>Current: {count}</p>
+                <p>Previous: {prevCountRef.current}</p>
+                <button onClick={() => setCount(count + 1)}>Increment</button>
+                </div>
+            );
+        }
+
+    ২.  First Render / Mount ট্র্যাকিং (Prevent Initial Effect Execution)
+        অনেক সময় আমরা চাই কোনো useEffect প্রথমবার Mount-এর সময় না চলে শুধু স্টেট Update হলে চলুক:
+
+        JavaScript
+        const isMounted = useRef(false);
+
+        useEffect(() => {
+            if (!isMounted.current) {
+                isMounted.current = true; // প্রথমবার Mount মার্ক করে রেখে বের হয়ে যাবে
+                return;
+            }
+
+            console.log('Only runs on UPDATES, not on initial mount!');
+        }, [someState]);
+
+৪.  ইন্টারভিউ ট্রিকস ও কমন অ্যান্টি-প্যাটার্ন (Common Mistakes)
+    ১.  Render Phase-এ ref.current পরিবর্তন করা
+        রেন্ডারের সময়েই ref.current আপডেট করা উচিত নয়। এটি শুধুমাত্র Event Handler বা useEffect-এর ভেতরে আপডেট করা নিয়ম।
+
+        JavaScript
+        // ভুল নিয়ম
+        function BadComponent() {
+            const myRef = useRef(0);
+            myRef.current = myRef.current + 1; // Render Phase-এ Side Effect!
+            return <div>{myRef.current}</div>;
+        }
+
+    ২.  UI-তে দেখানোর ডেটার জন্য useRef ব্যবহার করা
+        যদি কোনো ডেটা চেঞ্জ হলে স্ক্রিনে সাথে সাথে পরিবর্তন দেখতে চাও, তবে useState ব্যবহার করো, useRef নয়।
+
+৫.  ইন্টারভিউ প্রশ্ন ও স্মার্ট উত্তর (Interview Q&A)
+    ১.  useRef ব্যবহার করলে কেন Re-render হয় না?
+        উত্তর:
+
+        React-এর Fiber Architecture অনুসারে, useState-এর মতো useRef-এর চেঞ্জগুলো রেন্ডার ট্রিগার সাইকেলের অংশ নয়। useRef স্রেফ একটি সাধারণ JavaScript Object ({ current: value }) ধারণ করে, যা পুরো কম্পোনেন্ট লাইফসাইকেলে একই মেমোরি অ্যাড্রেস (Reference) বজায় রাখে।
+
+    ২.  Child Component-এর DOM Element কে Parent থেকে অ্যাক্সেস করতে হলে কী ব্যবহার করতে হয়?
+        উত্তর:
+
+        সাধারণ ref পাস করলে কাস্টম কম্পোনেন্টে কাজ করে না। এজন্য forwardRef (অথবা React 19-এ সরাসরি ref prop) ব্যবহার করে Child Component-এর inner DOM-কে Parent-এ এক্সপোজ করতে হয়।
+
+    ৩.  useRef সম্পর্কে ইংলিশে ২ লাইনে উত্তর:
+        "useRef is a React Hook that returns a mutable object whose .current property persists across renders without triggering a component re-render.
+
+        I primarily use it for two purposes: directly accessing and manipulating DOM elements, and storing mutable values (like interval IDs or previous state) that shouldn't affect the UI layout when changed."

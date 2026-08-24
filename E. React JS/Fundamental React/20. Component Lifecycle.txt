@@ -1,0 +1,89 @@
+=>  Component Lifecycle
+        1.  Mounting
+        2.  Updating
+        3.  Unmounting
+        4.  Lifecycle with Hooks
+
+Component Lifecycle হলো একটি React Component-এর জন্ম থেকে মৃত্যু পর্যন্ত যাত্রাপথ। প্রজেক্টের বাগ ফিক্সিংয়ের জন্য এটি জানা অত্যন্ত জরুরি।
+
+ক্লাস কম্পোনেন্টের লাইফসাইকেল মেথডগুলো ফাংশনাল কম্পোনেন্টে useEffect হুক কীভাবে রিপ্লেস করেছে এবং অভ্যন্তরীণভাবে কীভাবে কাজ করে—তার বিস্তারিত গাইড নিচে দেওয়া হলো:
+
+১.  Life Cycle-এর ৩টি মূল ফেজ (3 Core Phases)
+    একটি React Component মূলত ৩টি ফেজের মধ্য দিয়ে যায়:
+    1.  Mounting (জন্ম): কম্পোনেন্ট প্রথমবার তৈরি হয়ে DOM-এ যুক্ত হওয়ার প্রক্রিয়া।
+    2.  Updating (বৃদ্ধি/পরিবর্তন): Props বা State পরিবর্তনের কারণে কম্পোনেন্ট Re-render হওয়ার প্রক্রিয়া।
+    3.  Unmounting (মৃত্যু): কম্পোনেন্ট DOM থেকে রিমুভ বা অদৃশ্য হয়ে যাওয়ার প্রক্রিয়া।
+
+২.  Class vs Functional Component (Lifecycle Comparison)
+    পূর্বে Class Component-এ আলাদা আলাদা Lifecycle Method লেখা হতো। বর্তমান Functional Component-এ useEffect একাই এই ৩টি ফেজ সামলাতে পারে।
+    0.  Lifecycle Phase
+        Class Component Method
+        Functional Component Equivalent (useEffect)
+
+    1.  Mounting
+        componentDidMount()
+        "useEffect(() => { ... }, [])"
+
+    2.  Updating
+        componentDidUpdate()
+        "useEffect(() => { ... }, [deps])"
+
+    3.  Unmounting
+        componentWillUnmount()
+        "useEffect(() => { return () => { ... } }, [])"
+
+৩.  Functional Component-এ Lifecycle এর রিয়েল কোড বাস্তবায়ন
+    JavaScript
+    import React, { useState, useEffect } from 'react';
+
+    export function UserProfile({ userId }) {
+    const [user, setUser] = useState(null);
+
+    // Phase 1: MOUNTING (শুধু ১ম রেন্ডারের পর রান করবে)
+    useEffect(() => {
+        console.log('1. Component Mounted (Birth)');
+    }, []);
+
+    // Phase 2: UPDATING (userId প্রপস চেঞ্জ হলে রান করবে)
+    useEffect(() => {
+        if (!userId) return;
+
+        console.log(`2. Component Updated for userId: ${userId}`);
+        fetchUser(userId).then(data => setUser(data));
+
+    }, [userId]); // Dependency Array-র ওপর নির্ভর করে
+
+    // Phase 3: UNMOUNTING (কম্পোনেন্ট মুছে গেলে Cleanup রান করবে)
+    useEffect(() => {
+        const timer = setInterval(() => {
+        console.log('Tick...');
+        }, 1000);
+
+        // Cleanup function = componentWillUnmount
+        return () => {
+        console.log('3. Component Unmounted (Death)');
+        clearInterval(timer); // Memory Leak বন্ধ করতে ক্লিয়ার করা
+        };
+    }, []);
+
+    return <div>{user ? user.name : 'Loading...'}</div>;
+    }
+
+৪.  React-এর আধুনিক রেন্ডার ফেজ (Render vs Commit Phase)
+    React-এর অভ্যন্তরীণ লাইফসাইকেলকে মূলত ২টি পর্বে (Phases) ভাগ করা হয়:
+    1.  Render Phase (Pure & Pure Pure):
+        React JSX কোড এক্সিকিউট করে Virtual DOM তৈরি করে এবং পূর্ববর্তী Virtual DOM-এর সাথে তুলনা (Diffing Algorithm) করে দেখে কী কী চেঞ্জ প্রয়োজন। (এই ফেজে কোনো DOM Modification বা Side Effect ঘটানো নিষেধ)।
+
+    2.  Commit Phase (DOM Side Effects):
+        React বাস্তব DOM-এ পরিবর্তন আনে এবং পরিবর্তন শেষ হওয়ার পর useEffect বা useLayoutEffect এক্সিকিউট করে।
+
+৫.  Q & A
+    ১.  componentDidMount এবং useEffect(..., []) এর মধ্যে কোনো সূক্ষ্ম পার্থক্য আছে কি?
+        উত্তর:
+
+        হ্যাঁ, সূক্ষ্ম পার্থক্য রয়েছে। componentDidMount সিঙ্ক্রোনাসলি কাজ করত এবং ব্রাউজার পেইন্ট হওয়ার আগেই DOM ব্লক করতে পারত। কিন্তু useEffect(..., []) ব্রাউজারে স্ক্রিনে পিক্সেল রেন্ডার (Paint) হওয়ার পর অ্যাসিনক্রোনাসলি রান করে, যার ফলে UI রেসপন্সিভ থাকে এবং ইউজার কোনো Lag অনুভব করে না।
+
+    ২.  Component Lifecycle সম্পর্কে কীভাবে উত্তর দেবে?
+        "Component Lifecycle describes the series of stages a component goes through: Mounting, Updating, and Unmounting.
+
+        In modern React, functional components manage this entire lifecycle using the useEffect hook. By passing an empty dependency array we handle mounting, adding dependencies covers updates, and returning a cleanup function manages unmounting to prevent memory leaks."

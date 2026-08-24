@@ -1,0 +1,102 @@
+useCallback হলো React-এর আরেকটি অত্যন্ত গুরুত্বপূর্ণ Performance Optimization Hook। এটি useMemo-র সাথে সম্পর্কিত, তবে এর মূল কাজ হলো ফাংশন রেফারেন্স (Function Reference) ক্যাশ করে রাখা।
+
+১.  useCallback কী এবং কেন? (Core Concept)
+    সংজ্ঞা:
+
+    useCallback হলো একটি React Hook যা কম্পোনেন্টের রি-রেন্ডারের মধ্যে কোনো ফাংশন ডেফিনিশনকে Memoize (Cache) করে রাখে, যাতে অহেতুক নতুন ফাংশন ইনস্ট্যান্স/রেফারেন্স তৈরি না হয়।
+
+    =>  কেন প্রয়োজন? (The JavaScript Referential Equality Problem)
+        JavaScript-এ দুটি ফাংশন যদি দেখতে একদম একই রকমও হয়, তবুও প্রতিবার তৈরি করার সময় মেমোরিতে তাদের নতুন রেফারেন্স তৈরি হয় (() => {} !== () => {})।
+
+        React-এ যখন কোনো Parent Component রি-রেন্ডার হয়, তখন তার ভেতরের সব সাধারণ ফাংশন নতুন করে তৈরি হয়। যদি এই ফাংশন কোনো Child Component-এ Prop হিসেবে পাঠানো হয়, তবে Child Component ধরে নেয় Prop বদলে গেছে এবং সে-ও অহেতুক Re-render হয়—এমনকি যদি Child Component-কে React.memo দিয়ে আটকানোও থাকে!
+
+২.  মৌলিক সিনট্যাক্স (Syntax)
+    JavaScript
+    const memoizedCallback = useCallback(() => {
+      doSomething(a, b);
+    }, [a, b]);
+
+    1.  First Argument: যে ফাংশনটিকে ক্যাশ করতে চাও।
+    2.  Second Argument (Dependency Array):
+        এই অ্যারেতে থাকা কোনো মান পরিবর্তিত হলেই কেবল ফাংশনটি নতুন রেফারেন্স পাবে; অন্যথায় আগের পুরোনো রেফারেন্সটাই বজায় থাকবে।
+
+৩.  রিয়েল প্রজেক্ট উদাহরণ (React.memo + useCallback)
+    useCallback একা একা ব্যবহার করলে কোনো পারফরম্যান্স বেনিফিট পাওয়া যায় না। এটি কার্যকর হয় যখন চাইল্ড কম্পোনেন্টকে React.memo দিয়ে অপটিমাইজ করা থাকে।
+
+    কোড উদাহরণ: Optimized Product List
+    JavaScript
+    import React, { useState, useCallback } from 'react';
+
+    // ১. React.memo দিয়ে Child Component আটকানো হলো
+    const DeleteButton = React.memo(({ onDelete, id }) => {
+      console.log(`DeleteButton ${id} rendered`); // Re-render ট্র্যাক করার জন্য
+      return <button onClick={() => onDelete(id)}>Delete</button>;
+    });
+
+    export function ProductList() {
+      const [products, setProducts] = useState([
+        { id: 1, name: 'Laptop' },
+        { id: 2, name: 'Phone' }
+      ]);
+      const [count, setCount] = useState(0); // এমন একটি স্টেট যা প্রোডাক্টের সাথে সম্পর্কিত নয়
+
+      // useCallback ছাড়া: count পাল্টালে handleDelete নতুন রেফারেন্স পেত এবং DeleteButton রি-রেন্ডার হতো!
+      // useCallback দিয়ে: ফাংশন রেফারেন্স ফিক্সড রাখা হলো
+      const handleDelete = useCallback((id) => {
+        setProducts(prev => prev.filter(item => item.id !== id));
+      }, []); // কোনো ডিপেন্ডেন্সি নেই, তাই রেফারেন্স সবসময় একই থাকবে
+
+      return (
+        <div>
+          <h1>Count: {count}</h1>
+          <button onClick={() => setCount(count + 1)}>Increment Unrelated Counter</button>
+
+          <ul>
+            {products.map(item => (
+              <li key={item.id}>
+                {item.name}
+                <DeleteButton id={item.id} onDelete={handleDelete} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
+
+৪.  রিয়েল প্রজেক্ট অ্যান্টি-প্যাটার্ন (When NOT to use useCallback)
+    ইন্টারভিউতে সিনিয়র ইঞ্জিনিয়াররা প্রায়ই দেখেন আপনি বুঝে শুনে useCallback ব্যবহার করছেন নাকি না বুঝে সব জায়গায় বসিয়ে দিচ্ছেন।
+
+    ১.  সাধারণ চাইল্ড কম্পোনেন্টের ক্ষেত্রে (No React.memo):
+        যদি চাইল্ড কম্পোনেন্টটি React.memo দিয়ে মোড়ানো না থাকে, তবে Parent Re-render হলে Child এমনিতেও Re-render হবে। সেখানে useCallback বসালে পারফরম্যান্স কমার বদলে আরও নষ্ট হবে (কারণ React-কে অতিরিক্ত useCallback এর ডিপেন্ডেন্সি চ্যাকিং প্রসেস করতে হয়)।
+
+    ২.  শুধু Inline Event Handler-এর ক্ষেত্রে:
+        JavaScript
+        // কোনো দরকার নেই (অহেতুক ওভারহেড)
+        const handleClick = useCallback(() => {
+          console.log('Clicked');
+        }, []);
+
+        return <button onClick={handleClick}>Click Me</button>;
+
+    =>  সাধারণ HTML ট্যাগ (যেমন <button>, <input>) এর ক্ষেত্রে useCallback ব্যবহারের কোনো দরকার নেই।
+
+৫.  useMemo vs useCallback (ক্লিয়ার ডিফারেন্স)
+    1.  useMemo ক্যাস করে ফাংশন কলের ফলাফল/রেজাল্ট (Return Value)।
+    2.  useCallback ক্যাস করে সরাসরি ফাংশন রেফারেন্স (Function itself)।
+
+        JavaScript
+        // এই দুটি কোডের কাজ হুবহু এক:
+        useCallback(fn, deps) === useMemo(() => fn, deps)
+
+৬.  ইন্টারভিউ প্রশ্ন ও স্মার্ট উত্তর (Interview Q&A)
+    ১.  useCallback কখন ব্যবহার করা বাধ্যতামূলক?
+        উত্তর:
+
+        প্রধানত দুটি ক্ষেত্রে:
+        ১.  যখন কোনো ফাংশন এমন চাইল্ড কম্পোনেন্টে Prop হিসেবে পাস করা হয় যা React.memo ব্যবহার করে Re-render অপটিমাইজেশন করছে।
+        ২.  যখন কোনো ফাংশন অন্য কোনো হুকের (যেমন useEffect) Dependency Array-তে ব্যবহার করা হয়।
+
+    ২.  useCallback সম্পর্কে ইংলিশে ২ লাইনে উত্তর:
+        "useCallback is a React Hook that memoizes a function definition between re-renders to maintain referential equality.
+
+        It is primarily used to prevent unnecessary re-renders of optimized child components wrapped in React.memo or to stabilize functions passed into custom hooks and useEffect dependency arrays."

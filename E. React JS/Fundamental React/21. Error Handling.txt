@@ -1,0 +1,152 @@
+=>  Error Handling
+        1.  Error Boundary
+        2.  Try Catch
+        3.  Fallback UI
+
+React-এ Error Handling অত্যন্ত গুরুত্বপূর্ণ, কারণ কোনো একটি কম্পোনেন্টে রেন্ডারিং বা লাইফসাইকেল এরর ঘটার ফলে যেন পুরো অ্যাপ্লিকেশন ক্র্যাশ করে সাদা স্ক্রিন (Blank Screen) না হয়ে যায়।
+
+React-এর ৩টি মূল লেভেলে এরর হ্যান্ডেল করার আর্কিটেকচার নিচে সাজিয়ে দেওয়া হলো:
+
+১.  ৩টি লেভেলে Error Handling (The 3 Levels)
+    React অ্যাপ্লিকেশনে এরর মূলত ৩ জায়গায় ঘটতে পারে:
+        1.  Component Rendering Phase Errors: রেন্ডার করার সময় JSX বা কাস্টম লজিকে এরর (যেমন: undefined.map())।
+        2.  Event Handlers & Async Code: ক্লিক ইভেন্ট, টাইমার বা API কল (fetch/axios) করার সময় এরর।
+        3.  Global/Network Errors: নেটওয়ার্ক ডিসকানেক্ট বা আনহ্যান্ডেল্ড রিজেকশন।
+
+২.  Component Rendering Errors: Error Boundaries
+    React-এ কোনো চাইল্ড কম্পোনেন্টের রেন্ডার ফেজে এরর হলে, পুরো কম্পোনেন্ট ট্রি ক্র্যাশ করা আটকাতে Error Boundary ব্যবহার করা হয়।
+
+    গুরুত্বপূর্ণ নোট: React-এ বর্তমানে Error Boundary তৈরি করার জন্য Class Component ব্যবহার করা বাধ্যতামূলক, কারণ এটি ফাংশনাল কম্পোনেন্টের হুক আকারে এখনো উপলব্ধ নেই।
+
+    রিয়েল প্রজেক্ট উদাহরণ: Standard Error Boundary (src/components/ErrorBoundary.jsx)
+    JavaScript
+    import React, { Component } from 'react';
+
+    export class ErrorBoundary extends Component {
+        constructor(props) {
+            super(props);
+            this.state = { hasError: false, errorInfo: null };
+        }
+
+        // ১. এরর হলে স্টেট আপডেট করে Fallback UI দেখানোর জন্য
+        static getDerivedStateFromError(error) {
+            return { hasError: true };
+        }
+
+        // ২. এরর ট্র্যাকিং সার্ভিস (যেমন Sentry, LogRocket)-এ ডাটা পাঠাতে
+        componentDidCatch(error, errorInfo) {
+            console.error("Uncaught Error:", error, errorInfo);
+            this.setState({ errorInfo });
+        }
+
+        render() {
+            if (this.state.hasError) {
+                // Fallback UI (ক্র্যাশ না করে ইউজারকে ফ্রেন্ডলি মেসেজ দেখানো)
+                return (
+                    <div style={{ padding: '20px', backgroundColor: '#ffe6e6', borderRadius: '8px' }}>
+                    <h2>Oops! Something went wrong.</h2>
+                    <button onClick={() => window.location.reload()}>Reload Page</button>
+                    </div>
+                );
+            }
+
+            return this.props.children;
+        }
+    }
+
+    =>  ব্যবহারে সঠিক নিয়ম:
+        JavaScript
+        import { ErrorBoundary } from './components/ErrorBoundary';
+        import UserProfile from './components/UserProfile';
+
+        export default function App() {
+            return (
+                <div>
+                <Navbar />
+                {/* পুরো অ্যাপ না গুটিয়ে শুধু UserProfile সেকশনকে সুরক্ষিত রাখা */}
+                <ErrorBoundary>
+                    <UserProfile />
+                </ErrorBoundary>
+                </div>
+            );
+        }
+
+৩.  Event Handlers & Async Error Handling
+    মনে রাখুন: Error Boundary কিন্তু Event Handler (যেমন onClick), setTimeout বা Async API Call (যেমন fetch/axios)-এর ভেতরকার এরর ক্যাচ করতে পারে না! এগুলোর জন্য ঐতিহ্যগত try...catch ব্লক ব্যবহার করতে হয়।
+
+    রিয়েল প্রজেক্ট উদাহরণ: Event & Async Handling
+    JavaScript
+    import React, { useState } from 'react';
+
+    export function UserFetcher() {
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const handleFetch = async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const res = await fetch('https://api.example.com/user');
+            if (!res.ok) {
+                throw new Error('User data fetching failed!');
+            }
+            const result = await res.json();
+            setData(result);
+        } catch (err) {
+            // Async/Event এরর ক্যাচ করে স্টেটে সেভ রাখা
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+        return (
+            <div>
+            <button onClick={handleFetch}>Fetch User</button>
+            {loading && <p>Loading...</p>}
+            {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+            {data && <p>User: {data.name}</p>}
+            </div>
+        );
+    }
+
+৪.  প্রোডাকশন লাইব্রেরি: react-error-boundary
+    বাস্তব প্রজেক্টে ম্যানুয়ালি Class Component না লিখে জনপ্রিয় থার্ড-পার্টি লাইব্রেরি react-error-boundary ব্যবহার করা হয়। এটি ফাংশনাল কম্পোনেন্টের সাথেই খুব সুন্দর মানিয়ে যায় এবং useErrorBoundary হুক প্রদান করে।
+
+    JavaScript
+    import { ErrorBoundary } from 'react-error-boundary';
+
+    function FallbackComponent({ error, resetErrorBoundary }) {
+        return (
+            <div role="alert">
+                <p>Something went wrong:</p>
+                <pre>{error.message}</pre>
+                <button onClick={resetErrorBoundary}>Try again</button>
+            </div>
+        );
+    }
+
+    export function App() {
+        return (
+            <ErrorBoundary FallbackComponent={FallbackComponent}>
+                <MyComponent />
+            </ErrorBoundary>
+        );
+    }
+
+৫.  ইন্টারভিউ প্রশ্ন ও স্মার্ট উত্তর (Interview Q&A)
+    ১.  Error Boundary কোন কোন ক্ষেত্রে এরর ক্যাচ করতে পারে না?
+        উত্তর:
+
+        প্রধানত ৪টি ক্ষেত্রে Error Boundary কাজ করে না:
+        ১.  Event Handlers-এর ভেতরের এরর (যেমন: onClick)
+        ২.  Asynchronous Code (যেমন: setTimeout, requestAnimationFrame বা Promises)
+        ৩.  Server-Side Rendering (SSR)-এর সময় ঘটা এরর
+        ৪.  Error Boundary কম্পোনেন্টের নিজের ভেতরেই ঘটা কোনো এরর
+
+    ২.  Error Handling:
+        "In React, Error Handling is managed at two primary levels: Error Boundaries for component rendering and lifecycle errors, and try...catch blocks for event handlers and asynchronous API calls.
+
+        Error Boundaries are Class Components that implement getDerivedStateFromError and componentDidCatch to prevent UI crashes by displaying fallback views. In modern applications, I often use the react-error-boundary library for a clean, functional approach."

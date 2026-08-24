@@ -1,0 +1,142 @@
+Custom Hooks হলো React-এর সবচেয়ে পাওয়ারফুল ফিচারগুলোর একটি, যা আপনাকে একাধিক কম্পোনেন্টের মধ্যে Stateful Logic পুনঃব্যবহার (reuse) করতে সাহায্য করে।
+
+১.  Custom Hook কী এবং কেন? (Core Concept)
+    সংজ্ঞা:
+
+    Custom Hook হলো একটি সাধারণ JavaScript Function, যার নাম অবশ্যই use দিয়ে শুরু হয় এবং যার ভেতরে অন্যান্য Built-in React Hooks (useState, useEffect, useRef ইত্যাদি) কল করা যায়।
+
+    =>  কেন প্রয়োজন?
+        React-এ JSX (UI Component) সহজেই রি-ইউজ করা যায়। কিন্তু একাধিক কম্পোনেন্টে যখন একই লজিক (যেমন: API Data Fetching, Form Validation, LocalStorage Syncing) প্রয়োজন হয়, তখন কোড ডুপ্লিকেশন এড়াতে কাস্টম হুক ব্যবহার করা হয়।
+
+    পার্থক্য মনে রাখুন:
+    1.  Helper Function: শুধুমাত্র সাধারণ ক্যালকুলেশন করে, এর ভেতরে React Hooks কাজ করে না।
+    2.  Custom Hook: এর ভেতরে React State এবং Lifecycle Feature পুরোপুরি ব্যবহার করা যায়।
+
+২.  Custom Hook তৈরির গোল্ডেন রুলস (Golden Rules)
+    ১.  নামকরণ (Naming):
+        ফাংশনের নাম অবশ্যই use দিয়ে শুরু হতে হবে (যেমন: useFetch, useAuth, useLocalStorage)। এটি না করলে React-এর Linter বুঝতে পারবে না যে এর ভেতরে Rules of Hooks অ্যাপ্লাই করা প্রয়োজন।
+
+    ২.  প্রয়োজনে React Hooks ব্যবহার:
+        কাস্টম হুকের ভেতরে অন্তত একটি বিল্ট-ইন হুক (useState, useEffect ইত্যাদি) ব্যবহৃত হওয়া উচিত।
+
+    ৩.  যেকোনো কিছু রিটার্ন করা যায়:
+        সাধারণ ফাংশনের মতো এটি থেকে Primitive value, Object, Array বা Function—যেকোনো কিছু রিটার্ন করা যায়।
+
+৩.  প্র্যাকটিক্যাল উদাহরণ ১: useFetch (API Data Fetching Hook)
+    বাস্তব প্রজেক্টে ডেটা ফেচিং, লোডিং এবং এরর স্ট্যাটাস হ্যান্ডেল করার জন্য এটি সবচেয়ে বেশি ব্যবহৃত কাস্টম হুক।
+
+    src/hooks/useFetch.js
+    JavaScript
+    import { useState, useEffect } from 'react';
+
+    export function useFetch(url) {
+        const [data, setData] = useState(null);
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState(null);
+
+        useEffect(() => {
+            // API Call ক্যানসেল করার জন্য AbortController
+            const controller = new AbortController();
+
+            const fetchData = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response = await fetch(url, { signal: controller.signal });
+                if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result = await response.json();
+                setData(result);
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                setError(err.message || 'Something went wrong!');
+                }
+            } finally {
+                setLoading(false);
+            }
+            };
+
+            fetchData();
+
+            // Cleanup function
+            return () => controller.abort();
+        }, [url]);
+
+        return { data, loading, error };
+    }
+
+    যেকোনো কম্পোনেন্টে ব্যবহার (src/components/UserList.jsx):
+    JavaScript
+    import React from 'react';
+    import { useFetch } from '../hooks/useFetch';
+
+    export function UserList() {
+        const { data: users, loading, error } = useFetch('https://jsonplaceholder.typicode.com/users');
+
+        if (loading) return <p>Loading users...</p>;
+        if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
+
+        return (
+            <ul>
+            {users?.map(user => (
+                <li key={user.id}>{user.name} ({user.email})</li>
+            ))}
+            </ul>
+        );
+    }
+
+৪.  প্র্যাকটিক্যাল উদাহরণ ২: useLocalStorage (State with LocalStorage Sync)
+    স্টেটের মান পরিবর্তন হওয়ার সাথে সাথে ব্রাউজারের LocalStorage-এ ডাটা সেভ করার জন্য একটি কাস্টম হুক:
+
+    JavaScript
+    import { useState, useEffect } from 'react';
+
+    export function useLocalStorage(key, initialValue) {
+    // ১. Lazy Initialization ব্যবহার করে প্রথমবার LocalStorage থেকে রিড করা
+    const [value, setValue] = useState(() => {
+        try {
+        const savedValue = localStorage.getItem(key);
+        return savedValue !== null ? JSON.parse(savedValue) : initialValue;
+        } catch (err) {
+        console.error(`Error reading key "${key}":`, err);
+        return initialValue;
+        }
+    });
+
+    // ২. স্টেট চেঞ্জ হলে অটোমেটিক LocalStorage আপডেট
+    useEffect(() => {
+            try {
+                localStorage.setItem(key, JSON.stringify(value));
+            } catch (err) {
+                console.error(`Error writing key "${key}":`, err);
+            }
+        }, [key, value]);
+
+        return [value, setValue];
+    }
+    ব্যবহার:
+    JavaScript
+    const [theme, setTheme] = useLocalStorage('theme', 'light');
+
+    return (
+        <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+            Toggle Theme (Current: {theme})
+        </button>
+    );
+
+৫.  ইন্টারভিউ ট্রিকস ও ডিপ কনসেপ্টস (Critical Questions)
+    ১.  দুটি কম্পোনেন্ট কি একই Custom Hook ব্যবহার করলে তাদের State শেয়ার হয়?
+        উত্তর:
+
+        না! এটি সবচেয়ে কমন ট্রিক প্রশ্ন। কাস্টম হুক স্টেট শেয়ার করে না, এটি শুধুমাত্র লজিক শেয়ার করে।
+
+        যখনই আলাদা কম্পোনেন্টে কাস্টম হুক কল করা হয়, তখন প্রতিটি কম্পোনেন্ট নিজের জন্য সম্পূর্ণ আলাদা এবং স্বাধীন (isolated) State তৈরি করে।
+
+        (যদি গ্লোবালি স্টেট শেয়ার করতেই হয়, তবে Custom Hook-এর ভেতরে useContext ব্যবহার করতে হবে।)
+
+    ২.  Custom Hook সম্পর্কে ইংলিশে কীভাবে বলবে?
+        "Custom Hooks are JavaScript functions that start with the prefix use and encapsulate reusable stateful logic using built-in React Hooks.
+
+        They allow us to abstract complex functionality—such as data fetching, event listeners, or form handling—away from the UI. It's important to remember that Custom Hooks share logic, not state itself; each component calling a Custom Hook gets an entirely independent state."

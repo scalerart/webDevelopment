@@ -1,0 +1,83 @@
+=>  React State
+        1.  State কী
+        2.  useState Hook
+        3.  State update
+        4.  Multiple states
+        5.  State object
+        6.  State immutability
+        7.  Derived state
+
+React State হলো একটি কম্পোনেন্টের নিজস্ব মেমোরি বা অভ্যন্তরীণ ডেটা কনটেইনার। প্রপ্স (Props) যেমন বাইর থেকে আসে এবং রিড-অনলি (Immutable), স্টেট তেমনি কম্পোনেন্টের ভেতরে তৈরি হয় এবং ইন্টারঅ্যাকশনের ভিত্তিতে পরিবর্তিত হতে পারে।
+
+ইন্টারন্যাশনাল টেকনিক্যাল ইন্টারভিউ এবং প্রফেশনাল প্রজেক্টের উপযোগী করে React State-এর অভ্যন্তরীণ আর্কিটেকচার, মেমোরি বিহেভিয়ার এবং সেরা চর্চাগুলো নিচে দেওয়া হলো:
+
+১.  State কী এবং কেন? (Core Concept)
+    সংজ্ঞা:
+
+    React State হলো একটি বিশেষ JavaScript অবজেক্ট বা মান, যা পরিবর্তন হলে React বুঝতে পারে যে UI-তে পরিবর্তন এসেছে এবং কম্পোনেন্টটিকে Re-render করায়।
+
+    =>  সাধারণ ভ্যারিয়াবল দিয়ে কেন হয় না?
+        JavaScript
+        // সাধারণ ভ্যারিয়াবল মান পরিবর্তন করলেও React UI আপডেট করবে না
+        let count = 0;
+        const increment = () => { count++; };
+
+        // State ব্যবহার করলে মান পরিবর্তনের সাথে সাথে UI রেন্ডার হবে
+        const [count, setCount] = useState(0);
+
+২.  React State-এর ৩টি গোল্ডেন রুলস (Golden Rules)
+    ১.  Never Mutate State Directly (সরাসরি স্টেট পরিবর্তন নিষেধ)
+        React স্টেট অবজেক্টের মান সরাসরি আপডেট করা যাবে না। সবসময় Setter Function ব্যবহার করতে হবে।
+
+        JavaScript
+        // মারাত্মক ভুল (React Re-render ট্রিগার করবে না)
+        user.name = 'Rahim';
+
+        // সঠিক নিয়ম (নতুন রেফারেন্স পাস করা)
+        setUser({ ...user, name: 'Rahim' });
+
+    2.  State Updates are Asynchronous & Batched (অ্যাসিঙ্ক্রোনাস ও ব্যাচিং)
+        React পারফরম্যান্স বাঁচানোর জন্য একাধিক setState কলকে একসাথে গুছিয়ে (Batching) একবার রেন্ডার করায়।
+
+        JavaScript
+        // এটি পর পর ৩ বাড়াবে না, মাত্র ১ বাড়াবে!
+        const handleClick = () => {
+            setCount(count + 1);
+            setCount(count + 1);
+            setCount(count + 1);
+        };
+
+        // Functional Updater (আগের સ્ટેટ-এর ওপর নির্ভর করলে)
+        const handleClick = () => {
+            setCount(prev => prev + 1);
+            setCount(prev => prev + 1);
+            setCount(prev => prev + 1);
+        };
+
+3.  State Structure: Single Source of Truth & Colocation
+    ১.  Colocation: স্টেটকে যতটুকু সম্ভব নিচে (যে চাইল্ডে ব্যবহৃত হয়) রাখতে হবে।
+    ২.  Avoid Duplicate/Derived State: প্রপ্স বা অন্য স্টেট থেকে গণনা করে বের করা যায় এমন কিছু স্টেটে রাখা অ্যান্টি-প্যাটার্ন।
+
+        JavaScript
+        // Derived State (প্রয়োজন নেই)
+        const [fullName, setFullName] = useState(firstName + ' ' + lastName);
+
+        // Best Practice (সাধারণ ভ্যারিয়াবলে বের করে নেওয়া)
+        const fullName = `${firstName} ${lastName}`;
+
+৩.  React State Lifecycle & Fiber Architecture
+    React স্টেট যেভাবে কাজ করে:
+        ১.  Trigger Phase: setState কল হলে React Fiber Tree-তে ওই কম্পোনেন্টকে Update হিসেবে মার্ক করে।
+        ২.  Render Phase: React ফাংশনটি আবার রান করে নতুন Virtual DOM তৈরি করে।
+        ৩.  Commit Phase: React নতুন ও পুরোনো Virtual DOM-এর পার্থক্য (Diffing) মেপে আসল DOM-এ আপডেট প্রয়োগ করে।
+
+৪.  Questions & Answer
+    ১.  Primitive vs Non-Primitive State পরিবর্তনে React কীভাবে কাজ করে?
+        উত্তর:
+
+        Primitive value (Number, String, Boolean)-এর ক্ষেত্রে React মান সমান কি না (Object.is) তা মিলিয়ে দেখে। কিন্তু Array বা Object (Non-primitive)-এর ক্ষেত্রে React Referential Equality চেক করে। তাই একই অবজেক্ট মিউটেট করলে মেমোরি অ্যাড্রেস বদলায় না বলে React রি-রেন্ডার করে না। এজন্য সবসময় নতুন Spread Operator (...) দিয়ে নতুন অবজেক্ট বা অ্যারে পাঠাতে হয়।
+
+    ২.  React State:
+        "React State represents a component's internal memory that dictates its behavior and rendering.
+
+        Key practices include treating state as immutable, using functional updates when relying on previous state values to handle automatic batching, and avoiding derived state by calculating values directly during render to maintain a single source of truth."

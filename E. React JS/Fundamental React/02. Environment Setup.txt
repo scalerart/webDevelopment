@@ -1,0 +1,96 @@
+=>  Environment Setup
+
+    Tools
+        1.  Node.js
+        2.  npm / npx
+        3.  Vite
+        4.  Create React App
+
+    Topics
+        1.  React Project create করা
+        2.  Vite দিয়ে React Project তৈরি
+        3.  Project Folder Structure
+        4.  package.json
+        5.  node_modules
+        6.  development server
+        7.  build process
+
+Environment Setup হলো রিয়্যাক্ট (React) অ্যাপ্লিকেশন ডেভেলপমেন্ট শুরু করার প্রথম ধাপ। আধুনিক রিয়্যাক্ট প্রজেক্ট তৈরির জন্য বর্তমানে Vite হলো ইন্ডাস্ট্রি স্ট্যান্ডার্ড এবং সবচেয়ে জনপ্রিয় বিল্ড টুল (Create React App এখন ডেপ্রিকেটেড/Legacy)।
+
+একটি কমপ্লিট মডার্ন রিয়্যাক্ট ডেভেলপমেন্ট এনভায়রনমেন্ট সেটআপ করার গাইড নিচে দেওয়া হলো:
+
+১.  পূর্বশর্ত (Prerequisites)
+    রিয়্যাক্ট প্রজেক্ট চালানোর জন্য আপনার সিস্টেমে অবশ্যই Node.js ইন্সটল করা থাকতে হবে।
+        ১.  Node.js: ডাউনলোড করুন nodejs.org (LTS ভার্সন সুপারিশকৃত)।
+        ২.  Package Manager: Node.js-এর সাথে npm স্বয়ংক্রিয়ভাবে ইন্সটল হয়ে যায়। (আপনি চাইলে pnpm বা yarn ব্যবহার করতে পারেন)।
+
+    টার্মিনালে ভার্সন চেক করার কমান্ড:
+    Bash
+        node -v
+        npm -v
+
+২.  Vite দিয়ে নতুন React প্রজেক্ট তৈরি (Step-by-Step)
+    1.  প্রজেক্ট ক্রিয়েট করা
+        টার্মিনালে নিচে দেওয়া কমান্ডটি চালান:
+
+        Bash
+            npm create vite@latest my-react-app -- --template react
+        (TypeScript ব্যবহার করতে চাইলে শেষের --template react তুলে দিয়ে --template react-ts লিখবেন)।
+
+    2.  প্রজেক্ট ফোল্ডারে প্রবেশ ও ডিপেনডেন্সি ইন্সটল
+        Bash
+            cd my-react-app
+            npm install
+
+    3.  ডেভেলপমেন্ট সার্ভার চালু করা
+        Bash
+            npm run dev
+        টার্মিনালে একটি লোকাল ইউআরএল (যেমন: http://localhost:5173) দেখাবে। ব্রাউজারে এটি ওপেন করলেই আপনার রিয়্যাক্ট অ্যাপ চালু হয়ে যাবে।
+
+৩.  গুরুত্বপূর্ণ VS Code Extensions (Developer Productivity)
+    প্রোডাকশন-লেভেল ডেভেলপমেন্টের জন্য ভিজ্যুয়াল স্টুডিও কোডে (VS Code) নিচের এক্সটেনশনগুলো ইন্সটল করা উচিত:
+        ১.  ES7+ React/Redux/React-Native snippets:
+            দ্রুত রিয়্যাক্ট কোড ও কম্পোনেন্ট স্ট্রাকচার লেখার জন্য (rafce টাইপ করলেই কম্পোনেন্ট টেমপ্লেট চলে আসে)।
+
+        ২.  Prettier - Code formatter: অটোমেটিক কোড সুন্দর ও ফরম্যাট রাখার জন্য।
+        ৩.  ESLint: কোডের ভুল ও অ্যান্টি-প্যাটার্ন চিহ্নিত করার জন্য।
+        ৪.  Tailwind CSS IntelliSense: (যদি Tailwind CSS ব্যবহার করেন) অটো-কমপ্লিশনের জন্য।
+
+৪.  ব্রাউজার ইনস্পেকশন টুল: React Developer Tools
+    প্রজেক্টের স্টেট/প্রপ্স ডিবাগ করার জন্য ব্রাউজারে React Developer Tools এক্সটেনশনটি ইন্সটল করা বাধ্যতামূলক।
+        ১.  Chrome/Edge/Firefox: Extension Store থেকে React Developer Tools ডাউনলোড করুন।
+        ২.  সুবিধা:
+            এটি ব্রাউজার DevTools-এ Components এবং Profiler নামে দুটি ট্যাব যুক্ত করে, যা দিয়ে রেন্ডারিং ও স্টেট পরিবর্তন রিয়েল-টাইমে ট্র্যাক করা যায়।
+
+৫.  ফাইল ও ফোল্ডার স্ট্রাকচার (Standard Project Layout)
+    ইন্ডাস্ট্রি স্ট্যান্ডার্ড অনুযায়ী প্রজেক্টের ফোল্ডার স্ট্রাকচার:
+
+    Plaintext
+    my-react-app/
+    ├── node_modules/
+    ├── public/
+    │   └── favicon.svg
+    ├── src/
+    │   ├── assets/          # Images, Fonts, Icons
+    │   ├── components/      # Reusable UI Components (Button, Card)
+    │   ├── hooks/           # Custom Hooks (useFetch, useAuth)
+    │   ├── pages/           # Route Pages (Home, Dashboard)
+    │   ├── services/        # API Calls / Axios setup
+    │   ├── App.jsx          # Main App Component
+    │   ├── main.jsx         # Entry point (ReactDOM render)
+    │   └── index.css        # Global Styles
+    ├── .gitignore
+    ├── index.html
+    ├── package.json
+    └── vite.config.js
+
+৬.  Questions & Answers
+    ১.  Create React App (CRA) ছেড়ে কেন Vite ব্যবহার করা হয়?
+        উত্তর:
+
+        CRA ব্যবহার করত Webpack, যা প্রজেক্টের সব ফাইল একসাথে বান্ডেল (Bundle) করে সার্ভার স্টার্ট করত—ফলাফলস্বরূপ বড় প্রজেক্ট স্টার্ট হতে অনেক সময় লাগত। অন্যদিকে Vite ব্যবহার করে ব্রাউজারের নেটিভ ES Modules (ESM) এবং অত্যন্ত দ্রুতগতির Esbuild (Go ভাষায় লিখিত)। ফলে এটি তাৎক্ষণিক (Instant) সার্ভার স্টার্ট করে এবং Hot Module Replacement (HMR) অনেক দ্রুত হয়।
+
+    ২.  Environment Setup:
+        "Modern React Environment Setup relies on Vite as the build tool over legacy CRA due to its instant Cold Server Start and fast HMR powered by native ES Modules.
+
+        The core stack requires Node.js, npm/pnpm for package management, VS Code with React snippets and Prettier, alongside React Developer Tools browser extension for real-time state and component profiling."

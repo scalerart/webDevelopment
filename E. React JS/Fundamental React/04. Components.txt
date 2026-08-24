@@ -1,0 +1,90 @@
+=>  Components
+        1.  Component কী
+        2.  Function Component
+        3.  Component naming rules
+        4.  Multiple Components
+        5.  Component nesting
+        6.  Reusable components
+        7.  Component separation
+        8.  Smart vs Dumb Components
+
+Components হলো React অ্যাপ্লিকেশনের মূল বিল্ডিং ব্লক (Building Block)। যেমন একটি বাড়ি ছোট ছোট ইট জুড়ে তৈরি করা হয়, তেমনই একটি React UI ছোট ছোট স্বাধীন, পুনঃব্যবহারযোগ্য (Reusable) এবং আলাদা কম্পোনেন্ট দিয়ে তৈরি করা হয়।
+
+প্রফেশনাল প্রজেক্টের উপযোগী করে React Components-এর সমস্ত আর্কিটেকচার, মেমোরি বিহেভিয়ার এবং সেরা চর্চাগুলো নিচে সাজিয়ে দেওয়া হলো:
+
+১.  Component কী এবং কেন? (Core Concept)
+    সংজ্ঞা:
+
+    React Component হলো একটি স্বাধীন JavaScript ফাংশন (বা ক্লাস) যা ইনপুট হিসেবে Props এবং State নেয় এবং আউটপুট হিসেবে JSX (UI) রিটার্ন করে।
+
+    প্রধান সুবিধা:
+        ১.  Reusability (পুনঃব্যবহারযোগ্যতা): একবার একটি কম্পোনেন্ট বানিয়ে অ্যাপ্লিকেশনের শত শত জায়গায় ব্যবহার করা যায়।
+        ২.  Maintainability (সহজে রক্ষণাবেক্ষণ): কোড ছোট ছোট টুকরোতে ভাগ থাকায় সহজে বাগ ফিক্স বা নতুন ফিচার যোগ করা যায়।
+        ৩.  Separation of Concerns: প্রতিটি কম্পোনেন্ট কেবল তার নিজস্ব UI এবং লজিক নিয়ে কাজ করে।
+
+২.  Functional vs Class Components
+    React-এর ইতিহাসে ২ ধরনের কম্পোনেন্ট দেখা যায়:
+    0.  বিষয়
+        Functional Component (আধুনিক স্ট্যান্ডার্ড)
+        Class Component (পুরোনো/Legacy)
+
+    1.  সিনট্যাক্স
+        সাধারণ JavaScript Function
+        React.Component Extends করে তৈরি ক্লাস
+
+    2.  State ও Lifecycle
+        "React Hooks (useState, useEffect) দিয়ে সংজ্ঞায়িত"
+        this.state এবং Lifecycle Methods (componentDidMount)
+
+    3.  পারফরম্যান্স ও কোড
+        "কম কোড, পড়া সহজ এবং দ্রুততর"
+        "বয়লারপ্লেট কোড বেশি, this বাইন্ডিং জটিলতা"
+
+    নোট: আধুনিক রিয়্যাক্ট প্রজেক্টের ১০০% কোড Functional Components দিয়ে লেখা হয়। (শুধুমাত্র Error Boundary ব্যাতিক্রম, যা ক্লাস কম্পোনেন্ট বাধ্যতামূলক)।
+
+    JavaScript
+    // আধুনিক Functional Component
+    export function WelcomeBanner({ username }) {
+        return <h1>Welcome back, {username}!</h1>;
+    }
+
+৩.  Component-এর Pure Function বৈশিষ্ট্য (Pure Components)
+    React-এর একটি অন্যতম গোল্ডেন রুল হলো: "Components must be Pure Functions"।
+
+    Pure Function কী?
+    একটি ফাংশন যদি একই ইনপুটের (Props) জন্য সবসময় একই আউটপুট (JSX) রিটার্ন করে এবং বাইরে কোনো কিছু পরিবর্তন (Side Effect) না করে, তবে তাকে Pure Function বলে।
+
+    JavaScript
+    // Impure Component (রেন্ডারের সময় বাইরের ভ্যারিয়াবল মিউটেট করছে)
+    let guestCount = 0;
+    function BadCup() {
+        guestCount = guestCount + 1; // Side-effect in rendering!
+        return <h2>Tea cup for guest #{guestCount}</h2>;
+    }
+
+    // Pure Component (ইনপুটের ওপর নির্ভর করে নিরেট JSX রিটার্ন)
+    function GoodCup({ guestNo }) {
+        return <h2>Tea cup for guest #{guestNo}</h2>;
+    }
+
+৪.  প্রফেশনাল আর্কিটেকচার: Presentational vs Container Components
+    বড় প্রজেক্টে কম্পোনেন্ট ফোল্ডার স্ট্রাকচার সাজাতে ২টি প্যাটার্ন খুব জনপ্রিয়:
+
+    ১.  Presentational / Dumb Components:
+        ১.  এদের নিজস্ব কোনো জটিল স্টেট বা API কল থাকে না।
+        ২.  এরা কেবল Props দিয়ে ডেটা গ্রহণ করে এবং সুন্দর করে UI দেখায় (e.g., Button, Modal, Card)।
+
+    ২.  Container / Smart Components:
+        ১.  এরা API থেকে ডেটা আনে, স্টেট মেইনটেইন করে এবং প্রেজেন্টেশনাল কম্পোনেন্টকে সেই ডেটা পাস করে।
+
+
+৫.  Questions & Answers
+    ১.  React-এ কম্পোনেন্টের নাম সবসময় Capital Letter (বড় হাতের অক্ষর) দিয়ে শুরু করতে হয় কেন?
+        উত্তর:
+
+        React JSX ট্রান্সপাইল করার সময় ছোট হাতের ট্যাগকে (যেমন: <div>, <span>) সাধারণ HTML Element হিসেবে ধরে নেয়। কিন্তু বড় হাতের অক্ষর বিশিষ্ট ট্যাগকে (যেমন: <Button/>) একটি React Component হিসেবে চেনে এবং তাকে ইন্সট্যানশিয়েট করে।
+
+    ২.  Components:
+        "React Components are independent, reusable pieces of code that define the structure and behavior of the UI.
+
+        Modern React relies almost exclusively on Functional Components driven by Hooks. A fundamental rule of React is that components must behave as Pure Functions during rendering—returning the exact same JSX for the same props without introducing side effects."

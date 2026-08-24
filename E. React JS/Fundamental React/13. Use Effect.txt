@@ -1,0 +1,133 @@
+useEffect হলো React-এর সবচেয়ে গুরুত্বপূর্ণ এবং ট্রিকি হুকগুলোর একটি। রিয়েল প্রজেক্টের বাগ এড়ানো এবং ইন্টারভিউতে ভালো পারফর্ম করার জন্য useEffect-এর ভেতরকার মেকানিজম জানা আবশ্যক।
+
+১.  useEffect কী এবং কেন? (Core Concept)
+    সংজ্ঞা:
+    useEffect হলো এমন একটি হুক যা React-এর pure rendering লজিক থেকে Side Effects (বাইরের পৃথিবীর সাথে যোগাযোগ) আলাদা রাখতে সাহায্য করে।
+
+    =>  Side Effect কী?
+        যেকোনো কাজ যা সরাসরি React Component-এর JSX রেন্ডারিংয়ের অংশ নয়—যেমন:
+            1.  API Data Fetching (Axios/Fetch)
+            2.  DOM ম্যানিপুলেশন (যেমন: document.title চেঞ্জ করা)
+            3.  Event Listeners যোগ করা (window.addEventListener)
+            4.  Timers & Intervals (setInterval, setTimeout)
+            5.  Subscriptions (WebSocket বা Firebase Connection)
+
+২.  useEffect-এর গঠন এবং ৩টি রূপ (Dependency Array)
+    JavaScript
+    useEffect(() => {
+        // Side Effect Code
+
+        return () => {
+            // Cleanup Code (Optional)
+        };
+    }, [dependencies]);
+
+    =>  Dependency Array-এর ওপর ভিত্তি করে useEffect ৩টি ভিন্ন উপায়ে আচরণ করে:
+        ০.  Dependency Array,কখন এক্সিকিউট হয়?,ব্যবহারের ক্ষেত্র
+        ১.  No Array (useEffect(fn)),প্রথম রেন্ডার + প্রতিটি Re-render এর পর,খুব বিরল (Debug logging)
+        ২.  Empty Array (useEffect(fn, []))",শুধু প্রথমবার Mount হওয়ার পর (একবার),"API Fetching, Initial Setup"
+        ৩.  With Dependencies (useEffect(fn, [a, b]))",Mount হওয়ার পর + a বা b-এর মান বদলালে,"Search filter, Paginated data fetching"
+
+৩.  Cleanup Function: রিয়েল প্রজেক্টের বাগ ও Memory Leak বন্ধের চাবিকাঠি
+    যখন কোনো কম্পোনেন্ট Unmount হয় (স্ক্রিন থেকে সরে যায়) বা আবার রেন্ডার হয়, তখন আগের লাইফসাইকেলের অসম্পূর্ণ কাজ বা কানেকশন বন্ধ করতে Cleanup Function ব্যবহৃত হয়।
+
+    Cleanup Function-এর রিয়েল লাইফ ৩টি উদাহরণ:
+    ক.  Event Listener Cleanup
+        JavaScript
+        useEffect(() => {
+            const handleResize = () => setWidth(window.innerWidth);
+            window.addEventListener('resize', handleResize);
+
+            // Cleanup: না দিলে Memory Leak হবে
+            return () => {
+                window.removeEventListener('resize', handleResize);
+            };
+        }, []);
+
+    খ.  Timer / Interval Cleanup
+        JavaScript
+        useEffect(() => {
+            const timer = setInterval(() => {
+                setSeconds(prev => prev + 1);
+            }, 1000);
+
+            // Cleanup
+            return () => clearInterval(timer);
+        }, []);
+
+    গ.  API Race Condition এড়ানো (Aborting Fetch Request)
+        প্রজেক্টে দ্রুত টাইপ করার সময় আগের পুরোনো API Response যেন পরের আপডেটেড Response-কে ওভাররাইট না করে:
+
+        JavaScript
+        useEffect(() => {
+        const controller = new AbortController();
+
+        fetch(`https://api.example.com/search?query=${query}`, { signal: controller.signal })
+                .then(res => res.json())
+                .then(data => setData(data))
+                .catch(err => {
+                if (err.name !== 'AbortError') {
+                    // Handle actual error
+                }
+                });
+
+            // Cleanup: নতুন Query দিলে আগের পেন্ডিং রিকোয়েস্ট ক্যানসেল হয়ে যাবে
+            return () => controller.abort();
+        }, [query]);
+
+৪.  রিয়েল প্রজেক্ট অ্যান্টি-প্যাটার্ন (Common Mistakes)
+    রিয়েল লাইফ প্রজেক্টে এই ৩টি ভুল সবচেয়ে বেশি দেখা যায়:
+
+    ১.  Infinite Loop (অসীম লুপ):
+        JavaScript
+        // ভুল: Effect-এর ভেতরে data আপডেট করা হচ্ছে, আবার data-কে dependency হিসেবে রাখা হয়েছে!
+        useEffect(() => {
+            fetchData().then(res => setData(res));
+        }, [data]);
+
+    ২.  Object / Array-কে Dependency তে সরাসরি দেওয়া:
+        React-এ Object ও Array-এর Referential Equality চেক করা হয়। প্রতিটি রেন্ডারে নতুন Object তৈরি হওয়ায় Effect বারবার রান করবে।
+
+        JavaScript
+        // ভুল: { id: 1 } প্রতি রেন্ডারে নতুন রেফারেন্স
+        useEffect(() => {
+            fetchUser(options);
+        }, [options]);
+
+        // সঠিক: Primitive value দেওয়া অথবা useMemo ব্যবহার করা
+        useEffect(() => {
+            fetchUser(options.id);
+        }, [options.id]);
+
+    ৩.  Derived State-এর জন্য useEffect ব্যবহার করা (React 18+ Rule):
+        যদি কোনো মান বিদ্যমান Props/State থেকে সরাসরি গণনা করা যায়, তবে useEffect বা অতিরিক্ত State ব্যবহার না করে রেন্ডারের সময়েই ক্যালকুলেট করা উচিত।
+
+        JavaScript
+        // অ্যান্টি-প্যাটার্ন
+        const [fullName, setFullName] = useState('');
+        useEffect(() => {
+            setFullName(`${firstName} ${lastName}`);
+        }, [firstName, lastName]);
+
+        // সঠিক নিয়ম (No useEffect needed)
+        const fullName = `${firstName} ${lastName}`;
+
+৫.  ইন্টারভিউ প্রশ্ন ও স্মার্ট উত্তর (Interview Questions & Answers)
+    ১.  useEffect এবং useLayoutEffect-এর মধ্যে পার্থক্য কী?
+        উত্তর:
+
+        ১.  useEffect (Asynchronous):
+            ব্রাউজার DOM রেন্ডার করার পর স্ক্রিনে পিক্সেল আঁকা হলে পেন্টিং ব্লক না করে এক্সিকিউট হয়। ৯০% ক্ষেত্রে এটি ব্যবহার করা হয়।
+
+        ২.  useLayoutEffect (Synchronous):
+            DOM মেমোরিতে আপডেট হওয়ার পরপরই, কিন্তু ব্রাউজারে স্ক্রিনে দৃশ্যমান হওয়ার পূর্বে সিঙ্ক্রোনাসলি রান করে। DOM-এর সাইজ মাপার জন্য বা UI-এর ফ্লিকারিং এড়াতে এটি ব্যবহৃত হয়।
+
+    ২.  React 18 Strict Mode-এ useEffect দুইবার কেন রান করে?
+        উত্তর:
+
+        Development Environment-এ React 18-এর Strict Mode অন থাকলে কম্পোনেন্টকে Mount => Unmount => Remount করিয়ে টেস্ট করে। এটি করা হয় যাতে ডেভেলপার তার Cleanup Function সঠিকভাবে লিখেছে কি না এবং কোনো Memory Leak বা বাগ আছে কি না তা আগেভাগেই নিশ্চিত হওয়া যায়। (Production-এ এটি একবারই রান করে)।
+
+    ৩.  useEffect সম্পর্কে ইংলিশে কীভাবে বলবে?
+        "useEffect is a React Hook that lets components synchronize with external systems, such as fetching data, manipulating the DOM, or setting up subscriptions.
+
+        It runs after React renders the component to the DOM. A critical pattern I always follow in production is returning a cleanup function to clear timers, abort pending HTTP requests, or unbind event listeners to prevent memory leaks."

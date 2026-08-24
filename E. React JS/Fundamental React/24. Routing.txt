@@ -1,0 +1,129 @@
+/*
+=>  Routing
+        1.  Library
+        2.  React Router
+
+    Topics
+        1.  BrowserRouter
+        2.  Routes
+        3.  Route
+        4.  Link
+        5.  NavLink
+        6.  Nested routes
+        7.  Dynamic routes
+        8.  URL params
+        9.  404 page
+
+Routing হলো সিঙ্গেল পেইজ অ্যাপ্লিকেশন (SPA)-এ পেজ রিফ্রেশ ছাড়া এক ইউআরএল থেকে অন্য ইউআরএলে নেভিগেট করার মেকানিজম।
+React-এ রাউটিং করার জন্য সবচেয়ে জনপ্রিয় ইন্ডাস্ট্রি স্ট্যান্ডার্ড লাইব্রেরি হলো React Router (বর্তমানে ভার্সন 6/7)।
+
+১.  React Router-এর মূল উপাদানসমূহ (Core Components)
+    ১.  BrowserRouter: অ্যাপ্লিকেশনের পেছনের ব্রাউজার হিস্ট্রি (HTML5 History API) সিঙ্ক করে রাখে।
+    ২.  Routes & Route: ইউআরএল পাথ-এর ওপর ভিত্তি করে কোন কম্পোনেন্ট দেখাবে তা নির্ধারণ করে।
+    ৩.  Link / NavLink: পেজ রিফ্রেশ না করে নেভিগেট করার জন্য HTML <a> ট্যাগের অল্টারনেটিভ।
+
+২.  মৌলিক কোড স্ট্রাকচার (Basic Routing)
+    JavaScript
+    import { BrowserRouter, Routes, Route, Link, NavLink } from 'react-router-dom';
+
+    function App() {
+        return (
+            <BrowserRouter>
+            <nav>
+                {/* NavLink দিয়ে active class স্বয়ংক্রিয়ভাবে হ্যান্ডেল হয় */}
+                <NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink>
+                <Link to="/about">About</Link>
+            </nav>
+
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                {/* Wildcard/404 Page */}
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+            </BrowserRouter>
+        );
+    }
+
+৩.  ডায়নামিক রাউটিং ও ইউআরএল প্যারামিটার (Dynamic Routes & Params)
+    প্রোডাক্ট বা ইউজার প্রোফাইল আইডি অনুযায়ী ডায়নামিক পেজ তৈরি করতে useParams হুক ব্যবহৃত হয়।
+
+    JavaScript
+    import { useParams, useNavigate } from 'react-router-dom';
+
+    // Route Definition: <Route path="/users/:id" element={<UserProfile />} />
+
+    function UserProfile() {
+        const { id } = useParams(); // URL থেকে id রিড করা
+        const navigate = useNavigate(); // প্রোগ্রাম্যাটিকালি পেজ চেঞ্জ করা
+
+        const handleGoHome = () => {
+            navigate('/'); // প্রোগ্রাম্যাটিক নেভিগেশন
+        };
+
+        return (
+            <div>
+                <h2>User Profile ID: {id}</h2>
+                <button onClick={handleGoHome}>Back to Home</button>
+            </div>
+        );
+    }
+
+৪.  নেস্টেড রাউটিং ও লেআউট (Outlet)
+    ড্যাশবোর্ড বা সাধারণ নেভিগেশন লেআউট ফিক্সড রেখে ভেতরের কনটেন্ট পরিবর্তন করতে Outlet ব্যবহার করা হয়।
+
+    JavaScript
+    import { Routes, Route, Outlet, Link } from 'react-router-dom';
+
+    function DashboardLayout() {
+        return (
+            <div>
+            <aside><Link to="stats">Stats</Link> | <Link to="settings">Settings</Link></aside>
+            <main>
+                {/* চাইল্ড রাউটের কম্পোনেন্ট এখানে রেন্ডার হবে */}
+                <Outlet />
+            </main>
+            </div>
+        );
+    }
+
+    // App Routing Structure:
+    <Routes>
+        <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route path="stats" element={<Stats />} />
+            <Route path="settings" element={<Settings />} />
+        </Route>
+    </Routes>
+
+৫.  প্রটেক্টেড রাউটিং (Protected Routes / Authentication Guard)
+    অননুমোদিত ইউজার যেন প্রাইভেট পেজে (যেমন Dashboard বা Checkout) এক্সেস না পায়, সেজন্য কাস্টম প্রটেক্টেড রাউট ব্যবহার করা হয়:
+
+    JavaScript
+    import { Navigate, Outlet } from 'react-router-dom';
+
+    function ProtectedRoute({ isAllowed, redirectTo = "/login" }) {
+        if (!isAllowed) {
+            return <Navigate to={redirectTo} replace />;
+        }
+        return <Outlet />; // অনুমোদিত হলে চাইল্ড পেজে যেতে দেওয়া
+    }
+
+    // ব্যবহার:
+    <Routes>
+        <Route element={<ProtectedRoute isAllowed={!!user} />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<Profile />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+    </Routes>
+
+৬.  Questions & Answer
+    ১.  React Router-এ <Link> এবং স্বাভাবিক <a> ট্যাগের মধ্যে পার্থক্য কী?
+        উত্তর:
+
+        সাধারণ <a> ট্যাগ ব্রাউজারকে বাধ্য করে পুরো পেজ সার্ভার থেকে রিলোড করতে, যা SPA-এর মূল উদ্দেশ্য নষ্ট করে। পক্ষান্তরে, <Link> ব্রাউজারের পেজ রিফ্রেশ হওয়া আটকায় (via e.preventDefault()) এবং রিয়্যাক্ট স্টেটের ক্ষতি না করে শুধু প্রয়োজনীয় DOM আপডেট করে।
+
+    ২.  Routing:
+        "Routing in React is managed using React Router to enable Single Page Application (SPA) navigation without full-page reloads.
+
+        It leverages BrowserRouter and Routes for mapping paths to components, useParams for dynamic URL parameters, and Outlet for nested layouts. Authentication flow is handled efficiently via Protected Route wrappers using programmatic navigation like Navigate or useNavigate."

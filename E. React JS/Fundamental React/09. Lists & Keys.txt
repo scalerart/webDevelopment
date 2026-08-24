@@ -1,0 +1,92 @@
+/*
+=>  Lists & Keys
+    1.  Array rendering
+        map()
+        find()
+        filter()
+        foreach()
+    2.  Keys concept
+    3.  Dynamic list
+    4.  Filtering lists
+
+React-এ Lists & Keys হলো অ্যারে বা লিস্ট অব ডেটা থেকে JSX রেন্ডার করার মূল ভিত্তি। ইন্টারভিউতে ডায়নামিক লিস্ট রেন্ডারিং এবং Performance Diffing Algorithm সম্পর্কিত প্রশ্নগুলোর জন্য এই কনসেপ্টটি খুবই গুরুত্বপূর্ণ।
+
+প্রোডাকশন-লেভেলের প্রজেক্ট গাইড নিচে তুলে ধরা হলো:
+
+১.  Lists রেন্ডারিং কীভাবে কাজ করে?
+    React-এ কোনো অ্যারের ডেটা স্ক্রিনে সাজিয়ে দেখাতে JavaScript-এর map() মেথড ব্যবহার করা হয়।
+
+    JavaScript
+    export function UserList() {
+        const users = [
+            { id: 'u1', name: 'Rahim' },
+            { id: 'u2', name: 'Karim' },
+            { id: 'u3', name: 'Sabbir' }
+        ];
+
+        return (
+            <ul>
+                {users.map((user) => (
+                    // প্রতিটি লিস্ট আইটেমে ইউনিক 'key' প্রপার্টি থাকা বাধ্যতামূলক
+                    <li key={user.id}>{user.name}</li>
+                ))}
+            </ul>
+        );
+    }
+
+২.  Key কী এবং React-এর কেন এটি প্রয়োজন? (Core Concept)
+    সংজ্ঞা:
+    key হলো একটি বিশেষ String Attribute যা React-কে প্রতিটি উপাদান আলাদাভাবে চিনতে (Identify) সাহায্য করে।
+
+    =>  কেন প্রয়োজন? (Virtual DOM Diffing)
+        যখন কোনো লিস্টের ডেটা আপডেট হয় (যেমন: নতুন আইটেম যুক্ত হওয়া, আইটেম ডিলিট হওয়া বা সর্ট করা), তখন React Virtual DOM-এ পুরোনো লিস্ট এবং নতুন লিস্টের তুলনা করে।
+
+        ১.  key থাকলে:
+            React নির্দিষ্ট করে বুঝতে পারে ঠিক কোন আইটেমটি নতুন এসেছে বা কোনটা মুছে গেছে। ফলে React শুধু সেই নির্দিষ্ট Element-টি DOM-এ আপডেট করে।
+
+        ২.  key না থাকলে:
+            React পুরো লিস্টের সব উপাদান পুনর্নির্মাণ (Re-render) করতে বাধ্য হয়, যা পারফরম্যান্সের ওপর মারাত্মক নেতিবাচক প্রভাব ফেলে।
+
+৩.  key হিসেবে Index ব্যবহার করার ঝুঁকি (Critical Anti-Pattern)
+    "আমি কি map-এর index কে key হিসেবে ব্যবহার করতে পারি?"
+
+    উত্তর: না, সাধারণত করা উচিত নয়।
+
+    কেন Index কে Key হিসেবে ব্যবহার করা উচিত নয়?
+
+    যদি লিস্টটি static থাকে (কখনো যোগ/বিয়োগ বা রি-অর্ডার না হয়), তবে index ব্যবহার করা যায়। কিন্তু লিস্টে আইটেম সর্ট, ফিল্টার বা অ্যাড/ডিলিট হলে নিচের ৩টি মারাত্মক সমস্যা দেখা দেয়:
+        ১.  Unnecessary Re-rendering:
+            লিস্টের শুরুতে একটি উপাদান যোগ করলে সব উপাদানের Index বদলে যায়, ফলে React পুরো লিস্ট আবার রেন্ডার করে।
+
+        ২.  State Misalignment (Bug):
+            লিস্টের আইটেমে যদি নিজস্ব Input Field বা State থাকে, তবে সর্ট করার পর স্টেট ভুল উপাদানে অ্যাসাইন হয়ে যেতে পারে।
+
+    ভুল উদাহরণ:
+    JavaScript
+    // অ্যান্টি-প্যাটার্ন: dynamic list-এ index ব্যবহার করা
+    {items.map((item, index) => (
+        <ListItem key={index} data={item} />
+    ))}
+
+    // সঠিক নিয়ম: ইউনিক ID ব্যবহার করা
+    {items.map((item) => (
+        <ListItem key={item.id} data={item} />
+    ))}
+
+৪. Keys সম্পর্কিত গোল্ডেন রুলস (Rules of Keys)
+Keys Must Be Unique Among Siblings: একই লিস্টের পাশাপাশি থাকা উপাদানগুলোর Key অবশ্যই ইউনিক হতে হবে। তবে দুটি ভিন্ন লিস্টে একই Key থাকলে কোনো সমস্যা নেই।
+
+Keys Must Be Stable: রেন্ডারের সময় dynamically key={Math.random()} ব্যবহার করা যাবে না। এর ফলে প্রতি রেন্ডারে React মনে করবে এটি নতুন কম্পোনেন্ট এবং রি-রেন্ডার না করে পুরো DOM ডেস্ট্রয় করে আবার বানাবে।
+
+Keys Are Not Props: key প্রপার্টিটি রিয়্যাক্ট নিজের জন্য ব্যবহার করে। চাইল্ড কম্পোনেন্টে প্রপস হিসেবে props.key পড়ে অ্যাক্সেস পাওয়া যায় না।
+
+৫.  Questions & Answer
+    ১.  Database থেকে পাওয়া ID না থাকলে ইউনিক Key কীভাবে তৈরি করব?
+        উত্তর:
+
+        যদি ব্যাকএন্ড থেকে কোনো Unique ID না পাওয়া যায়, তবে ডেটা প্রসেস করার সময় crypto.randomUUID() বা nanoid / uuid লাইব্রেরি ব্যবহার করে ইউনিক ID তৈরি করে নেওয়া ভালো। রেন্ডার ফাংশনের ভেতরে নয়, বরং ডেটা রিসিভ করার সময় আইডি অ্যাসাইন করা উচিত।
+
+    ২.  Lists & Keys:
+        "In React, Keys are special attributes used when rendering lists to give elements a stable identity across re-renders.
+
+        They enable React's Reconciliation Algorithm to efficiently track additions, removals, and reordering of items. Using array indices as keys is an anti-pattern for dynamic lists because it can cause UI bugs and state corruption during mutations."

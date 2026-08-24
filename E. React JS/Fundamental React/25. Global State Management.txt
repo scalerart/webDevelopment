@@ -1,0 +1,15 @@
+22. Global State Management
+        1.  Context API
+        2.  Redux introduction
+
+    Libraries
+        1.  Redux
+        2.  Redux Toolkit
+
+    Topics
+        1.  Store
+        3.  Slice
+        4.  Actions
+        5.  Reducers
+        6.  useSelector
+        7.  useDispatch

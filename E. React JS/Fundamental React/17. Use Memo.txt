@@ -1,0 +1,111 @@
+useMemo হলো React-এর Performance Optimization Hook। কম্পোনেন্ট রি-রেন্ডার হওয়ার সময় কোনো ভারী বা ব্যয়বহুল হিসাব (Expensive Calculation) যেন বারবার না চলে, তা প্রতিরোধ করতে এই হুক ব্যবহার করা হয়।
+
+১.  useMemo কী এবং কেন? (Core Concept)
+    সংজ্ঞা:
+
+    useMemo হলো একটি React Hook যা কোনো একটি ফাংশনের গণনাকৃত ফলাফলকে Memoize (Cache) করে রেখে দেয় এবং শুধুমাত্র সংশ্লিষ্ট Dependencies পরিবর্তিত হলেই সেটি পুনরায় গণনা করে।
+
+    =>  কেন প্রয়োজন?
+        React-এ যখন কোনো কম্পোনেন্টের স্টেট বা প্রপস পরিবর্তন হয়, তখন পুরো কম্পোনেন্টটি পুনরায় রেন্ডার হয় (Re-render)। যদি কম্পোনেন্টের ভেতরে ১০০০টি আইটেমের ওপর কোনো ফিল্টারিং, সর্টিং বা বড় গাণিতিক হিসাব থাকে, তবে প্রতিবার রেন্ডারে সেই হিসাবটি আবার চলবে এবং অ্যাপ ধীরগতির (Laggy) হয়ে পড়বে।
+
+২.  মৌলিক সিনট্যাক্স ও ব্যবহারের নিয়ম (Syntax)
+    JavaScript
+    const memoizedValue = useMemo(() => {
+      return calculateExpensiveValue(a, b);
+    }, [a, b]);
+
+    1.  Calculate Function: একটি Pure Function যা গণনাকৃত রেজাল্ট রিটার্ন করে।
+    2.  Dependency Array:
+        এই অ্যারেতে থাকা ভ্যারিয়াবলের মান বদলালেই কেবল ফাংশনটি আবার চলবে; অন্যথায় ক্যাশ থেকে সরাসরি রেজাল্ট দিয়ে দেবে।
+
+৩.  রিয়েল প্রজেক্ট উদাহরণ (Real-World Examples)
+    ১.  Heavy Data Filtering & Sorting (E-commerce / Dashboard)
+        JavaScript
+        import React, { useState, useMemo } from 'react';
+
+        export function ProductList({ products }) {
+          const [search, setSearch] = useState('');
+          const [category, setCategory] = useState('all');
+
+          // useMemo ছাড়া: অন্য কোনো স্টেট (যেমন Theme বা Counter) পাল্টালেও প্রতি রেন্ডারে ১,০০,০০০ ডাটা ফিল্টার হতো!
+          // useMemo দিয়ে: শুধুমাত্র search বা category পাল্টালেই এটি নতুন করে রান করবে।
+          const filteredProducts = useMemo(() => {
+            console.log('Filtering products...'); // টেস্টের জন্য
+            return products.filter(product => {
+              const matchesSearch = product.name.toLowerCase().includes(search.toLowerCase());
+              const matchesCategory = category === 'all' || product.category === category;
+              return matchesSearch && matchesCategory;
+            });
+          }, [products, search, category]);
+
+          return (
+            <div>
+              <input
+                type="text"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="Search products..."
+              />
+              <ul>
+                {filteredProducts.map(item => (
+                  <li key={item.id}>{item.name}</li>
+                ))}
+              </ul>
+            </div>
+          );
+        }
+
+    ২.  Referential Equality (অনাকাঙ্ক্ষিত Re-render এড়ানো)
+        React-এ Object ও Array প্রতিবার রেন্ডারে মেমোরিতে নতুন Reference পায়। যদি এই Object কোনো Child Component-এ Prop হিসেবে পাঠানো হয়, তবে Child Component-টি অহেতুক Re-render হয়।
+
+        JavaScript
+        // useMemo ছাড়া: প্রতি রেন্ডারে options-এর রেফারেন্স চেঞ্জ হয়ে Child Component রেন্ডার করত
+        const options = { color: 'blue', size: 'large' };
+
+        // useMemo দিয়ে: রেফারেন্স ফিক্সড রাখা
+        const options = useMemo(() => ({
+          color: 'blue',
+          size: 'large'
+        }), []); // কখনো রেফারেন্স চেঞ্জ হবে না
+
+৪.  রিয়েল প্রজেক্ট অ্যান্টি-প্যাটার্ন (When NOT to use useMemo)
+    ইন্টারভিউতে সবচেয়ে বেশি যে জায়গায় আটকানো হয় তা হলো: সব জায়গায় useMemo ব্যবহার করা একটি বড় ভুল!
+
+    ১.  সাধারণ বা ছোট হিসাবের ক্ষেত্রে:
+        সহজ কোনো হিসাব যেমন a + b বা ছোট অ্যারের জন্য useMemo ব্যবহার করলে পারফরম্যান্স বাড়ার বদলে কমে যায়। কারণ useMemo-এর নিজস্ব মেমোরি কস্ট এবং Dependency Comparison করার ওভারহেড থাকে।
+
+    ২.  Primitive Values-এর ক্ষেত্রে:
+        String, Number, Boolean এমনিতেই Referential Equality বজায় রাখে, তাই এগুলোর জন্য useMemo ব্যবহার করার কোনো প্রয়োজন নেই।
+
+৫.  useMemo vs useCallback (ইন্টারভিউয়ের প্রিয় প্রশ্ন)
+    ০.  বৈশিষ্ট্য
+        useMemo
+        useCallback
+
+    ১.  মূল কাজ
+        কোনো ফাংশনের রিটার্ন ভ্যালু (Result/Value) ক্যাশ করে।
+        সরাসরি ফাংশনের রেফারেন্স (Function Definition) ক্যাশ করে।
+
+    ২.  কী রিটার্ন করে?
+        fn()-এর গণনা করা ফলাফল।
+        নিজেই একটি মেমোইজড ফাংশন fn।
+
+    ৩.  সমতুল্য কোড
+        "useMemo(() => fn, deps)"
+        "useCallback(fn, deps)"
+
+৬.  ইন্টারভিউ প্রশ্ন ও স্মার্ট উত্তর (Interview Q&A)
+    ১.  useMemo কি প্রথম রেন্ডারের সময় রান করে?
+        উত্তর:
+
+        হ্যাঁ, useMemo কম্পোনেন্টের প্রথম রেন্ডারের (Initial Mount) সময়েই তার ভেতরের ফাংশন এক্সিকিউট করে প্রথম ফলাফলটি ক্যাশে জমা করে।
+
+    ২.  useMemo ব্যবহার করলেই কি React স্মৃতির গ্যারান্টি দেয়?
+        উত্তর:
+
+        না, React কিন্তু useMemo-কে "Semantic Guarantee" হিসেবে দেখার বদলে একটি Optimization Hint হিসেবে দেখতে বলে। ভবিষ্যতে React মেমোরি খালি করার প্রয়োজনে কোনো ক্যাশ করা মান মুছে ফেলতে পারে এবং প্রয়োজন হলে আবার গণনা করতে পারে।
+
+    ৩.  useMemo সম্পর্কে ইংলিশে ২ লাইনে উত্তর:
+        "useMemo is a React Hook that memoizes the result of an expensive calculation between re-renders.
+
+        It recalculates the value only when one of its dependencies changes, preventing performance bottlenecks during unnecessary re-renders or preserving referential equality for complex objects."

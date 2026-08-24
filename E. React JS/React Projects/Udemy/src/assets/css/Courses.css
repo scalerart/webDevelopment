@@ -1,9 +1,0 @@
-.conurse-container {
-    padding: 30px 5%;
-}
-
-.all-course {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-}

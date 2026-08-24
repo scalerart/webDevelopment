@@ -1,0 +1,104 @@
+=>  JSX (JavaScript XML)
+        1.  JSX কী
+        2.  JSX syntax
+        3.  JSX rules
+        4.  JavaScript inside JSX
+        5.  JSX expressions
+        6.  JSX attributes
+        7.  JSX conditional rendering
+        8.  JSX fragments
+        9.  Rendering lists in JSX
+
+JSX (JavaScript XML) হলো JavaScript-এর একটি আর্গুমেন্ট বা সিনট্যাক্স এক্সটেনশন (Syntax Extension)। এটি রিয়্যাক্টে HTML-এর মতো কোড সরাসরি JavaScript-এর ভেতরে লেখার সুবিধা দেয়।
+
+প্রফেশনাল প্রজেক্টের উপযোগী করে JSX-এর অভ্যন্তরীণ আর্কিটেকচার, বিহাইন্ড-দ্য-সিনস প্রসেস এবং নিয়মাবলী নিচে সাজিয়ে দেওয়া হলো:
+
+১.  JSX কী এবং কেন? (Core Concept)
+    সংজ্ঞা:
+
+    JSX সরাসরি কোনো HTML নয়; এটি JavaScript-এর একটি সিনট্যাক্টিক সুগার (Syntactic Sugar), যা ডেভেলপারদের UI স্ট্রাকচার সহজে লেখার সুযোগ করে দেয়।
+
+    কেন প্রয়োজন?
+    সাধারণত ওয়েবে লজিক (JavaScript) এবং মার্কআপ (HTML) আলাদা ফাইলে লেখা হতো। কিন্তু রিয়্যাক্টের মূল দর্শন হলো: UI এবং রেন্ডারিং লজিক একে অপরের সাথে গভীরভাবে সম্পর্কিত। JSX রিয়্যাক্ট কম্পোনেন্টের ভেতরেই লজিক ও UI-কে একসাথে সুন্দরভাবে সাজাতে সাহায্য করে।
+
+২.  বিহাইন্ড দ্য সিনস (Behind the Scenes / Under the Hood)
+    ব্রাউজার সরাসরি JSX বুঝতে পারে না। Babel বা SWC-এর মতো ট্রান্সপাইলার (Transpiler) JSX-কে রূপান্তর করে সাধারণ JavaScript ফাংশন কলে পরিণত করে।
+
+    =>  JSX কোড:
+        JavaScript
+            const element = <h1 className="title">Hello, World!</h1>;
+
+    =>  ট্রান্সপাইল হওয়ার পর আসল JavaScript কোড (React 17-এর পূর্বে):
+        JavaScript
+            const element = React.createElement(
+                'h1',
+                { className: 'title' },
+                'Hello, World!'
+            );
+
+    =>  React 17+ (New JSX Transform):
+        আধুনিক রিয়্যাক্টে import React from 'react' না লিখলেও চলে, কারণ এটি ব্যাকগ্রাউন্ডে react/jsx-runtime ব্যবহার করে রূপান্তর করে:
+
+        JavaScript
+        import { jsx as _jsx } from 'react/jsx-runtime';
+        const element = _jsx('h1', { className: 'title', children: 'Hello, World!' });
+
+৩.  JSX ব্যবহারের ৫টি সুনির্দিষ্ট নিয়ম (Golden Rules of JSX)
+    ১.  Return a Single Root Element (একই ফ্র্যাগমেন্টে র‍্যাপ করা)
+        একটি কম্পোনেন্ট থেকে একাধিক JSX ট্যাগ একসাথে রিটার্ন করা যায় না। এগুলোকে একটি সিঙ্গেল Parent ট্যাগ অথবা React.Fragment (<>...</>) দিয়ে র‍্যাপ করতে হয়।
+
+        JavaScript
+        // ভুল
+        return (
+            <h1>Title</h1>
+            <p>Description</p>
+        );
+
+        // সঠিক (Fragment ব্যবহার)
+        return (
+            <>
+                <h1>Title</h1>
+                <p>Description</p>
+            </>
+        );
+
+    ২.  Close All Tags (সব ট্যাগ বন্ধ করতে হবে)
+        HTML-এ <input> বা <img>-এর মতো কিছু সেলফ-ক্লোজিং ট্যাগে বন্ধ করার প্রয়োজন না হলেও JSX-এ সব ট্যাগ অবশ্যই বন্ধ করতে হবে (<input />, <img />)।
+
+    ৩.  camelCase HTML Attributes
+        JSX শেষপর্যন্ত JavaScript অবজেক্টে রূপান্তর হয়। তাই HTML প্রপার্টির নামগুলো camelCase-এ লিখতে হয়:
+            ১.  class ➔ className (কারণ class একটি JS Reserved Keyword)
+            ২.  for ➔ htmlFor
+            ৩.  tabindex ➔ tabIndex
+            ৪.  onclick ➔ onClick
+
+    ৪.  JavaScript Expressions inside Curly Braces {}
+        JSX-এর ভেতরে যেকোনো ডায়নামিক মান বা JavaScript হিসাব বসানোর জন্য সেকেন্ড ব্র্যাকেট {} ব্যবহার করতে হয়।
+
+        JavaScript
+        const name = "Sabbir";
+        return <h1>Hello, {name.toUpperCase()}!</h1>;
+
+    ৫.  Inline Styling is an Object
+        JSX-এ style এট্রিবিউটে স্ট্রিং-এর বদলে JavaScript Object পাস করতে হয় এবং CSS প্রপার্টিগুলো camelCase হতে হয়।
+
+        JavaScript
+        <div style={{ backgroundColor: 'black', color: 'white', padding: '10px' }}>
+            Styled Content
+        </div>
+
+৪.  XSS (Cross-Site Scripting) সিকিউরিটি
+    JSX ডিফল্টভাবে সিকিউর। রিয়্যাক্ট রেন্ডার করার আগে যেকোনো ইনপুট বা এক্সপ্রেশনকে Escape করে স্ট্রিং বানিয়ে দেয়। ফলে ইউজার ইনপুটের মাধ্যমে কেউ ক্ষতিকর <script> বা ফাইল ইনজেক্ট করতে পারে না।
+
+    (যদি ইচ্ছে করেই Raw HTML রেন্ডার করাতে হয়, তবে dangerouslySetInnerHTML প্রপার্টি ব্যবহার করা লাগে)।
+
+৫.  Questions & Answers
+    ১.  JSX ছাড়া কি রিয়্যাক্ট অ্যাপ তৈরি করা সম্ভব?
+        উত্তর:
+
+        হ্যাঁ, সম্ভব। সরাসরি React.createElement() বা _jsx() ফাংশন লিখে পুরো অ্যাপ বানানো যায়। কিন্তু সেই কোড পড়া ও মেইনটেইন করা অত্যন্ত জটিল ও বিরক্তিকর হওয়ায় প্র্যাকটিকালি সবাই JSX ব্যবহার করে।
+
+    ২.  JSX:
+        "JSX (JavaScript XML) is a syntax extension for JavaScript that allows developers to write HTML-like structures directly inside React components.
+
+        Browsers cannot execute JSX natively, so transpilers like Babel transform JSX into standard JavaScript function calls (such as _jsx or React.createElement). Key rules include wrapping adjacent elements in a single parent or Fragment, using camelCase for attributes, and enforcing strict self-closing tags."

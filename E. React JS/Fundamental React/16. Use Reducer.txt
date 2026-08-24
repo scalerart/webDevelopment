@@ -1,0 +1,150 @@
+useReducer হলো React-এর জটিল স্টেট ব্যবস্থাপনার জন্য অন্যতম শক্তিশালী একটি বিল্ট-ইন হুক। অ্যাপ্লিকেশনের স্টেট লজিক যখন বড় বা জটিল হয়ে যায়, অথবা পরবর্তী স্টেট যখন একাধিক পূর্ববর্তী অবস্থার ওপর নির্ভর করে, তখন useState-এর বদলে useReducer ব্যবহার করা ইন্ডাস্ট্রিতে স্ট্যান্ডার্ড ধরে নেওয়া হয়।
+
+১.  useReducer কী এবং কেন? (Core Concept)
+    সংজ্ঞা:
+    useReducer হলো এমন একটি React Hook যা Redux-এর মতো Action-Reducer প্যাটার্ন অনুসরণ করে জটিল স্টেট লজিক পরিচালনা করে।
+
+    =>  useState থাকতে useReducer কেন?
+        ১.  বিষয়:
+            useState,useReducer
+
+        ২.  স্টেট জটিলতা
+            "প্রাইমিটিভ (String, Number, Boolean) বা সহজ অবজেক্টের জন্য সেরা।","নেস্টেড অবজেক্ট, জটিল অ্যারে বা সম্পর্কিত বহু স্টেটের জন্য সেরা।"
+
+        ৩.  স্টেট লজিক
+            UI/কম্পোনেন্টের ভেতরেই স্টেট আপডেটের লজিক ছড়ানো থাকে।,স্টেট আপডেটের লজিক কম্পোনেন্টের বাইরে একটি পিওর ফাংশনে (Reducer) আলাদা থাকে।
+
+        ৪.  ট্রিগার মেকানিজম
+            সরাসরি নতুন মান পাঠাতে হয় (setCount(5))।,dispatch({ type: 'ACTION' })-এর মাধ্যমে ইন্টেন্ট (Intent) পাঠাতে হয়।
+
+        ৫.  টেস্টাবিলিটি
+            কাস্টম লজিক টেস্ট করা কিছুটা কঠিন।,Reducer Pure Function হওয়ায় ইউনিট টেস্ট করা অত্যন্ত সহজ।
+
+২.  useReducer-এর ৩টি মূল স্তম্ভ (3 Core Pillars)
+    useReducer বুঝতে ৩টি জিনিস জানা আবশ্যক:
+      1.  State:
+          অ্যাপ্লিকেশনের বর্তমান ডেটা/মান।
+
+      2.  Action:
+          একটি JavaScript Object যা বলে দেয় কী ঘটতে চলেছে। সাধারণত এতে একটি type (বাধ্যতামূলক) এবং একটি optional payload থাকে।
+          (যেমন: { type: 'ADD_TO_CART', payload: product })
+
+      3.  Reducer Function:
+          একটি Pure Function যা বর্তমান state এবং action গ্রহণ করে এবং নতুন স্টেট রিটার্ন করে।
+        (Formulas: (currentState, action) => newState)
+
+৩.  মৌলিক সিনট্যাক্স ও কোড উদাহরণ
+    JavaScript
+    const [state, dispatch] = useReducer(reducer, initialState, initFn);
+
+    =>  রিয়েল প্রজেক্ট উদাহরণ: E-commerce Cart Management
+        JavaScript
+        import React, { useReducer } from 'react';
+
+        // ১. Initial State
+        const initialState = {
+          cart: [],
+          totalAmount: 0,
+        };
+
+        // ২. Reducer Function (Pure Function - কম্পোনেন্টের বাইরে থাকে)
+        function cartReducer(state, action) {
+          switch (action.type) {
+            case 'ADD_ITEM': {
+              const updatedCart = [...state.cart, action.payload];
+              const updatedTotal = updatedCart.reduce((sum, item) => sum + item.price, 0);
+              return {
+                ...state,
+                cart: updatedCart,
+                totalAmount: updatedTotal,
+              };
+            }
+
+            case 'REMOVE_ITEM': {
+              const updatedCart = state.cart.filter(item => item.id !== action.payload);
+              const updatedTotal = updatedCart.reduce((sum, item) => sum + item.price, 0);
+              return {
+                ...state,
+                cart: updatedCart,
+                totalAmount: updatedTotal,
+              };
+            }
+
+            case 'CLEAR_CART':
+              return initialState;
+
+            default:
+              throw new Error(`Unhandled action type: ${action.type}`);
+          }
+        }
+
+        // ৩. Component
+        export function Cart() {
+          const [state, dispatch] = useReducer(cartReducer, initialState);
+
+          const handleAdd = () => {
+            const newItem = { id: Date.now(), name: 'Keyboard', price: 50 };
+            dispatch({ type: 'ADD_ITEM', payload: newItem });
+          };
+
+          return (
+            <div>
+              <h2>Total: ${state.totalAmount}</h2>
+              <p>Total Items: {state.cart.length}</p>
+              <button onClick={handleAdd}>Add Item</button>
+              <button onClick={() => dispatch({ type: 'CLEAR_CART' })}>Clear Cart</button>
+            </div>
+          );
+        }
+
+৪.  Advanced Feature: Lazy Initialization (৩য় প্যারামিটার)
+    useReducer-এর ৩ নম্বর প্যারামিটার হিসেবে একটি init function পাস করা যায়। যদি আপনার Initial State কোনো ভারী হিসাব বা External API/LocalStorage থেকে রিড করতে হয়, তবে Lazy Initialization পারফরম্যান্স বজায় রাখে।
+
+    JavaScript
+    function init(initialValue) {
+      const savedCart = localStorage.getItem('cart');
+      return savedCart ? JSON.parse(savedCart) : initialValue;
+    }
+
+    // ব্যবহারের সময়:
+    const [state, dispatch] = useReducer(cartReducer, initialState, init);
+
+৫.  রিয়েল প্রজেক্ট আর্কিটেকচার: useReducer + useContext
+    ছোট বা মাঝারি অ্যাপে Redux ছাড়াই গ্লোবাল স্টেট ম্যানেজ করতে useReducer এবং useContext একসাথে ব্যবহার করা হয়।
+
+    1.  useReducer: লজিক এবং স্টেট ডিক্লেয়ার করে।
+    2.  useContext: state এবং dispatch কে পুরো অ্যাপের চাইল্ড কম্পোনেন্টে ডিস্ট্রিবিউট করে।
+
+    JavaScript
+    // Provider Setup
+    export const GlobalContext = createContext();
+
+    export const GlobalProvider = ({ children }) => {
+      const [state, dispatch] = useReducer(cartReducer, initialState);
+
+      return (
+        <GlobalContext.Provider value={{ state, dispatch }}>
+          {children}
+        </GlobalContext.Provider>
+      );
+    };
+
+৬.  ইন্টারভিউ প্রশ্ন ও স্মার্ট উত্তর (Interview Q&A)
+    ১.  Reducer Function কেন সবসময় Pure Function হতে হবে?
+        উত্তর:
+
+        Pure Function এর দুটি শর্ত থাকে:
+          ১.  এটি কোনো Side Effect ঘটাবে না (API Request, DOM Modification বা Async Call করা যাবে না)।
+          ২.  একই Input-এর জন্য এটি সবসময় একই Output দেবে।
+
+        React রি-রেন্ডার ট্র্যাকিং এবং স্টেটের আগের মেমোরি রেফারেন্সের সাথে নতুন রেফারেন্স তুলনা (Predictable State Transition) করতে Reducer-এর Pure প্রকৃতির ওপর নির্ভর করে।
+
+    ২.  Reducer-এর ভেতরে সরাসরি Async Action (যেমন API Fetching) করা যাবে কি?
+        উত্তর:
+
+        না, Reducer-এর ভেতরে async/await বা API Fetching করা যাবে না। Async কাজের রেসপন্স আসার পর ইন্টারসেপ্ট করে Event Handler বা useEffect-এর ভেতর থেকে API কল করে ডাটা আসার পর dispatch() কল করতে হবে।
+
+    ৩.  useReducer সম্পর্কে ইংলিশে ২ লাইনে উত্তর:
+        "useReducer is a React Hook designed for managing complex or nested state logic using an Action-Reducer pattern.
+
+        It decouples state update logic from UI components into a pure reducer function, offering predictable state transitions and making unit testing significantly easier."

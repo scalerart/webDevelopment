@@ -1,0 +1,119 @@
+=>  Props
+        1.  Props কী
+        2.  Parent → Child data pass
+        3.  Props with JSX
+        4.  Props destructuring
+        5.  Default props
+        6.  Props children
+        7.  Props vs State
+        8.  Props validation
+
+Props (সংক্ষিপ্তরূপ: Properties) হলো React-এর ডেটা পাস করার মূল ভিত্তি। প্যারেন্ট কম্পোনেন্ট (Parent Component) থেকে চাইল্ড কম্পোনেন্টে (Child Component) ডেটা পাঠানোর জন্য Props ব্যবহার করা হয়।
+
+ইন্টারন্যাশনাল টেকনিক্যাল ইন্টারভিউ এবং প্রফেশনাল প্রজেক্টের উপযোগী করে Props-এর সমস্ত আর্কিটেকচার, মেমোরি বিহেভিয়ার এবং সেরা চর্চাগুলো নিচে সাজিয়ে দেওয়া হলো:
+
+১.  Props কী এবং কেন? (Core Concept)
+    সংজ্ঞা:
+
+    Props হলো এমন এক ধরনের বিশেষ আর্গুমেন্ট, যা দিয়ে প্যারেন্ট কম্পোনেন্ট থেকে চাইল্ড কম্পোনেন্টে অবজেক্ট, অ্যারে, ফ্রিকোয়েন্সি ভ্যালু বা ফাংশন পাঠানো হয়।
+
+    প্রধান বৈশিষ্ট্যসমূহ:
+        ১.  Unidirectional Data Flow: ডেটা সবসময় ওপর থেকে নিচে (Parent to Child) প্রবাহিত হয়।
+        ২.  Immutable (Read-Only): চাইল্ড কম্পোনেন্ট কখনো তার পাওয়া Props সরাসরি পরিবর্তন (Mutate) করতে পারে না।
+
+    JavaScript
+    // মারাত্মক ভুল: Props সরাসরি পরিবর্তন করা যাবে না!
+    function UserCard(props) {
+        props.name = "New Name"; // TypeError বা React Warning দেবে
+        return <h1>{props.name}</h1>;
+    }
+
+২.  প্র্যাকটিক্যাল উদাহরণ ও Destructuring Pattern
+    প্রোডাকশন কোডে props.something না লিখে সরাসরি Destructuring ব্যবহার করা ইন্ডাস্ট্রি স্ট্যান্ডার্ড।
+
+    JavaScript
+    // Child Component
+    export function UserProfile({ name, age, role = 'User', onLogOut }) {
+        return (
+            <div className="user-card">
+            <h2>{name} ({age})</h2>
+            <p>Role: {role}</p> {/* Default Prop value: User */}
+            <button onClick={onLogOut}>Logout</button>
+            </div>
+        );
+    }
+
+    // Parent Component
+    export function App() {
+        const handleLogout = () => console.log('User logged out');
+
+        return (
+            <UserProfile
+            name="Sabbir"
+            age={25}
+            onLogOut={handleLogout}
+            />
+        );
+    }
+
+৩.  children Prop (Composition Pattern)
+    React-এর একটি অত্যন্ত শক্তিশালী বিল্ট-ইন Prop হলো children। কোনো কম্পোনেন্টের ওপেনিং এবং ক্লোজিং ট্যাগের মাঝে যে JSX দেওয়া হয়, তা চাইল্ড কম্পোনেন্টে children হিসেবে এক্সেস করা যায়।
+
+    JavaScript
+    // Wrapper/Container Component
+    function Card({ title, children }) {
+        return (
+            <div className="card-box">
+                <h3>{title}</h3>
+                <div className="card-body">
+                    {children} {/* ভেতরে পাঠানো যেকোনো JSX এখানে রেন্ডার হবে */}
+                </div>
+            </div>
+        );
+    }
+
+    // ব্যবহার:
+    <Card title="User Details">
+        <p>Email: user@example.com</p>
+        <button>Edit Profile</button>
+    </Card>
+
+৪.  Prop Drilling ও তার সমাধান (Critical Interview Topic)
+    Prop Drilling কী?
+
+    যখন কোনো ডেটা টপ-লেভেল প্যারেন্ট থেকে গভীরের কোনো চাইল্ড কম্পোনেন্টে পাঠাতে মাঝখানের ৩-৪টি কম্পোনেন্ট দিয়ে অহেতুক Prop পাস করতে হয় (মাঝের কম্পোনেন্টগুলোর সেই ডেটার প্রয়োজন না থাকা সত্ত্বেও), তখন তাকে Prop Drilling বলে।
+
+    App -> Header -> Navbar -> UserMenu -> Avatar  (App থেকে Avatar-এ prop পাঠানো)
+
+    Prop Drilling সমাধানের উপায়সমূহ:
+        ১.  React Context API (useContext): গ্লোবালি ডেটা শেয়ার করা।
+        ২.  Component Composition (children prop): লেআউট প্যাটার্ন ব্যবহার করে।
+        ২.  State Management Libraries: Redux Toolkit, Zustand, Recoil ইত্যাদি।
+
+৫.  State vs Props (ডিফারেন্স টেবিল)
+    0.  বিষয়
+        State
+        Props
+
+    1.  উৎস (Source)
+        কম্পোনেন্টের নিজস্ব মেমোরি (Internal)।
+        প্যারেন্ট কম্পোনেন্ট থেকে আসে (External)।
+
+    2.  পরিবর্তনযোগ্যতা
+        Mutable (Setter Function দিয়ে পরিবর্তন করা যায়)।
+        "Immutable (Read-Only, পরিবর্তন করা যায় না)।"
+
+    3.  রেন্ডার ট্রিগার
+        setState দিয়ে পরিবর্তন করলে Re-render হয়।
+        প্যারেন্ট নতুন Props পাঠালে Re-render হয়।
+
+৬.  Questions & Answers
+    ১.  চাইল্ড কম্পোনেন্ট থেকে প্যারেন্ট কম্পোনেন্টে কীভাবে ডেটা পাঠানো যায়?
+        উত্তর:
+
+        React-এ সরাসরি চাইল্ড থেকে প্যারেন্টে Props পাঠানো যায় না (যেহেতু Data Flow একমুখী)। এর জন্য Lifting State Up প্যাটার্ন ব্যবহার করা হয়। প্যারেন্ট থেকে একটি Callback Function প্রপ হিসেবে চাইল্ডে পাঠানো হয়, এবং চাইল্ড সেই ফাংশনটি কল করার সময় প্যারামিটার হিসেবে ডেটাটি পাঠায়।
+
+    ২.  Props:
+        "Props (Properties) are read-only inputs passed from a parent component down to a child component to enable unidirectional data flow.
+
+        Props are immutable, meaning child components cannot modify the props they receive. To manage complex hierarchies without excessive Prop Drilling, we typically use Component Composition or the Context API."

@@ -1,0 +1,113 @@
+/*
+=>  Conditional Rendering
+        1.  if else
+        2.  ternary operator
+        3.  logical &&
+        4.  conditional components
+        5.  null rendering
+
+React-এ Conditional Rendering হলো লজিক্যাল শর্তের (Condition) ওপর ভিত্তি করে UI-এর নির্দিষ্ট অংশ দেখানো বা লুকানোর টেকনিক।
+
+প্রফেশনাল প্রজেক্টের উপযোগী করে Conditional Rendering-এর সবকটি পদ্ধতি, ক্ষতিকর অ্যান্টি-প্যাটার্ন এবং সেরা চর্চাগুলো নিচে দেওয়া হলো:
+
+১.  Conditional Rendering-এর ৫টি প্রধান উপায়
+    ১.  Logical AND (&&) Operator (সবচেয়ে বেশি ব্যবহৃত)
+        যখন কোনো শর্ত সত্য (true) হলে নির্দিষ্ট JSX দেখাতে চান, আর মিথ্যা (false) হলে কিছুই দেখাতে চান না।
+
+        JavaScript
+        {isLoggedIn && <UserProfile />}
+
+    ২.  Ternary Operator (condition ? true : false)
+        যখন শর্তের ওপর ভিত্তি করে দুটি আলাদা JSX-এর মধ্যে একটি দেখাতে চান।
+
+        JavaScript
+        {isLoading ? <Spinner /> : <DataView />}
+
+    ৩.  Early Return Pattern (If-Else in Component)
+        কম্পোনেন্টের একদম শুরুতে গার্ড ক্লজ (Guard Clause) হিসেবে শর্ত সাপেক্ষে আলাদা JSX রিটার্ন করা।
+
+        JavaScript
+        function UserCard({ user, isLoading, error }) {
+            if (isLoading) return <p>Loading user data...</p>;
+            if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
+            if (!user) return null; // কিছুই দেখাবে না
+
+            return <div><h1>{user.name}</h1></div>;
+        }
+
+    ৪.  Enum / Map Pattern (একাধিক অবস্থার জন্য)
+        যখন আপনার ৩ বা তার বেশি স্ট্যাটাস থাকে (যেমন: idle, loading, success, error), তখন if-else বা switch দিয়ে কোড নোংরা না করে Object Map ব্যবহার করা সেরা সমাধান।
+
+        JavaScript
+        const STATUS_COMPONENTS = {
+            loading: <Spinner />,
+            success: <DataView />,
+            error: <ErrorMessage />,
+            idle: <EmptyState />,
+        };
+
+        function StatusDashboard({ status }) {
+            return <div>{STATUS_COMPONENTS[status] || <EmptyState />}</div>;
+        }
+
+    ৫.  IIFE (Immediately Invoked Function Expression)
+        JSX-এর ভেতরেই তাৎক্ষণিক কোনো জটিল if-else বা switch লজিক চালাতে চাইলে:
+
+        JavaScript
+        <div>
+            {(() => {
+                if (score > 80) return <GoldBadge />;
+                if (score > 50) return <SilverBadge />;
+                return <BronzeBadge />;
+            })()}
+        </div>
+
+২.  লজিক্যাল && অপারেটরের মারাত্মক ট্র্যাপ (Critical Interview Pitfall)
+    লজিক্যাল && অপারেটরের সবচেয়ে বেশি ধরা পড়া একটি ভুল হলো Number 0-এর ট্র্যাপ।
+
+    ভুল কোড:
+    JavaScript
+    // যদি items.length-এর মান 0 হয়, তবে এটি মিথ্যা হয়ে কিছুই দেখানোর কথা...
+    // কিন্তু স্ক্রিনে "0" লেখাটি রেন্ডার হয়ে যাবে!
+    {items.length && <ItemList items={items} />}
+
+    কেন এই ভুল হয়?
+    JavaScript-এ 0 && <Component/> মূল্যায়ন করলে এটি 0 রিটার্ন করে, এবং React নম্বর 0-কে স্ক্রিনে রেন্ডার করে দেয়!
+
+    =>  সঠিক সমাধান (Best Practice):
+        JavaScript
+        // উপায় ১: Boolean-এ রূপান্তর করা
+        {items.length > 0 && <ItemList items={items} />}
+
+        // উপায় ২: Double NOT (!!) ব্যবহার করা
+        {!!items.length && <ItemList items={items} />}
+
+        // উপায় ৩: Ternary Operator ব্যবহার করা
+        {items.length ? <ItemList items={items} /> : null}
+
+৩.  রেন্ডার না করতে চাইলে null রিটার্ন করা
+    যদি কোনো কম্পোনেন্ট নির্দিষ্ট শর্তে স্ক্রিনে সম্পূর্ণ অদৃশ্য রাখতে চান, তবে সেই শর্তে null রিটার্ন করতে হয়। React null, undefined বা boolean মানগুলোকে DOM-এ রেন্ডার করে না।
+
+    JavaScript
+    function WarningBanner({ warn }) {
+        if (!warn) {
+            return null; // কিছুই রেন্ডার হবে না
+        }
+
+        return <div className="warning">Warning!</div>;
+    }
+
+৪.  Questions & Answers
+    ১.  React-এ display: none আর Conditional Rendering (return null বা &&)-এর মধ্যে পার্থক্য কী?
+        উত্তর:
+
+        ১.  display: none (CSS):
+            কম্পোনেন্টটি DOM-এ তৈরি ও মাউন্ট হয়ে থাকে, লাইফসাইকেল বা হুকগুলো চলে, কিন্তু ব্রাউজারে শুধু দেখা যায় না।
+
+        ২.  Conditional Rendering (return null):
+            কম্পোনেন্টটি DOM-এ মাউন্টই হয় না (Unmount হয়ে যায়)। ফলে মেমোরি বাঁচে এবং অপ্রয়োজনীয় সাইড-ইফেক্ট চলা বন্ধ থাকে।
+
+    ২.  Conditional Rendering:
+        "Conditional Rendering in React allows us to render different UI elements based on state or props conditions.
+
+        We commonly use Ternary Operators, Logical AND (&&), or Early Returns. A key pitfall to avoid is using numbers like 0 with the && operator, as JavaScript evaluates 0 as truthy enough to render 0 directly on the screen. We solve this by explicitly checking strictly for booleans, such as length > 0."

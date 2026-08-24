@@ -1,0 +1,85 @@
+১.  useState কী এবং কেন ব্যবহার করা হয়?
+    useState হলো React-এর সবচেয়ে প্রাথমিক এবং প্রয়োজনীয় State Hook।
+
+    সংজ্ঞা: এটি একটি ফাংশন যা ফাংশনাল কম্পোনেন্টের ভেতরে ডাইনামিক ডেটা সংরক্ষণ (preserve) করতে এবং আপডেট করতে সাহায্য করে।
+
+    কেন প্রয়োজন: আমরা যদি সাধারণ JavaScript ভ্যারিয়াবল (let x = 10) পরিবর্তন করি, React তা টের পায় না এবং UI আপডেট করে না। কিন্তু useState-এর updater function ব্যবহার করে স্টেট চেঞ্জ করলে React সংকেত পায় এবং কম্পোনেন্টটিকে Re-render করে নতুন ডেটা স্ক্রিনে দেখায়।
+
+২.  সিনট্যাক্স ও ব্যবহারের নিয়ম (Syntax)
+    JavaScript
+    const [state, setState] = useState(initialValue);
+
+        1.  state: বর্তমান স্টেটের মান (Current Value)।
+        2.  setState: স্টেট আপডেট করার ফাংশন (Setter Function)।
+        3.  initialValue:
+            স্টেটের প্রারম্ভিক মান (এটি Primitive Data যেমন String, Number, Boolean হতে পারে; আবার Non-primitive যেমন Array বা Object-ও হতে পারে)।
+
+    কোড উদাহরণ (Counter Component):
+    JavaScript
+    import { useState } from 'react';
+
+    export function Counter() {
+    const [count, setCount] = useState(0);
+
+    return (
+        <div>
+            <p>Current Count: {count}</p>
+            <button onClick={() => setCount(count + 1)}>Increment</button>
+        </div>
+    );
+    }
+
+৩.  useState-এর ৫টি মূল মেকানিজম (Core Concepts)
+    ১.  Re-render Trigger
+        যখনই তুমি setState কল করবে, React কম্পোনেন্টটিকে Re-render করে virtual DOM-এর সাহায্যে মূল DOM-এ পরিবর্তন আনে।
+
+    ২.  State Immutability (পরিবর্তনহীনতা)
+        React-এ স্টেটকে সরাসরি মিউট বা চেঞ্জ করা নিষেধ। সবসময় নতুন রেফারেন্স সরবরাহ করতে হয়।
+
+        ভুল: user.name = "Rahim"; setUser(user); (রেন্ডার হবে না)
+        সঠিক: setUser({ ...user, name: "Rahim" });
+
+    ৩.  Functional Updates (আগের স্টেটের ওপর নির্ভরতা)
+        যদি নতুন স্টেট তৈরির জন্য আগের স্টেটের ওপর নির্ভর করতে হয়, তবে সরাসরি মান না বসিয়ে Callback Function পাস করতে হয়।
+
+        JavaScript
+        // যখন পরপর একাধিক আপডেট প্রয়োজন হয়:
+        setCount(prevCount => prevCount + 1);
+
+    ৪.  Asynchronous & Batching Nature
+        setState সাথে সাথে বা synchronous উপায়ে এক্সিকিউট হয় না। পারফরম্যান্স বাড়ানোর জন্য React একাধিক স্টেট আপডেটকে একসাথে ব্যাচ (Batching) করে প্রসেস করে।
+
+    ৫.  Lazy Initialization (পারফরম্যান্স অপটিমাইজেশন)
+        যদি প্রারম্ভিক মান (Initial Value) পাওয়ার জন্য ভারী কোনো ক্যালকুলেশন বা localStorage থেকে ডেটা রিড করতে হয়, তবে সেটি সরাসরি না লিখে Initializer Function হিসেবে লিখতে হয়।
+
+        খারাপ: useState(getHeavyData()) (প্রতিটি রেন্ডারে কল হবে)
+        ভাল: useState(() => getHeavyData()) (শুধু প্রথম রেন্ডারে কল হবে)
+
+৪.  Interview Q & A
+    ১.  useState এবং সাধারণ let ভ্যারিয়াবলের মধ্যে মূল পার্থক্য কী?
+        উত্তর:
+
+        সাধারণ ভ্যারিয়াবল রেন্ডারের পর আগের মান মনে রাখতে পারে না এবং এর মান বদলালে UI Re-render হয় না। অন্যদিকে useState রেন্ডারের পরেও মান ধরে রাখে এবং স্টেট চেঞ্জ হলে UI আপডেট নিশ্চিত করে।
+
+    ২.  এই কোডটির আউটপুট কী হবে এবং কেন?
+        JavaScript
+        const [count, setCount] = useState(0);
+
+        const handleClick = () => {
+        setCount(count + 1);
+        setCount(count + 1);
+        setCount(count + 1);
+        };
+        উত্তর:
+
+        count-এর মান 1 হবে, 3 হবে না।
+        কারণ: React-এ স্টেট আপডেটগুলো asynchronous ও batched। তিনটি লাইনেই count-এর বর্তমান মান 0 হিসেবেই হিসাব করা হয়েছে (0 + 1)। এটি ঠিক করতে হলে Functional Update setCount(prev => prev + 1) ব্যবহার করতে হবে।
+
+    ৩.  Answer about useState:
+        "useState is a fundamental React Hook that manages dynamic local state in functional components. Calling its setter function notifies React to re-render the component, and as a best practice, I always maintain immutability and use functional updates when next state depends on the previous one."
+
+        "useState is a fundamental React Hook that allows functional components to declare and preserve dynamic local state across re-renders.
+
+        When we call its updater function, React schedules a component re-render to efficiently reflect the updated data in the UI.
+
+        In production, I always follow two key best practices: first, keeping state immutable by passing fresh references for objects or arrays using the spread operator; and second, using functional updates—like prev => prev + 1—whenever the next state depends directly on the previous one."

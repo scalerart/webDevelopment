@@ -1,0 +1,66 @@
+=>  React Introduction
+    1.  React কী
+    2.  React কেন ব্যবহার করা হয়
+    3.  React vs Vanilla JavaScript
+    4.  React vs Angular vs Vue
+    5.  SPA (Single Page Application)
+    6.  Virtual DOM
+    7.  Real DOM vs Virtual DOM
+    8.  React Architecture overview
+
+React (বা React.js) হলো Meta (পূর্বের Facebook) এবং একটি সুবিশাল ওপেন-সোর্স কমিউনিটি দ্বারা তৈরি ও পরিচালিত অত্যন্ত জনপ্রিয় JavaScript Library। এটি মূলত ইউজার ইন্টারফেস (UI), বিশেষ করে Single Page Applications (SPA) তৈরি করার জন্য ব্যবহৃত হয়।
+
+প্রফেশনাল প্রজেক্টের উপযোগী করে React-এর আর্কিটেকচার, মূল বৈশিষ্ট্য এবং কাজ করার প্রক্রিয়া নিচে সাজিয়ে দেওয়া হলো:
+
+১.  Framework নাকি Library? (Core Concept)
+    রথম প্রশ্নই থাকে—"Is React a Framework or a Library?"
+        ১.  React হলো একটি Library, Framework নয়।
+        ২.  Library:
+            React শুধু UI (User Interface) বা ভিউ লেয়ার (View Layer) হ্যান্ডেল করে। রাউটিং (Routing), স্টেট ম্যানেজমেন্ট (State Management) বা API কলের জন্য React নির্দিষ্ট কোনো লাইব্রেরি চাপিয়ে দেয় না; ডেভেলপার নিজের পছন্দ মতো টুল বেছে নিতে পারেন।
+
+        ২.  Framework (যেমন Next.js বা Angular):
+            যেখানে ফাইল স্ট্রাকচার, রাউটিং, ডাটাবেস হ্যান্ডলিং সবকিছুর জন্য পূর্ব-নির্ধারিত নিয়ম ও টুলস মেনে চলতে হয়।
+
+২.  React-এর প্রধান বৈশিষ্ট্যসমূহ (Key Features)
+    ১.  Virtual DOM (VDOM)
+        সরাসরি ব্রাউজারের Real DOM আপডেট করা পারফরম্যান্সের দিক থেকে অত্যন্ত ব্যয়বহুল (Slow)। React একটি হালকা Virtual DOM ধারণ করে।
+
+            ১.  অ্যাপে কোনো পরিবর্তন হলে প্রথমে Virtual DOM আপডেট হয়।
+            ২.  Reconciliation (Diffing Algorithm):
+                React আগের Virtual DOM এবং নতুন Virtual DOM-এর মধ্যে তুলনা করে শুধু পরিবর্তিত অংশটুকু চিহ্নিত করে।
+
+            ৩.  সবশেষে শুধু ওই নির্দিষ্ট অংশটুকুই Real DOM-এ আপডেট (Batch Update) করে, যার ফলে UI অত্যন্ত দ্রুত কাজ করে।
+
+    ২.  Component-Based Architecture
+        React-এ পুরো UI-কে ছোট ছোট স্বাধীন ও পুনঃব্যবহারযোগ্য টুকরোতে (Component) ভাগ করা হয়। যেমন: Header, Sidebar, Footer ইত্যাদি।
+
+    ৩.  Unidirectional Data Flow (একমুখী ডেটা প্রবাহ)
+        React-এ ডেটা সবসময় উপর থেকে নিচে অর্থাৎ Parent Component থেকে Child Component-এর দিকে প্রবাহিত হয় (Props-এর মাধ্যমে)। এতে ডেটার প্রবাহ ট্র্যাক করা এবং ডিবাগিং করা অত্যন্ত সহজ হয়।
+
+    ৪.  Declarative Programming
+        JavaScript-এ নির্দেশমূলকভাবে (Imperative) লিখতে হয় যে DOM কীভাবে আপডেট হবে (যেমন: document.getElementById().innerText = ...)।
+        কিন্তু React-এ ডিক্লেয়ারেটিভ পদ্ধতিতে শুধু বলা হয় UI দেখতে কেমন হবে (State অনুযায়ী), বাকি আপডেট মেকানিজম React নিজে ব্যাকগ্রাউন্ডে সামলায়।
+
+৩.  React কেন শিখবেন/ব্যবহার করবেন?
+    ১.  উচ্চ পারফরম্যান্স:
+        Virtual DOM-এর কারণে অ্যাপ্লিকেশন মেমোরি ব্যবহারে দক্ষ এবং দ্রুতগতির হয়।
+
+    ২.  কোড পুনঃব্যবহার (Reusability):
+        একটি কম্পোনেন্ট বানিয়ে অ্যাপের বিভিন্ন জায়গায় বারবার ব্যবহার করা যায়।
+
+    ৩.  বিশাল ইকোসিস্টেম ও কমিউনিটি:
+        যেকোনো সমস্যার সমাধান এবং থার্ড-পার্টি লাইব্রেরি (Tailwind, Redux, React Query) সহজে পাওয়া যায়।
+
+    ৪.  React Native:
+        React শেখা থাকলে খুব সহজেই মোবাইল অ্যাপ (iOS ও Android) তৈরির জন্য React Native-এ স্থানান্তরিত হওয়া যায়।
+
+৪.  Questions & Answers
+    ১.  Virtual DOM এবং Real DOM-এর মধ্যে পার্থক্য কী?
+        উত্তর:
+
+        Real DOM সরাসরি ব্রাউজারের লেআউট রেন্ডার করে এবং যেকোনো ছোট পরিবর্তনে পুরো গাছের কাঠামো আবার হিসেব করে (Repaint/Reflow)। কিন্তু Virtual DOM হলো Real DOM-এর একটি হালকা মেমোরি অবজেক্ট। এটি আগে মেমোরিতে চেঞ্জগুলোর হিসাব বের করে (Diffing) এবং অত্যন্ত নিখুঁতভাবে শুধু প্রয়োজনীয় পরিবর্তনটুকু Real DOM-এ পাঠায়।
+
+    ২.  React Overview:
+        "React is an open-source JavaScript library developed by Meta for building dynamic and interactive user interfaces.
+
+        Its core strengths lie in its Component-Based Architecture, Unidirectional Data Flow, and the Virtual DOM, which uses a reconciliation mechanism to optimize real DOM updates for high-performance Single Page Applications."

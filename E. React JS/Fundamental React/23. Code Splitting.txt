@@ -1,0 +1,98 @@
+=>  Code Splitting
+        1.  Lazy loading
+        2.  Dynamic import
+        3.  Suspense
+
+Code Splitting হলো এমন একটি টেকনিক যার মাধ্যমে পুরো অ্যাপ্লিকেশনের সমস্ত JavaScript ফাইল একসাথে একটি বিশাল "Bundle" হিসেবে লোড না করে, কোডকে ছোট ছোট টুকরোতে (Chunks) ভাগ করে ফেলা হয়।
+
+এর ফলে ইউজার যখন অ্যাপ্লিকেশনের নির্দিষ্ট পেইজ বা ফিচারে যায়, তখন কেবল সেই অংশের কোড অন-ডিমান্ড (On-Demand) লোড হয়। এটি Initial Page Load Time (FCP & LCP) বহুগুণ কমিয়ে দেয়।
+
+১.  কেন Code Splitting প্রয়োজন? (The Problem vs Solution)
+    ১.  উইদাউট Code Splitting:
+        ইউজার হোমপেজে প্রবেশ করলেও ব্রাউজার পুরো ওয়েবসাইটের (Dashboard, Settings, Profile, Admin Panel সহ) ৫০০KB-১MB JavaScript ফাইল একসাথে ডাউনলোড করে। এতে স্লো নেটওয়ার্কে ইউজার দীর্ঘসময় সাদা স্ক্রিন দেখে।
+
+    ২.  উইথ Code Splitting:
+        ইউজার কেবল হোমপেজের জন্য প্রয়োজনীয় ২০-৩০KB কোড ডাউনলোড করে। ড্যাশবোর্ডে ক্লিক করলে তবেই ড্যাশবোর্ডের কোড ব্যাকগ্রাউন্ডে লোড হবে।
+
+২.  Code Splitting-এর প্রধান ২ পদ্ধতি
+    ক.  Route-Based Code Splitting (সর্বাধিক ব্যবহৃত)
+        অ্যাপ্লিকেশনের প্রতিটি রাউটের (Route) জন্য আলাদা চ্যাংক (Chunk) তৈরি করা।
+
+        React-এ এটি বাস্তবায়নের জন্য React.lazy() এবং Suspense ব্যবহার করা হয়:
+
+        JavaScript
+        import React, { lazy, Suspense } from 'react';
+        import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+        // স্ট্যাটিক ইমপোর্টের পরিবর্তে Dynamic Import
+        const Home = lazy(() => import('./routes/Home'));
+        const Dashboard = lazy(() => import('./routes/Dashboard'));
+        const Settings = lazy(() => import('./routes/Settings'));
+
+        export function App() {
+            return (
+                <Router>
+                {/* কোড ব্যাকগ্রাউন্ডে লোড হওয়ার সময় Suspense একটি Fallback UI দেখাবে */}
+                <Suspense fallback={<div className="loading-spinner">Loading...</div>}>
+                    <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/settings" element={<Settings />} />
+                    </Routes>
+                </Suspense>
+                </Router>
+            );
+        }
+
+    খ.  Component & Heavy Library Based Code Splitting
+        বড় কোনো ভারী কম্পোনেন্ট (যেমন: Rich Text Editor, Chart, Modal) অথবা ভারী লাইব্রেরি (যেমন: lodash, moment, pdf.js) ইউজার একশন (যেমন: বাটনে ক্লিক) না করা পর্যন্ত লোড না করা।
+
+        JavaScript
+        import React, { useState, lazy, Suspense } from 'react';
+
+        // ভারী চার্ট কম্পোনেন্টকে লাযি লোড করা
+        const HeavyChart = lazy(() => import('./components/HeavyChart'));
+
+        export function AnalyticsPage() {
+        const [showChart, setShowChart] = useState(false);
+
+            return (
+                <div>
+                <h1>Analytics</h1>
+                <button onClick={() => setShowChart(true)}>Show Analytics Chart</button>
+
+                {showChart && (
+                    <Suspense fallback={<p>Loading Chart Engine...</p>}>
+                    <HeavyChart />
+                    </Suspense>
+                )}
+                </div>
+            );
+        }
+
+৩.  Dynamic Import with Vanilla JS (Library Level)
+    কোনো বড় লাইব্রেরি সম্পূর্ণ গ্লোবালি ইমপোর্ট না করে কেবল প্রয়োজনীয় ফাংশন চলার সময় ডায়নামিকালি ইমপোর্ট করা:
+
+    JavaScript
+    const handleDownloadPDF = async () => {
+        // বাটনে ক্লিক করলেই কেবল pdf-generator লাইব্রেরি ডাউনলোড হবে
+        const pdfModule = await import('./utils/pdfGenerator');
+        pdfModule.generatePDF();
+    };
+
+৪.  Qeestions & Answer
+    ১.  React.lazy() দিয়ে কি Named Exported Component লোড করা যায়?
+        উত্তর:
+
+        না, React.lazy ডিফল্টভাবে কেবল Default Export (export default Component) করা কম্পোনেন্টকে সাপোর্ট করে।
+        যদি Named Export করা কম্পোনেন্ট লাযি লোড করতে হয়, তবে Intermediate Module দিয়ে র‍্যাপ করে নিতে হয়:
+
+        JavaScript
+        const MyComponent = lazy(() =>
+            import('./Components').then(module => ({ default: module.MyComponent }))
+        );
+
+    ২.  Code Splitting
+        "Code Splitting is a performance optimization technique where we divide a large JavaScript bundle into smaller chunks that can be loaded lazily on demand.
+
+        In React, we achieve this using React.lazy() for dynamic imports alongside Suspense to provide fallback UI during chunk loading. It significantly improves initial load metrics like First Contentful Paint (FCP) and reduces unnecessary bandwidth usage."

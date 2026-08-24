@@ -1,0 +1,83 @@
+/*
+=>  Performance Optimization
+        1.  React.memo
+        2.  useMemo
+        3.  useCallback
+        4.  Lazy loading
+        5.  Avoid unnecessary re-render
+
+React-এ Performance Optimization হলো একটি বড় স্কেলের অ্যাপ্লিকেশনের গতি বাড়িয়ে স্মুথ ইউজার এক্সপেরিয়েন্স নিশ্চিত করার প্রক্রিয়া। ইন্টারভিউতে সিনিয়র ইঞ্জিনিয়াররা প্রায়ই অপটিমাইজেশন টেকনিকগুলো থেকে গভীরে প্রশ্ন করেন।
+
+প্রোডাকশন-লেভেলের প্রজেক্ট জন্য React Performance Optimization-এর মূল আর্কিটেকচার নিচে তুলে ধরা হলো:
+
+১.  প্রধান সমস্যা: Unnecessary Re-renders এড়ানো
+    React-এর ধীরগতির মূল কারণ হলো অহেতুক Re-render। এটি রোধ করতে নিচের কৌশলগুলো ব্যবহৃত হয়:
+
+    ১.  React.memo (High-Order Component)
+        Parent Component রেন্ডার হলেও Child Component-এর Prop না পাল্টালে তাকে রি-রেন্ডার হওয়া থেকে রক্ষা করে।
+
+        JavaScript
+        const PureChild = React.memo(({ name }) => {
+            return <div>Hello, {name}</div>;
+        });
+
+    ২.  useMemo এবং useCallback
+        ১.  useMemo: ভারী গণনার ফলাফল ক্যাশ করে।
+        ২.  useCallback: ফাংশন রেফারেন্স ফিক্সড রাখে, যাতে React.memo-তে মোড়ানো চাইল্ড রি-রেন্ডার না হয়।
+
+    ৩.  State Colocation (স্টেটকে সঠিক জায়গায় রাখা)
+        গ্লোবাল বা অভিভাবক কম্পোনেন্টে সব স্টেট না রেখে, যে চাইল্ডে লাগবে স্টেটকে ঠিক সেখানেই সীমাবদ্ধ রাখা। এতে পুরো ট্রি রেন্ডার হওয়া বেঁচে যায়।
+
+২.  Code Splitting & Lazy Loading (Bundle Size কমানো)
+    অ্যাপের প্রথম লোডিং টাইম কমানোর জন্য পুরো JavaScript ফাইল একসাথে লোড না করে ছোট ছোট টুকরো (Chunks) করে লোড করা।
+
+    =>  React.lazy এবং Suspense (Route Level Splitting)
+        JavaScript
+        import React, { lazy, Suspense } from 'react';
+
+        // ডায়নামিক ইমপোর্ট
+        const AnalyticsDashboard = lazy(() => import('./AnalyticsDashboard'));
+
+        function App() {
+            return (
+                <Suspense fallback={<div>Loading Dashboard...</div>}>
+                <AnalyticsDashboard />
+                </Suspense>
+            );
+        }
+
+৩.  Large List Optimization (Windowing / Virtualization)
+    যদি ১,০০০+ আইটেমের তালিকা রেন্ডার করতে হয়, তবে DOM-এ সব আইটেম একসাথে রাখলে ব্রাউজার স্লো হয়ে যায়। Virtualization টেকনিকের মাধ্যমে শুধু স্ক্রিনে যা দেখা যাচ্ছে (Visible Area), সেটুকু DOM-এ রেন্ডার করা হয়।
+
+    জনপ্রিয় লাইব্রেরি: react-window অথবা react-virtualized
+        JavaScript
+        import { FixedSizeList as List } from 'react-window';
+
+        const Row = ({ index, style }) => <div style={style}>Item {index}</div>;
+
+        const MyList = () => (
+            <List height={400} itemCount={1000} itemSize={35} width={300}>
+                {Row}
+            </List>
+        );
+
+৪.  Assets & State Structure Optimization
+    ১.  Image & Media Optimization:
+        WebP/AVIF ফরম্যাট ব্যবহার করা এবং Images-এ loading="lazy" যুক্ত করা।
+
+    ২.  Context Splitting:
+        গ্লোবাল State আপডেট হলে সব Consumer যেন রি-রেন্ডার না হয়, সেজন্য Context-কে আলাদা (Split) করা।
+
+    ৩.  Key Prop-এর সঠিক ব্যবহার:
+        অ্যারে ম্যাপ করার সময় key={index} এড়িয়ে ইউনিক ID ব্যবহার করা, যাতে React সহজে Virtual DOM Diffing করতে পারে।
+
+৫.  Q & A
+    ১.  "Premature Optimization" বলতে কী বোঝায়?
+        উত্তর:
+
+        কোডে আসল পারফরম্যান্সের সমস্যা পরিমাপ (Profile) না করেই আগেভাগে useMemo, useCallback বা React.memo বসিয়ে জটিলতা বাড়ানোকে Premature Optimization বলে। এটি হুকের মেমোরি ওভারহেড বাড়িয়ে হিতে বিপরীত করতে পারে।
+
+    ২.  Performance Optimization:
+        "React Performance Optimization primarily focuses on reducing unnecessary re-renders, minimizing bundle size, and efficiently managing DOM updates.
+
+        Key techniques include using React.memo, useMemo, and useCallback to control render flow, implementing Code Splitting via React.lazy and Suspense, and using List Virtualization for handling large datasets. I always measure using Chrome DevTools or React Profiler before optimizing."

@@ -1,0 +1,93 @@
+১.  Hook কী? (What is a Hook?)
+    সংজ্ঞা (Definition):
+
+    React Hook হলো বিশেষ ধরনের ফাংশন যা Functional Component-কে React-এর বিভিন্ন স্টেট (State) এবং লাইফসাইকেল ফিচারের সাথে যুক্ত বা "Hook" হতে সাহায্য করে।
+        1.  Hooks ব্যবহার করার ফলে Class Component না লিখেও Functional Component-এ স্টেট এবং লাইফসাইকেল লজিক পরিচালনা করা যায়।
+        2.  Hooks-এর নাম সবসময় use দিয়ে শুরু হয় (যেমন: useState, useEffect)।
+        3.  এটি React 16.8 ভার্সনে প্রথম পরিচিত করানো হয়।
+
+    =>  Hooks কেন আনা হয়েছিল? (Why Hooks were introduced?):
+        1.  Reusability:
+            Class Component-এর Stateful Logic সহজে রি-ইউজ করা যেত না (HOC বা Render Props ব্যবহার করতে হতো, যা কোড জটিল করে তুলত)। Hooks দিয়ে Custom Hook বানিয়ে লজিক সহজে শেয়ার করা যায়।
+
+        2.  Simpler Code:
+            Class Component-এর this কিওয়ার্ড এবং জটিল লাইফসাইকেল মেথডগুলো (componentDidMount, componentDidUpdate) পরিহার করে কোড ছোট ও পরিষ্কার রাখা যায়।
+
+২.  Hook-এর দুটি গোল্ডেন রুল (Rules of Hooks)
+    React-এ Hooks সঠিকভাবে কাজ করার জন্য ২টি কঠোর নিয়ম মেনে চলতে হয়:
+
+    1.  Only Call Hooks at the Top Level
+        নিয়ম: কোনো Loop, Condition (if-else), বা Nested Function-এর ভেতরে Hooks কল করা যাবে না।
+
+        কারণ: React তার কম্পোনেন্টের একাধিক Hooks-এর স্টেট সঠিক ক্রমানুসারে (Order of Execution) ট্র্যাক করে। Conditional Block-এ ব্যবহার করলে রেন্ডারিংয়ের সময় Hooks-এর অর্ডার বা সিকোয়েন্স ভেঙে পড়ে।
+
+    2.  Only Call Hooks from React Functions
+        নিয়ম: সাধারণ JavaScript Function-এ Hooks ব্যবহার করা যাবে না।
+        কোথায় ব্যবহার করা যাবে:
+            1.  শুধুমাত্র React Functional Component-এর ভেতরে।
+            2.  অথবা Custom Hooks-এর ভেতরে (যেগুলোর নাম use দিয়ে শুরু হয়)।
+
+    Note: লিন্টার সম্পর্কে প্রশ্ন করা হলে বলবে: eslint-plugin-react-hooks প্লাগইনটি এই দুটি নিয়ম মেনে চলতে ডেভেলপমেন্টের সময় সাহায্য করে।
+
+৩.  Built-in Hooks Overview
+    React-এর বিল্ট-ইন হুকগুলোকে তাদের ব্যবহারের ওপর ভিত্তি করে কয়েকটি ক্যাটাগরিতে ভাগ করা হয়:
+
+    ১.  State Hooks (স্টেট ব্যবস্থাপনার জন্য)
+        ১.  useState:
+            কম্পোনেন্টে লোকাল ডেটা/স্টেট ডাইনামিকালি সংরক্ষণ ও আপডেট করে।
+
+        ২.  useReducer:
+            জটিল বা নেস্টেড স্টেট লজিক (যেমন Redux-এর মতো action/reducer প্যাটার্নে) পরিচালনা করতে ব্যবহৃত হয়।
+
+    ২.  Effect Hooks (সাইড ইফেক্টের জন্য)
+        ১.  useEffect:
+            API Data Fetching, DOM Subscriptions, কিংবা Event Listener সেট করার মতো External System-এর সাথে রিলেটেড সাইড ইফেক্ট হ্যান্ডেল করতে ব্যবহৃত হয়।
+
+        ২.  useLayoutEffect:
+            এটি useEffect-এর মতোই, তবে DOM আপডেট হওয়ার পর এবং স্ক্রিনে ব্রাউজার রেন্ডার করার পূর্বে (Synchronously) এক্সিকিউট হয়। (যেমন: সাইজ বা পজিশন মাপার কাজ)।
+
+    ৩.  Performance/Optimization Hooks (পারফরম্যান্স উন্নত করতে)
+        ১.  useMemo:
+            ভারী বা ব্যয়বহুল কোনো গণনার (Expensive Calculation) রেজাল্ট ক্যাস (Cache/Memoize) করে রাখে, যাতে অপ্রয়োজনীয় রি-ক্যালকুলেশন না হয়।
+
+        ২.  useCallback:
+            কোনো ফাংশন ডেফিনিশনকে Memoize করে রাখে, যাতে Re-render এর সময় অপ্রয়োজনে নতুন ফাংশন রেফারেন্স তৈরি না হয়।
+
+    ৪.  Ref Hooks (DOM বা মান সংরক্ষণে)
+        useRef: সরাসরি DOM এলিমেন্ট অ্যাক্সেস করতে এবং এমন মান সংরক্ষণ করতে ব্যবহৃত হয় যা পরিবর্তন হলেও কম্পোনেন্ট Re-render হয় না।
+
+    ৫.  Context Hooks (গ্লোবাল স্টেটের জন্য)
+        useContext: Prop Drilling ছাড়াই গ্লোবালি ডেটা (যেমন: Theme, Auth User) এক কম্পোনেন্ট থেকে অন্য কম্পোনেন্টে পাস করতে সাহায্য করে।
+
+৪.  Quick Revision
+    1.  What is a React Hook?
+        "A Hook is a special function that lets functional components attach to React state and lifecycle features without writing a class."
+
+    2.  What are the two Rules of Hooks?
+        1.  Only call Hooks at the top level—never inside loops, conditions, or nested functions.
+        2.  Only call Hooks from React functional components or custom Hooks."
+
+    3.  Why does React rely on call order for Hooks?
+        "React tracks state and effect associations internally using linked lists based on the sequence in which Hooks are called. Conditional calls disrupt this order, breaking state consistency."
+
+
+=>*************************************=>
+১. useCallback (অবশ্যই শিখতে হবে — High Priority)
+কেন শিখবে: তুমি useMemo শিখেছ যা মান (Value) ক্যাশ করে। কিন্তু useCallback শিখতে হবে ফাংশনের রেফারেন্স (Function Reference) ক্যাশ করার জন্য।
+
+রিয়েল প্রজেক্ট ব্যবহার: চাইল্ড কম্পোনেন্টে Prop হিসেবে Event Handler পাস করার সময় অহেতুক চাইল্ড Re-render আটকানো এবং React.memo-র সাথে অপটিমাইজেশন করা।
+
+2. Custom Hooks (মাস্টার কনসেপ্ট — Essential for Projects)
+কেন শিখবে: একাধিক বিল্ট-ইন হুক (যেমন: useState + useEffect) একসাথে মিলিয়ে নিজের মতো রি-ইউজেবল লজিক তৈরি করা।
+
+রিয়েল প্রজেক্ট ব্যবহার: useFetch (API ডাটা ফেচিং), useLocalStorage (লোকাল স্টোরেজ সিনসিংস), useDebounce (সার্চ ইনপুট অপটিমাইজেশন)। প্রফেশনাল প্রজেক্টে কাস্টম হুক ছাড়া কোড লেখা হয় না বললেই চলে।
+
+3. useLayoutEffect (Edge-case & Performance)
+কেন শিখবে: useEffect-এর ছোট ভাই। ইন্টারভিউতে useEffect vs useLayoutEffect-এর পার্থক্য খুব বেশি জিজ্ঞেস করা হয়।
+
+রিয়েল প্রজেক্ট ব্যবহার: ব্রাউজারে পিক্সেল রেন্ডার করার পূর্বে সিঙ্ক্রোনাসলি DOM মেপে দেখা (যেমন: Tooltip, Popover পজিশনিং করা) যাতে UI-তে Flicker না করে।
+
+4. React 18+ Concurrent Hooks (useTransition & useDeferredValue)
+কেন শিখবে: মডার্ন React 18-এর এডভান্সড ইন্টারভিউয়ের জন্য।
+
+রিয়েল প্রজেক্ট ব্যবহার: ইউজার ইনপুট টাইপিং বা সার্চ ফিল্টারের মতো স্লো UI আপডেটকে স্মুথ রাখা, যাতে অ্যাপ আটকে (Lag) না যায়।
