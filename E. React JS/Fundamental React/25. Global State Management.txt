@@ -13,3 +13,93 @@
         5.  Reducers
         6.  useSelector
         7.  useDispatch
+
+Global State Management হলো অ্যাপ্লিকেশনের একাধিক কম্পোনেন্ট বা লেআউটে শেয়ার করা ডেটা (যেমন: User Auth Status, Theme, Cart Items) একটি কেন্দ্রীয় মেমোরিতে (Central Store) সংরক্ষণ ও নিয়ন্ত্রণ করার প্রক্রিয়া।
+
+Prop Drilling এড়াতে এবং অ্যাপ্লিকেশনের স্কেলেবিলিটি বাড়াতে গ্লোবাল স্টেট ম্যানেজমেন্ট ব্যবহার করা হয়।
+
+১.  কেন Global State Management প্রয়োজন?
+    1.  স্থানীয় স্টেট (Local State)
+        গ্লোবাল স্টেট (Global State)
+
+    2.  নির্দিষ্ট একটি কম্পোনেন্ট বা তার সরাসরি চাইল্ডের মধ্যে সীমাবদ্ধ।
+        পুরো অ্যাপ্লিকেশনের যেকোনো কম্পোনেন্ট থেকে অ্যাক্সেসযোগ্য।
+
+    3.  উদাহরণ: Form Input, Toggle Dropdown, Modal Open Status।
+        উদাহরণ: User Authentication, Shopping Cart, Theme Settings।
+
+    4.  useState বা useReducer দিয়ে সহজে হ্যান্ডেল হয়।
+        Context API, Redux Toolkit, Zustand বা Recoil দিয়ে হ্যান্ডেল হয়।
+
+২.  গ্লোবাল স্টেট সমাধানের সেরা পদ্ধতিসমূহ
+    ১.  React Context API (স্মল থেকে মিডিয়াম অ্যাপের জন্য)
+        React-এর বিল্ট-ইন ফিচার। কোনো থার্ড-পার্টি লাইব্রেরি ছাড়া ছোটখাটো গ্লোবাল ডেটা (যেমন Theme বা Current User) শেয়ার করতে ব্যবহৃত হয়।
+
+        JavaScript
+        import React, { createContext, useContext, useState } from 'react';
+
+        const ThemeContext = createContext();
+
+        export function ThemeProvider({ children }) {
+            const [theme, setTheme] = useState('light');
+            return (
+                <ThemeContext.Provider value={{ theme, setTheme }}>
+                    {children}
+                </ThemeContext.Provider>
+            );
+        }
+
+        // ব্যবহার:
+        export const useTheme = () => useContext(ThemeContext);
+
+        সীমারদ্ধতা: স্টেট আপডেট হলে Provider-এর ভেতরে থাকা সমস্ত Consumer কম্পোনেন্ট Re-render হয় (Unnecessary Re-render issue)।
+
+    ২.  Zustand (আধুনিক প্রজেক্টের জন্য জনপ্রিয় ও হালকা)
+        বর্তমানে ইন্ডাস্ট্রি স্ট্যান্ডার্ড সবচেয়ে সহজ ও পারফর্মার্ট লাইব্রেরি। এতে কোনো Provider দিয়ে পুরো অ্যাপ র‍্যাপ করার ঝামেলা নেই।
+
+        JavaScript
+        import { create } from 'zustand';
+
+        // Store তৈরি
+        export const useCartStore = create((set) => ({
+            cart: [],
+            addToCart: (item) => set((state) => ({ cart: [...state.cart, item] })),
+            clearCart: () => set({ cart: [] }),
+        }));
+
+        // যেকোনো কম্পোনেন্ট থেকে ব্যবহার:
+        function CartButton() {
+            const { cart, addToCart } = useCartStore();
+            return <button onClick={() => addToCart({ id: 1 })}>Items: {cart.length}</button>;
+        }
+
+    ৩.  Redux Toolkit - RTK (লার্জ এন্টারপ্রাইজ প্রজেক্টের জন্য)
+        অত্যন্ত শক্তিশালী ও ভবিষ্যদ্বাণীযোগ্য (Predictable) স্টেট ম্যানেজমেন্ট সমাধান। বড় টিম ও জটিল বিজনেস লজিকের জন্য উপযোগী।
+            1.  Store: মূল ডেটা সেন্টার।
+            2.  Slice: নির্দিষ্ট ফিচারের জন্য স্টেট ও রিডিউসার (Reducer)।
+            3.  Dispatch: Action ট্রিগার করা।
+
+        JavaScript
+        import { createSlice, configureStore } from '@reduxjs/toolkit';
+
+        const counterSlice = createSlice({
+            name: 'counter',
+            initialState: { value: 0 },
+            reducers: {
+                increment: (state) => { state.value += 1; }, // RTK-তে Immer ব্যবহার করায় সরাসরি mutating কোড লেখা যায়
+            },
+        });
+
+        export const { increment } = counterSlice.actions;
+        export const store = configureStore({ reducer: { counter: counterSlice.reducer } });
+
+৩.  Questions & Answer
+    ১.  Context API থাকতেও কেন Zustand বা Redux ব্যবহার করব?
+        উত্তর:
+
+        Context API মূল উদ্দেশ্য তৈরি করা হয়েছিল Prop Drilling এড়ানোর জন্য, গ্লোবাল স্টেট ম্যানেজমেন্ট লাইব্রেরি হিসেবে নয়। Context-এর ভ্যালু সামান্য পরিবর্তন হলেও তার আন্ডারে থাকা সমস্ত চাইল্ড কম্পোনেন্ট Re-render হয়। পক্ষান্তরে Zustand বা Redux Selector-based subscription সাপোর্ট করে—ফলে স্টেটের নির্দিষ্ট একটা অংশ অবজেক্ট চেঞ্জ হলেই কেবল সংশ্লিষ্ট কম্পোনেন্ট রি-রেন্ডার হয়, বাকিগুলো শান্ত থাকে।
+
+    ২.  Global State Management:
+        "Global State Management ensures that shared application data is centralized and accessible across deeply nested components without suffering from Prop Drilling.
+
+        For lightweight use-cases like theme or user session, React's Context API is sufficient. However, for scalable applications requiring fine-grained re-render control and devtools debugging, modern libraries like Zustand or Redux Toolkit (RTK) are preferred due to their selector subscription patterns and predictable updates."
